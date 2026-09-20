@@ -1,10 +1,11 @@
 let context: AudioContext | null = null;
 
-export function playChime(kind: 'select' | 'action' | 'tide' | 'win' | 'error', enabled: boolean): void {
-  if (!enabled) return;
+export function playChime(kind: 'select' | 'action' | 'tide' | 'win' | 'error', enabled: boolean, volume = 1): void {
+  const level = Number.isFinite(volume) ? Math.max(0, Math.min(1, volume)) : 0;
+  if (!enabled || level === 0) return;
   try {
     context ??= new AudioContext();
-    void context.resume();
+    void context.resume().catch(() => undefined);
     const notes = kind === 'win' ? [392, 493.88, 587.33, 783.99] : kind === 'tide' ? [196, 293.66, 392] : kind === 'error' ? [174.61] : kind === 'action' ? [392, 523.25] : [523.25];
     notes.forEach((frequency, index) => {
       const oscillator = context!.createOscillator();
@@ -13,8 +14,8 @@ export function playChime(kind: 'select' | 'action' | 'tide' | 'win' | 'error', 
       oscillator.type = 'sine';
       oscillator.frequency.setValueAtTime(frequency, start);
       gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(0.035, start + 0.025);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.7);
+      gain.gain.linearRampToValueAtTime(0.035 * level, start + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001 * level, start + 0.7);
       oscillator.connect(gain); gain.connect(context!.destination);
       oscillator.start(start); oscillator.stop(start + 0.75);
     });

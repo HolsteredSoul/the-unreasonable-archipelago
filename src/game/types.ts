@@ -9,9 +9,11 @@ export type GameState = {
   version: 1; seed: string; tide: number; maxTides: number;
   food: number; timber: number; integrity: number; actions: number;
   status: 'playing' | 'won' | 'lost'; islands: Island[]; log: string[];
+  currentRotation?: number; whaleTowedId?: string | null;
 };
 export type Command =
   | { type: 'tow'; id: string; to: Hex }
+  | { type: 'whaleTow'; id: string }
   | { type: 'build'; id: string; building: Building }
   | { type: 'anchor'; id: string }
   | { type: 'nourish'; id: string };

@@ -1,4 +1,5 @@
 import type { Building, Command, CommandResult, Forecast, GameState, Hex, Island, IslandStats, Weather } from './types';
+import { generateOpening } from './generation';
 
 export type { Building, Command, CommandResult, Forecast, GameState, Hex, Island, IslandStats, Weather } from './types';
 
@@ -27,7 +28,7 @@ export function createGame(seed = 'first-light'): GameState {
   const island = (id: string, name: string, kind: Island['kind'], q: number, r: number, building: Building | null = null): Island => ({
     id, name, kind, q, r, building, growth: 0, stress: 0, nourished: false, anchored: false,
   });
-  return {
+  const opening: GameState = {
     version: 1, seed, tide: 1, maxTides: 8, food: 10, timber: 9, integrity: 5, actions: RULES.actions, status: 'playing',
     islands: [
       island('heart', 'The Heart', 'heart', 0, 0),
@@ -40,6 +41,7 @@ export function createGame(seed = 'first-light'): GameState {
     ],
     log: ['The Moon requests its sea back. Grow the bell three times and connect it to the Heart by tide 8.'],
   };
+  return seed === 'first-light' ? opening : generateOpening(opening, { applyCommand, resolveTide }).state;
 }
 
 export function getWeather(state: GameState): Weather {
@@ -55,10 +57,25 @@ export function getWeather(state: GameState): Weather {
     { name: 'The Final Tide', description: 'No drift. The final squall adds 2 stress to exposed islands. A mature bell must connect to the Heart.', direction: 2, storm: true, strength: 2 },
   ];
   const weather = schedule[Math.min(7, Math.max(0, state.tide - 1))];
-  return { ...weather, direction: (weather.direction + offset) % 6 };
+  const description = state.currentRotation && state.tide % 4 !== 0
+    ? `${weather.storm ? `A squall adds ${weather.strength} stress to exposed islands.` : 'Calm water. A good tide to grow.'} This sea has rotated currents; follow the arrows on the water.`
+    : weather.description;
+  return { ...weather, description, direction: (weather.direction + offset) % 6 };
+}
+
+function rotateHex(hex: Hex, turns: number): Hex {
+  let rotated = { q: hex.q, r: hex.r };
+  for (let turn = 0; turn < turns % 6; turn++) rotated = { q: rotated.q + rotated.r, r: -rotated.q };
+  return rotated;
 }
 
 function currentAt(state: GameState, island: Island): Hex {
+  const rotation = state.currentRotation ?? 0;
+  const local = { ...island, ...rotateHex(island, 6 - rotation) };
+  return rotateHex(unrotatedCurrent(state, local), rotation);
+}
+
+function unrotatedCurrent(state: GameState, island: Island): Hex {
   if (island.kind === 'heart' || island.anchored || state.status !== 'playing') return { ...STILL };
   switch (state.tide % 4) {
     case 1:
@@ -127,6 +144,22 @@ export function getLegalTowTargets(state: GameState, id: string): Hex[] {
   return DIRECTIONS.map(direction => plus(island, direction)).filter(target => isInBounds(target) && !state.islands.some(other => same(other, target)));
 }
 
+export type WhaleEncounter = { direction: Hex; directionIndex: number; offers: { id: string; to: Hex }[]; used: boolean };
+/** The visiting whale offers one action-costing, food-free tow; ordinary drift still follows. */
+export function getWhaleEncounter(state: GameState): WhaleEncounter | null {
+  const visit = [2, 5, 7].indexOf(state.tide);
+  if (visit < 0 || state.status !== 'playing') return null;
+  const offset = state.seed === 'first-light' ? 0 : hash(`whale:${state.seed}`) % 6;
+  const directionIndex = ([3, 4, 1][visit] + offset) % 6;
+  const direction = { ...DIRECTIONS[directionIndex] };
+  const used = !!state.whaleTowedId;
+  const offers = used ? [] : state.islands.filter(island => island.kind !== 'heart').flatMap(island => {
+    const to = plus(island, direction);
+    return isInBounds(to) && !state.islands.some(other => same(other, to)) ? [{ id: island.id, to }] : [];
+  });
+  return { direction, directionIndex, offers, used };
+}
+
 export function applyCommand(state: GameState, command: Command): CommandResult {
   const reject = (error: string): CommandResult => ({ state, error });
   if (state.status !== 'playing') return reject('This voyage is complete. Start another sea.');
@@ -137,6 +170,17 @@ export function applyCommand(state: GameState, command: Command): CommandResult 
   const island = next.islands.find(item => item.id === command.id)!;
   let message: string;
   switch (command.type) {
+    case 'whaleTow': {
+      const encounter = getWhaleEncounter(state);
+      if (!encounter) return reject('The whale visits on tides 2, 5, and 7.');
+      if (encounter.used) return reject('One favour per visit. The whale has other appointments.');
+      const offer = encounter.offers.find(item => item.id === island.id);
+      if (!offer) return reject('The whale needs an empty neighboring hex in its travel direction.');
+      island.q = offer.to.q; island.r = offer.to.r;
+      next.whaleTowedId = island.id;
+      message = `The whale towed ${island.name} for one action and no food. The coming current still applies.`;
+      break;
+    }
     case 'tow':
       if (island.kind === 'heart') return reject('The Heart is rooted to the seabed.');
       if (state.food < RULES.tow) return reject('Towing needs 1 food.');
@@ -252,6 +296,7 @@ export function resolveTide(state: GameState): Forecast {
     events.push(won ? 'The bell rings. The Moon agrees to an extension. You saved this unreasonable archipelago.' : 'The final tide arrived before the bell was grown and connected. The Moon politely declines.');
   } else next.tide += 1;
   next.actions = next.status === 'playing' ? RULES.actions : 0;
+  next.whaleTowedId = null;
   next.log = [...next.log, `Tide ${state.tide}: ${weather.name}.`, ...events].slice(-12);
   return { state: next, moves, foodDelta: next.food - state.food, timberDelta: next.timber - state.timber, production: { food: foodProduced, timber: timberProduced }, rations: RULES.rations, weather, shelteredIds, connectedIds, events };
 }

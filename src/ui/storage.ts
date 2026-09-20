@@ -26,6 +26,8 @@ export function validateGameState(value: unknown): value is GameState {
   if (!Array.isArray(value.islands) || value.islands.length !== 7 || !value.islands.every(validIsland)) return false;
   if (value.islands.filter(island => island.kind === 'heart').length !== 1 || value.islands.filter(island => island.kind === 'bell').length !== 1) return false;
   if (new Set(value.islands.map(island => island.id)).size !== value.islands.length || new Set(value.islands.map(island => `${island.q},${island.r}`)).size !== value.islands.length) return false;
+  if (value.currentRotation !== undefined && !integer(value.currentRotation, 0, 5)) return false;
+  if (value.whaleTowedId !== undefined && value.whaleTowedId !== null && (!text(value.whaleTowedId, 100) || ![2, 5, 7].includes(value.tide) || value.status !== 'playing' || value.actions === 3 || !value.islands.some(island => island.id === value.whaleTowedId && island.kind !== 'heart'))) return false;
   if (!Array.isArray(value.log) || value.log.length > 1000 || !value.log.every(item => typeof item === 'string' && item.length <= 1000)) return false;
   if (value.status === 'playing' && value.integrity === 0) return false;
   if (value.status !== 'playing' && value.actions !== 0) return false;
@@ -43,6 +45,9 @@ export function validateSession(value: unknown): value is SavedSession {
   if (state.status === 'playing' && value.undo.length !== 3 - state.actions) return false;
   if (!value.undo.every((snapshot, index) => validateGameState(snapshot) && snapshot.seed === state.seed && snapshot.tide === state.tide && snapshot.integrity === state.integrity && snapshot.status === 'playing' && snapshot.actions === 3 - index && snapshot.actions > state.actions)) return false;
   if (value.undo.length > 0 && state.status !== 'playing') return false;
+  if (!value.undo.every(snapshot => ((snapshot as GameState).currentRotation ?? 0) === (state.currentRotation ?? 0))) return false;
+  const history = [...value.undo as GameState[], state];
+  if (history.some((snapshot, index) => index > 0 && history[index - 1].whaleTowedId && history[index - 1].whaleTowedId !== snapshot.whaleTowedId)) return false;
   if (!record(value.settings) || typeof value.settings.sound !== 'boolean' || typeof value.settings.reducedMotion !== 'boolean' || typeof value.settings.quality !== 'string' || !['high', 'low'].includes(value.settings.quality) || typeof value.seenIntro !== 'boolean') return false;
   if (value.settings.seaFocus !== undefined && typeof value.settings.seaFocus !== 'boolean') return false;
   if (value.settings.musicEnabled !== undefined && typeof value.settings.musicEnabled !== 'boolean') return false;
@@ -67,7 +72,7 @@ export function initialSession(): SavedSession {
   } catch { /* A blocked or damaged local save must never prevent play. */ }
   return {
     version: 1, state: createGame(urlSeed), undo: [], seenIntro: false,
-    settings: { sound: false, reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, quality: 'high' },
+    settings: { sound: true, musicEnabled: true, musicVolume: 0.35, effectsVolume: 0.8, reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, quality: 'high' },
   };
 }
 

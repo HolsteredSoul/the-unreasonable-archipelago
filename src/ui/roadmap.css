@@ -1,5 +1,13 @@
 /* Planning feedback sits close to its cause; sea focus leaves room for the map. */
+/* Translucent fills keep the paper look without repeatedly blurring the animated WebGL surface. */
+.hud .resources,.hud .panel,.hud .island-browser-toggle,.hud .preview-banner,.hud .mode-banner,.hud .action-dock,.hud .sea-toolbar button,.hud .sea-chips button,.world-labels .island-label{backdrop-filter:none}
+.whale-encounter{position:absolute;bottom:246px;left:50%;transform:translateX(-50%);width:440px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#dcefedf2;border:1px solid #87bbb3;pointer-events:auto;z-index:4}.whale-encounter>svg{flex-shrink:0;color:#416f72}.whale-encounter>div{flex:1}.whale-encounter strong{font-size:12px;color:#365c59}.whale-encounter p{font-size:11px;line-height:1.45;margin:4px 0 0;color:#476965}.whale-encounter button{font-size:11px;padding:9px;white-space:nowrap;flex-shrink:0}.opening-summary{padding:12px;background:#e3e8d7;border-left:3px solid #8a9d6c;font-size:12px;line-height:1.6;color:#3c5a41;margin:12px 0}.setting-row p{max-width:280px}
+@media(min-width:1600px){.whale-encounter{bottom:276px}}
+@media(max-width:800px){.whale-encounter{bottom:328px;width:calc(100% - 32px);max-width:400px}.whale-encounter p{font-size:10px}.whale-encounter>svg{display:none}}
 .sea-toolbar{position:absolute;top:112px;left:50%;transform:translateX(-50%);display:flex;gap:6px;pointer-events:auto}
+.whale-encounter{left:auto;right:24px;top:400px;bottom:auto;transform:none;width:270px;max-height:106px;display:grid;grid-template-columns:1fr auto;gap:6px 8px;padding:10px 12px}.whale-encounter>svg{display:none}.whale-encounter>div{grid-column:1/-1}.whale-encounter strong{font-size:11px}.whale-encounter p{font-size:10px;line-height:1.35;margin-top:3px}.whale-encounter button{grid-column:2;font-size:10px;padding:5px 8px}.sea-focus .whale-encounter{top:212px;width:280px;max-height:none}
+@media(min-width:1600px){.whale-encounter{top:440px}}
+@media(max-width:800px){.whale-encounter,.sea-focus .whale-encounter{top:268px;right:12px;width:230px;max-height:104px}}
 .sea-toolbar button,.sea-chips button{display:flex;align-items:center;gap:7px;border:1px solid #f5f1df90;background:#edf0dedd;border-radius:24px;padding:9px 12px;font-size:12px;box-shadow:0 3px 12px #24494212;backdrop-filter:blur(12px)}
 .sea-toolbar button[aria-pressed=true]{background:#294e42;color:#faf0cf;border-color:#75957a}
 .sea-toolbar button:hover,.sea-chips button:hover{background:#fff3da;color:#294e42}

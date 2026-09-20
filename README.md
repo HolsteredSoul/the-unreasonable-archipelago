@@ -24,6 +24,7 @@ Each tide gives you three actions:
 - **Build** a garden, grove, or breakwater on an ordinary island: 3 timber.
 - **Anchor** an island through one tide: 1 timber.
 - **Nourish** an island's next growth stage: 2 food. It grows after a safe, fed tide.
+- **Whale Tow**, on tides 2, 5, and 7: one action and no food. Accept one tow per visit, one hex in the whale's direction. Currents still apply afterward.
 
 The Heart is rooted and cannot move. Gardens like open water. Groves like neighbors.
 Breakwaters shield themselves and islands downstream. Calm tides permit growth everywhere.
@@ -41,12 +42,17 @@ The water shows drift arrows, storm shelter wakes, and the Heart connection chai
 Action feedback separates food spent now from the town's two rations at the tide.
 Your best medal for each seed stays beside its name and in voyage settings.
 The game saves automatically in this browser. Seed links recreate an opening, not a saved voyage.
+Settings include separate piano and effects volumes, a piano toggle, and master mute.
+The original score starts after your first interaction and pauses when the page is hidden.
 
 ## Scope
 This chapter demonstrates the core rules, procedural scenery and growth, forecast currents,
 local persistence, accessible controls, audio, and a complete win/loss flow.
 The 13-island campaign, three-bell chorus, expanded hazards and phone layouts belong to later stages.
-World seeds vary names, scenery, and weather; this introductory chapter keeps a tested opening layout.
+`first-light` keeps the authored introductory layout. Other seeds change island positions,
+starting structures, and current patterns. Every generated opening is verified against the
+real simulator with a complete winning route. Settings show the new sea's characteristics
+before you set sail; existing saved voyages retain their original geometry.
 
 ## Development
 `npm test` verifies simulation and persistence.
@@ -59,6 +65,11 @@ World seeds vary names, scenery, and weather; this introductory chapter keeps a 
 - assets/source/bell-flower.blend: editable original Blender asset.
 - public/assets/bell-flower.glb: browser-ready bell model.
 - scripts/create_bell.py: reproducible Blender modeling/export script.
+- assets/source/whale.blend and public/assets/whale.glb: original animated whale and editable source.
+- scripts/create_whale.py: reproducible whale model and animation.
+- src/ui/music.ts and music.worker.ts: original adaptive piano and instrument synthesis.
+- docs/verification.md: test evidence, browser playthroughs, and current limitations.
+- docs/roadmap-whale.jpg: actual gameplay with the whale encounter.
 - docs/concept.png: visual target, generated concept art (not a gameplay screenshot).
 
 No account, paid asset library, API key, backend, or runtime AI service is required.

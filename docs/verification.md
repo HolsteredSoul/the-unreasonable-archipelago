@@ -1,5 +1,21 @@
 # First playable verification
 
+## Completed roadmap: generated seas, whale encounters, and piano
+
+20 September 2026. All 54 tests pass across eight files: 14 core simulation, 6 generated-opening, 8 whale/current, 10 original save, 6 roadmap save, 3 medal, 4 planning, and 3 scenery-batching tests. Final command: `npm test -- --maxWorkers=1`. The heavy 1,000-seed invariant test has an explicit 30-second budget for concurrent desktop work. Generation tests replay 400 complete winning routes through the public game API, covering all six current rotations, three initial bell distances, and four structure families. Old fixed-layout saves are preserved without regeneration.
+
+The production build and TypeScript checks pass. The bundle remains dominated by Three.js (approximately 273 KB gzipped JavaScript); Vite reports its advisory large-chunk warning. The whale adds a 208 KB GLB with a four-second animated tail/flipper cycle and a procedural loading fallback. An isolated Blender process produced and verified both the browser asset and editable source.
+
+Real Chromium controls completed two additional eight-tide wins: the introductory sea using Whale Tow as a food-saving rescue, and generated seed `moonlit-teapot`. The combined pass verified whale eligibility, one-action/no-food cost, keyboard activation, exact destination, once-per-visit limit, undo, reload and replay, plus seed preview, new geometry, accessible costs and Escape focus. No JavaScript exceptions or failed HTTP responses occurred. Actual screenshots were inspected at 1366×768 and 1920×1080; the encounter card was moved to the edge after the first visual pass covered islands.
+
+Integrated audio controls passed: independent piano/effects levels, piano-only mute, master mute, zero-volume behavior, preference persistence, and no AudioContext before a gesture after reload. A full eight-tide victory exercised disconnected, calm, storm and finale music, including result ducking. An actual score-and-chime recording measured peak 0.0741 and RMS 0.0128 with zero clipped samples; the four-minute offline score render also had no clipping. Simulated page-visibility suspension/resume passed; real-tab hiding was inconclusive because this automation environment kept `document.hidden` false. No subjective listening audition is claimed.
+
+Final five-second production frame samples on Intel Iris Xe / ANGLE D3D11, DPR 1: **58.7 FPS at 1366×768 high**, **54.1 FPS at 1920×1080 high**, and **59.3 FPS at 1920×1080 low**. Median frame interval was 19.9 ms, with p95 at 20.1–20.2 ms. These are local samples, not cross-device guarantees. Initial development/probed and production checks were much slower; isolating animated backdrop blur identified the main full-screen compositing cost. The final HUD retains translucent fills without per-control blur. Static shadow reuse, cached label dimensions, and conservative island mesh batching also reduce repeated work. Representative scenery mesh counts fell from 68 to 20 for a garden and 61 to 16 for a grove; 96 reference picking rays and precise world bounds were preserved. `docs/roadmap-whale.jpg` shows the actual game.
+
+Gameplay remains a short, forgiving strategy chapter. The whale gives a direction-limited food-saving alternative on three tides; ordinary towing still supplies free direction choice, and anchors still stop subsequent drift. Generated geometry changes opening decisions, but the verified rescue method still brings the bell into the inner ring early. Higher medals encourage developing the ordinary islands. Repeated-run enjoyment and subjective listening fatigue need human playtesting; automated success does not establish either.
+
+After the final rendering fixes, the production browser pass also verified direct mesh picking, low graphics and reduced motion, Whale Tow with refresh, an entire unsuccessful eight-tide voyage, defeat persistence without a medal, and restart. No JavaScript exceptions or failed HTTP responses occurred. The final screenshot was refreshed from this production build.
+
 ## Roadmap checkpoint: planning and clarity
 
 20 September 2026: 31 automated checks passed (14 simulation, 10 saves, 3 achievements, 4 planning overlays). TypeScript and production build passed. Under concurrent Blender/audio work, the 1,000-seed simulation check needed a 30-second timeout; its assertions passed.
@@ -37,4 +53,4 @@ The final map-control check caught decorative shore lines intercepting clicks on
 ## Gameplay assessment and boundaries
 The chapter is deliberately forgiving while teaching movement, delayed growth, currents, and planning with forecasts. The bell can be rescued early; developing six shore growth stages provides a second objective during later tides. Longer-term strategic depth and repeated-run enjoyment still need human playtesting.
 
-Seeds vary scenery, names, and weather. The seven-island opening layout is fixed for this introductory chapter. This is a complete short desktop chapter, not the planned larger campaign; phone layouts and additional chapters are not part of this stage.
+The original first-playable release varied only scenery, names, and weather. The roadmap update above replaces that limitation for non-introductory seeds. This remains a complete short desktop chapter; phone layouts, additional chapters, and the larger campaign are outside this roadmap.

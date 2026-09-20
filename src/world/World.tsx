@@ -3,10 +3,13 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { Hex, Island, WorldProps } from '../game/types';
-import { getConnectedIds, getIslandStats } from '../game';
+import { getConnectedIds, getIslandStats, getWhaleEncounter } from '../game';
 import { hexDistance, missingConnection, sameHex, shelterCells, tideProduction } from './planning';
+import { createWhaleVisual } from './Whale';
+import { batchIsland } from './batchIsland';
 import './world.css';
 import './planning.css';
+import './whale.css';
 
 const SPACING = 1.75;
 const LAND_HEIGHT = 0.57;
@@ -185,6 +188,7 @@ function makeIsland(island:Island, seed:string, hero:THREE.Group|null) {
   if(island.nourished) for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const sprout=ball(group,0.03,0xffe3a0,Math.cos(a)*1.05,LAND_HEIGHT+0.08,Math.sin(a)*1.05,0);sprout.name='sparkle';}
   group.traverse(child=>{child.userData.islandId=island.id;});
   group.userData.signature=`${island.kind}|${island.building}|${island.growth}|${island.anchored}|${island.nourished}`;
+  batchIsland(group);
   return group;
 }
 
@@ -214,7 +218,7 @@ const waterFragment=`
   }
 `;
 
-type IslandView={group:THREE.Group;target:THREE.Vector3;label:HTMLButtonElement;signature:string};
+type IslandView={group:THREE.Group;target:THREE.Vector3;label:HTMLButtonElement;signature:string;width:number;height:number};
 type Runtime={update:(props:WorldProps)=>void};
 
 export default function World(props:WorldProps) {
@@ -226,6 +230,8 @@ export default function World(props:WorldProps) {
     try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});}catch{setError(true);return;}
     let disposed=false,raf=0; const scene=new THREE.Scene();scene.background=new THREE.Color(0x73b9b5);scene.fog=new THREE.Fog(0x73b9b5,37,105);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,latest.current.quality==='high'?1.75:1));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+    // Island geometry is static between choices. Reuse its shadow map while the sea and whale animate.
+    renderer.shadowMap.autoUpdate=false;renderer.shadowMap.needsUpdate=true;
     renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
     renderer.domElement.setAttribute('aria-label','Interactive ocean map. Select an island to manage it. Drag to look around; scroll to zoom.');renderer.domElement.setAttribute('role','img');container.prepend(renderer.domElement);
     const camera=new THREE.OrthographicCamera(-15,15,10,-10,0.1,180);camera.position.set(13,21,26);camera.lookAt(0,0,0);
@@ -324,10 +330,48 @@ export default function World(props:WorldProps) {
         }
       }
     }
-    // The whale travels outside the playable map, a small promise of a larger world.
-    const whale=new THREE.Group();scene.add(whale);const body=ball(whale,1,0x356a6a,0,-0.015,0,2);body.scale.set(0.47,0.16,1.28);
-    for(const side of [-1,1]){const fin=ball(whale,0.3,0x3c7772,side*0.23,-0.012,-1.17);fin.scale.set(1,0.12,0.48);fin.rotation.y=side*0.5;}
-    const whaleWake=ringLine(circlePoints(0.65,0.008,40),0xc3e6d7,0.2,whale);whaleWake.scale.set(1,1,2.6);
+    const whaleVisual = createWhaleVisual(), whale = whaleVisual.group; whale.scale.setScalar(0.48); scene.add(whale);
+    const whaleGoal = new THREE.Vector3(-11, 0.18, 8), whaleHeading = new THREE.Vector3(0, 0, 1), whaleNoteAnchor = new THREE.Vector3(), whaleTowOffset = new THREE.Vector3();
+    let whaleEncounter: ReturnType<typeof getWhaleEncounter> = null, whaleTowKey = '', whaleVisitKey = '', whaleReactionUntil = 0;
+    const tetherGeometry = new THREE.BufferGeometry(); tetherGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(24), 3));
+    const tether = new THREE.Line(tetherGeometry, new THREE.LineBasicMaterial({ color: 0xffe1a8, transparent: true, opacity: 0.92 })); tether.visible = false; scene.add(tether);
+    function updateWhale(next: WorldProps) {
+      whaleEncounter = getWhaleEncounter(next.state);
+      const visitKey = whaleEncounter ? `${next.state.seed}:${next.state.tide}` : '';
+      const towKey = next.state.whaleTowedId ? `${visitKey}:${next.state.whaleTowedId}` : '';
+      if (towKey && towKey !== whaleTowKey) whaleReactionUntil = performance.now() + 2200;
+      whaleTowKey = towKey;
+      if (whaleEncounter) {
+        whaleHeading.copy(hexPosition(whaleEncounter.direction)).normalize();
+        const offer = whaleEncounter.offers.find(item => item.id === next.selectedId) ?? whaleEncounter.offers.find(item => item.id === 'bell') ?? whaleEncounter.offers[0];
+        const leadIsland = next.state.islands.find(island => island.id === (next.state.whaleTowedId || offer?.id));
+        if (leadIsland) {
+          const origin = hexPosition(leadIsland);
+          {
+            const angles = whaleEncounter.used ? [0, -Math.PI / 3, Math.PI / 3, -Math.PI / 2, Math.PI / 2] : [-Math.PI / 2, Math.PI / 2, 0, Math.PI, -Math.PI / 3, Math.PI / 3];
+            const candidates = angles.map(angle => {
+              const point = origin.clone().addScaledVector(whaleHeading.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), angle), 3.6).setY(0.18);
+              const clear = Math.min(...next.state.islands.map(island => point.distanceTo(hexPosition(island))));
+              const projected = point.clone().project(camera), px = (projected.x * 0.5 + 0.5) * container!.clientWidth, py = (-projected.y * 0.5 + 0.5) * container!.clientHeight;
+              const cover = Math.max(0, 210 - px, px - container!.clientWidth + 210) + Math.max(0, 215 - py, py - container!.clientHeight + 230);
+              return { point, score: clear * 2 - cover * 0.04 - point.length() * 0.05 };
+            });
+            candidates.sort((a, b) => b.score - a.score); whaleGoal.copy(candidates[0].point); whaleTowOffset.copy(whaleGoal).sub(origin).setY(0);
+          }
+        } else whaleGoal.set(-7, 0.18, 4.5);
+        if (visitKey !== whaleVisitKey) whale.position.copy(whaleGoal).addScaledVector(whaleHeading, -1.5);
+        chartLabel(whaleEncounter.used ? 'A tow, courteously given' : 'The whale offers a tow', whaleNoteAnchor, 'is-whale');
+        if (offer && !whaleEncounter.used) {
+          const island = next.state.islands.find(item => item.id === offer.id)!;
+          const from = hexPosition(island).setY(0.17), to = hexPosition(offer.to).setY(0.17);
+          const direction = to.clone().sub(from).normalize();
+          ringLine(circlePoints(1.3, 0.16).map(point => point.add(hexPosition(offer.to))), 0xa5e5ef, 0.85, currentGroup, true);
+          seaArrow(from.clone().addScaledVector(direction, 1.35), to.clone().addScaledVector(direction, -0.6), 0xa5e5ef, currentGroup, 0.095);
+          chartLabel('Whale tow · 1 action', to.clone().add(new THREE.Vector3(0, 0.06, 0)), 'is-whale-destination');
+        }
+      }
+      whaleVisitKey = visitKey;
+    }
     const gulls:THREE.Group[]=[];
     for(let i=0;i<5;i++){const gull=new THREE.Group();const points=[new THREE.Vector3(-0.18,0,0),new THREE.Vector3(-0.07,0.05,0),new THREE.Vector3(0,0,0),new THREE.Vector3(0.07,0.05,0),new THREE.Vector3(0.18,0,0)];ringLine(points,0xfff4d8,0.9,gull);scene.add(gull);gulls.push(gull);}
     const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();let down={x:0,y:0};
@@ -336,11 +380,12 @@ export default function World(props:WorldProps) {
     const pointerUp=(event:PointerEvent)=>{if(event.button!==0||Math.hypot(event.clientX-down.x,event.clientY-down.y)>6)return;const hit=getHits(event)[0];if(!hit)return;const hex=hit.object.userData.hex as Hex|undefined;if(hex)latest.current.onSelectHex(hex);else{const id=hit.object.userData.islandId;if(id)latest.current.onSelectIsland(id);}};
     const pointerMove=(event:PointerEvent)=>{renderer.domElement.style.cursor=getHits(event).length?'pointer':'grab';};
     renderer.domElement.addEventListener('pointerdown',pointerDown);renderer.domElement.addEventListener('pointerup',pointerUp);renderer.domElement.addEventListener('pointermove',pointerMove);
-    function resize(){if(disposed)return;const w=container!.clientWidth,h=container!.clientHeight;renderer.setSize(w,h);const aspect=w/Math.max(h,1),halfHeight=Math.max(10.7,projectedWidth/(2*aspect));camera.left=-halfHeight*aspect;camera.right=halfHeight*aspect;camera.top=halfHeight;camera.bottom=-halfHeight;camera.updateProjectionMatrix();}
+    function resize(){if(disposed)return;const w=container!.clientWidth,h=container!.clientHeight;renderer.setSize(w,h);const aspect=w/Math.max(h,1),halfHeight=Math.max(10.7,projectedWidth/(2*aspect));camera.left=-halfHeight*aspect;camera.right=halfHeight*aspect;camera.top=halfHeight;camera.bottom=-halfHeight;camera.updateProjectionMatrix();islands.forEach(view=>{view.width=view.label.offsetWidth;view.height=view.label.offsetHeight;});}
     const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(container);
     function update(next:WorldProps){
       if(disposed)return;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio,next.quality==='high'?1.75:1));renderer.shadowMap.enabled=next.quality==='high';sun.castShadow=next.quality==='high';
+      renderer.shadowMap.needsUpdate=true;
       if(lastSeed!==next.state.seed){
         islands.forEach(view=>{scene.remove(view.group);disposeObject(view.group);view.label.remove();});islands.clear();lastSeed=next.state.seed;
         controls.target.set(0,0,-0.4);camera.position.set(13,21,26);camera.zoom=1.34;projectedWidth=29;resize();
@@ -351,7 +396,7 @@ export default function World(props:WorldProps) {
         if(!view){
           const group=makeIsland(island,next.state.seed,hero);group.position.copy(hexPosition(island));scene.add(group);
           const label=document.createElement('button');label.type='button';label.className='island-label';label.dataset.island=island.id;label.textContent=island.name;label.addEventListener('click',()=>latest.current.onSelectIsland(island.id));labelContainer!.append(label);
-          view={group,target:hexPosition(island),label,signature:sig};islands.set(island.id,view);
+          view={group,target:hexPosition(island),label,signature:sig,width:0,height:0};islands.set(island.id,view);
         }else if(view.signature!==sig){
           const oldPosition=view.group.position.clone();scene.remove(view.group);disposeObject(view.group);view.group=makeIsland(island,next.state.seed,hero);view.group.position.copy(oldPosition);scene.add(view.group);view.signature=sig;
         }
@@ -386,8 +431,10 @@ export default function World(props:WorldProps) {
         const accessibility = next.state.status === 'playing' ? `. After the tide: ${[...changes, ...yields, connection].join('. ')}` : '';
         view.label.classList.toggle('is-selected',island.id===next.selectedId);view.label.classList.toggle('is-bell',island.kind==='bell');view.label.classList.toggle('is-stressed',after.stress>=3);view.label.classList.toggle('has-forecast',details);view.label.classList.toggle('is-blocked',Boolean(move?.blocked));
         view.label.setAttribute('aria-label',`Select ${island.name}, ${island.kind==='ordinary'?(island.building||'undeveloped island'):island.kind+' island'}${accessibility}`);view.label.setAttribute('aria-pressed',String(island.id===next.selectedId));
+        view.width=view.label.offsetWidth;view.height=view.label.offsetHeight;
       }
       updatePlanning(next);
+      updateWhale(next);
       disposeObject(targetsGroup);targetsGroup.clear();targetMeshes.length=0;
       for(const hex of next.towTargets){
         const center=hexPosition(hex);const target=new THREE.Group();target.position.copy(center);targetsGroup.add(target);
@@ -414,33 +461,54 @@ export default function World(props:WorldProps) {
     },undefined,()=>{});
     const clock=new THREE.Clock();const projected=new THREE.Vector3();
     function animate(){
-      if(disposed)return;raf=requestAnimationFrame(animate);const elapsed=clock.getElapsedTime(),reduce=latest.current.reducedMotion;waterMat.uniforms.uTime.value=reduce?0:elapsed;
+      if(disposed)return;raf=requestAnimationFrame(animate);const delta=Math.min(clock.getDelta(),0.05),elapsed=clock.elapsedTime,reduce=latest.current.reducedMotion;waterMat.uniforms.uTime.value=reduce?0:elapsed;
       controls.update();
+      const width=container!.clientWidth,height=container!.clientHeight;
+      const occupiedLabels:{left:number;right:number;top:number;bottom:number}[]=[];
       islands.forEach((view,id)=>{
+        if(view.group.position.distanceToSquared(view.target)>0.0001)renderer.shadowMap.needsUpdate=true;
         view.group.position.lerp(view.target,reduce?1:0.12);
         if(!reduce)view.group.rotation.z=Math.sin(elapsed*0.4+view.target.x)*0.0025;
-        projected.copy(view.group.position).add(new THREE.Vector3(0,0.1,1.48)).project(camera);const x=(projected.x*0.5+0.5)*container!.clientWidth,y=(-projected.y*0.5+0.5)*container!.clientHeight;
+        projected.copy(view.group.position).add(new THREE.Vector3(0,0.1,1.48)).project(camera);const x=(projected.x*0.5+0.5)*width,y=(-projected.y*0.5+0.5)*height;
+        occupiedLabels.push({left:x-view.width/2,right:x+view.width/2,top:y,bottom:y+view.height});
         view.label.style.transform=`translate(${x}px,${y}px) translate(-50%,0)`;view.label.style.visibility=projected.z>1?'hidden':'visible';
         if(id===latest.current.selectedId){selection.visible=true;selection.position.copy(view.group.position);selectionRing.material.opacity=reduce?0.92:0.83+Math.sin(elapsed*2)*0.12;}
       });if(!latest.current.selectedId)selection.visible=false;
+      const towedIsland = latest.current.state.whaleTowedId ? islands.get(latest.current.state.whaleTowedId) : null;
+      if (whaleEncounter) {
+        if (whaleEncounter.used && towedIsland) whaleGoal.copy(towedIsland.group.position).add(whaleTowOffset).setY(0.18);
+        whale.position.lerp(whaleGoal, reduce ? 1 : 1 - Math.exp(-delta * 5));
+        const angle = Math.atan2(whaleHeading.x, whaleHeading.z), turn = Math.atan2(Math.sin(angle - whale.rotation.y), Math.cos(angle - whale.rotation.y));
+        whale.rotation.y += turn * (reduce ? 1 : 1 - Math.exp(-delta * 5)); whale.scale.setScalar(0.55);
+      } else {
+        const drift = reduce ? 0 : elapsed * 0.017; whaleGoal.set(-11 + Math.sin(drift) * 2.3, 0.18, 6 + Math.cos(drift) * 2);
+        whale.position.lerp(whaleGoal, reduce ? 1 : 1 - Math.exp(-delta * 2)); whale.rotation.y = -0.8 + Math.sin(drift) * 0.2; whale.scale.setScalar(0.48);
+      }
+      whaleNoteAnchor.copy(whale.position).add(new THREE.Vector3(0, 0.1, 2.0));
+      tether.visible = Boolean(whaleEncounter?.used && towedIsland);
+      if (tether.visible && towedIsland) {
+        const shoreDirection = whale.position.clone().sub(towedIsland.group.position).setY(0).normalize();
+        const from = towedIsland.group.position.clone().addScaledVector(shoreDirection, 1.15).setY(0.22), to = whale.position.clone().addScaledVector(whaleHeading, -1.48).setY(0.21);
+        const positions = tetherGeometry.getAttribute('position') as THREE.BufferAttribute;
+        for (let i = 0; i < 8; i++) { const t = i / 7, point = from.clone().lerp(to, t); point.y -= Math.sin(t * Math.PI) * 0.11; positions.setXYZ(i, point.x, point.y, point.z); }
+        positions.needsUpdate = true; tetherGeometry.computeBoundingSphere();
+      }
+      whaleVisual.tick(delta, elapsed, reduce, latest.current.quality, Boolean(whaleEncounter), performance.now() < whaleReactionUntil);
       for (const particle of driftParticles) particle.object.position.copy(particle.from).lerp(particle.to, reduce ? 0.52 : (elapsed * 0.38 + particle.phase) % 1).setY(0.11);
-      const occupiedLabels = Array.from(islands.values()).map(view => view.label.getBoundingClientRect());
-      const mapBounds = container!.getBoundingClientRect();
       for (const note of chartLabels) {
         projected.copy(note.position).project(camera);
-        let x = (projected.x * 0.5 + 0.5) * container!.clientWidth, y = (-projected.y * 0.5 + 0.5) * container!.clientHeight;
+        let x = (projected.x * 0.5 + 0.5) * width, y = (-projected.y * 0.5 + 0.5) * height;
         const offsets = [[0, 0], [0, -26], [-55, -26], [55, -26], [-75, 0], [75, 0], [0, -52]];
-        const clear = offsets.find(([dx, dy]) => occupiedLabels.every(rect => x + dx + note.width / 2 + 4 < rect.left - mapBounds.left || x + dx - note.width / 2 - 4 > rect.right - mapBounds.left || y + dy + note.height / 2 + 4 < rect.top - mapBounds.top || y + dy - note.height / 2 - 4 > rect.bottom - mapBounds.top));
+        const clear = offsets.find(([dx, dy]) => occupiedLabels.every(rect => x + dx + note.width / 2 + 4 < rect.left || x + dx - note.width / 2 - 4 > rect.right || y + dy + note.height / 2 + 4 < rect.top || y + dy - note.height / 2 - 4 > rect.bottom));
         if (clear) { x += clear[0]; y += clear[1]; }
         note.label.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`; note.label.style.visibility = projected.z > 1 ? 'hidden' : 'visible';
       }
-      const drift=reduce?0:elapsed*0.017;whale.position.set(-11+Math.sin(drift)*2.3,0,6+Math.cos(drift)*2);whale.rotation.y=-0.8+Math.sin(drift)*0.2;
       gulls.forEach((gull,i)=>{const t=(reduce?0:elapsed*0.1)+i*1.25;gull.position.set(Math.sin(t)*6.6,3.2+i*0.22,Math.cos(t)*5-2);gull.rotation.y=-t;gull.rotation.z=reduce?0:Math.sin(elapsed*2+i)*0.08;});
       renderer.render(scene,camera);
     }
     animate();
     const onContextLost=(event:Event)=>{event.preventDefault();setError(true);};renderer.domElement.addEventListener('webglcontextlost',onContextLost);
-    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());chartLabels.forEach(({label})=>label.remove());};
+    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);whaleVisual.dispose();disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());chartLabels.forEach(({label})=>label.remove());};
   },[]);
   useEffect(()=>{runtime.current?.update(props);},[props.state,props.forecast,props.selectedId,props.towTargets,props.preview,props.quality,props.reducedMotion]);
   return <div className="world-root" ref={host}><div className="world-vignette"/><div className="world-labels" ref={labels}/><div className="world-legend" aria-label="Sea chart legend"><span className="legend-drift">→ Drift</span><span className="legend-blocked">× Blocked</span><span className="legend-chain">— Heart links</span>{props.forecast.weather.storm&&<span className="legend-shelter">▱ Shelter wake</span>}</div>{error&&<div className="world-unavailable"><strong>The sea needs a little more graphics power.</strong><p>This game requires WebGL 2. Enable hardware acceleration or try a current desktop browser, then reload.</p></div>}<div className="world-chart-mark" aria-hidden="true"><span>N</span><svg viewBox="0 0 50 50"><path d="M25 4 31 25 25 46 19 25Z" fill="none" stroke="currentColor"/><path d="M4 25H46M25 4V46" fill="none" stroke="currentColor"/><circle cx="25" cy="25" r="15" fill="none" stroke="currentColor" opacity=".4"/></svg></div></div>;
