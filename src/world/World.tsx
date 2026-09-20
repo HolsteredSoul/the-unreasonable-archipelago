@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import type { GameState, Hex, Island, WorldProps } from '../game/types';
-import { getIslandStats } from '../game';
+import type { Hex, Island, WorldProps } from '../game/types';
+import { getConnectedIds, getIslandStats } from '../game';
+import { hexDistance, missingConnection, sameHex, shelterCells, tideProduction } from './planning';
 import './world.css';
+import './planning.css';
 
 const SPACING = 1.75;
 const LAND_HEIGHT = 0.57;
@@ -33,6 +35,28 @@ function ringLine(points:THREE.Vector3[], color:THREE.ColorRepresentation, opaci
   const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),mat); if(dashed) line.computeLineDistances(); parent.add(line); return line;
 }
 function circlePoints(radius:number,y=0,count=64) { return Array.from({length:count+1},(_,i)=>new THREE.Vector3(Math.cos(i/count*Math.PI*2)*radius,y,Math.sin(i/count*Math.PI*2)*radius)); }
+
+// Mesh ribbons keep chart marks readable where WebGL lines stay one pixel wide.
+function seaStroke(points: THREE.Vector3[], color: THREE.ColorRepresentation, width: number, opacity: number, parent: THREE.Object3D) {
+  const vertices: number[] = [];
+  for (let i = 1; i < points.length; i++) {
+    const from = points[i - 1], to = points[i];
+    const side = new THREE.Vector3(-(to.z - from.z), 0, to.x - from.x).normalize().multiplyScalar(width / 2);
+    const corners = [from.clone().add(side), from.clone().sub(side), to.clone().add(side), to.clone().sub(side)];
+    for (const index of [0, 1, 2, 1, 3, 2]) vertices.push(...corners[index].toArray());
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  const stroke = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color, transparent: true, opacity, side: THREE.DoubleSide, depthWrite: false }));
+  parent.add(stroke);
+  return stroke;
+}
+
+function seaArrow(from: THREE.Vector3, to: THREE.Vector3, color: THREE.ColorRepresentation, parent: THREE.Object3D, width = 0.065) {
+  seaStroke([from, to], color, width, 0.88, parent);
+  const direction = to.clone().sub(from).normalize(), side = new THREE.Vector3(-direction.z, 0, direction.x);
+  seaStroke([to.clone().addScaledVector(direction, -0.33).addScaledVector(side, 0.23), to, to.clone().addScaledVector(direction, -0.33).addScaledVector(side, -0.23)], color, width, 0.96, parent);
+}
 
 function makeHouse(parent:THREE.Object3D,x:number,z:number,scale:number,rotation:number,color=PALETTE.coral) {
   const group = new THREE.Group(); group.position.set(x,LAND_HEIGHT,z); group.rotation.y=rotation; group.scale.setScalar(scale); parent.add(group);
@@ -216,6 +240,12 @@ export default function World(props:WorldProps) {
     const selectionRing=ringLine(circlePoints(1.55,0.08),0xffe6a7,0.96,selection);ringLine(circlePoints(1.64,0.07),0xffedc4,0.32,selection);selection.visible=false;
     const targetsGroup=new THREE.Group(),previewGroup=new THREE.Group(),currentGroup=new THREE.Group(),boundaryGroup=new THREE.Group();scene.add(targetsGroup,previewGroup,currentGroup,boundaryGroup);
     const targetMeshes:THREE.Object3D[]=[];
+    const driftParticles: { object: THREE.Mesh; from: THREE.Vector3; to: THREE.Vector3; phase: number }[] = [];
+    const chartLabels: { label: HTMLSpanElement; position: THREE.Vector3; width: number; height: number }[] = [];
+    function chartLabel(text: string, position: THREE.Vector3, className = '') {
+      const label = document.createElement('span'); label.className = `world-map-note ${className}`; label.textContent = text; label.setAttribute('aria-hidden', 'true');
+      labelContainer!.append(label); chartLabels.push({ label, position, width: label.offsetWidth, height: label.offsetHeight });
+    }
     let hero:THREE.Group|null=null,lastSeed='';
     let projectedWidth=30;
     // A fine perimeter is a chart mark, not a wall around the world.
@@ -231,19 +261,67 @@ export default function World(props:WorldProps) {
         ringLine(points,0xd6eee2,0.2,boundaryGroup,true);
       }
     }
-    // These arrows come from the simulation: sea pressure and island drift are different rules.
-    function updateCurrent(state:GameState){
-      disposeObject(currentGroup);currentGroup.clear();
-      for(const island of state.islands){
-        const current=getIslandStats(state,island.id).current;if(current.q===0&&current.r===0)continue;
-        const d=hexPosition(current).normalize(),center=hexPosition(island);center.y=0.028;
-        const side=new THREE.Vector3(-d.z,0,d.x),end=center.clone().addScaledVector(d,2.02),start=center.clone().addScaledVector(d,1.48);
-        ringLine([start,end],0xe3f0dd,0.64,currentGroup);ringLine([end.clone().addScaledVector(d,-0.19).addScaledVector(side,0.13),end,end.clone().addScaledVector(d,-0.19).addScaledVector(side,-0.13)],0xe3f0dd,0.8,currentGroup);
+    function updatePlanning(next: WorldProps) {
+      disposeObject(currentGroup); currentGroup.clear(); driftParticles.length = 0;
+      chartLabels.forEach(({ label }) => label.remove()); chartLabels.length = 0;
+      // Drift and storm pressure are separate rules. Only resolved forecast moves drive these arrows.
+      for (const move of next.forecast.moves) {
+        const from = hexPosition(move.from).setY(0.095), to = hexPosition(move.to).setY(0.095), direction = to.clone().sub(from).normalize();
+        const start = from.clone().addScaledVector(direction, 1.42), end = to.clone().addScaledVector(direction, -0.64);
+        const color = move.blocked ? 0xf1a38b : 0xd4f3e8;
+        seaArrow(start, end, color, currentGroup, move.id === next.selectedId ? 0.09 : 0.065);
+        if (move.blocked) {
+          const side = new THREE.Vector3(-direction.z, 0, direction.x), cross = end.clone().addScaledVector(direction, 0.21);
+          seaStroke([cross.clone().addScaledVector(direction, -0.15).addScaledVector(side, -0.17), cross.clone().addScaledVector(direction, 0.15).addScaledVector(side, 0.17)], color, 0.075, 1, currentGroup);
+          seaStroke([cross.clone().addScaledVector(direction, 0.15).addScaledVector(side, -0.17), cross.clone().addScaledVector(direction, -0.15).addScaledVector(side, 0.17)], color, 0.075, 1, currentGroup);
+        } else {
+          const dot = new THREE.Mesh(new THREE.CircleGeometry(0.07, 12), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.95, depthWrite: false, side: THREE.DoubleSide }));
+          dot.rotation.x = -Math.PI / 2; currentGroup.add(dot); driftParticles.push({ object: dot, from: start, to: end, phase: driftParticles.length * 0.27 });
+        }
       }
-      const connected=state.islands.filter(island=>getIslandStats(state,island.id).connected);
-      for(let i=0;i<connected.length;i++)for(let j=i+1;j<connected.length;j++){
-        const a=connected[i],b=connected[j];if(Math.max(Math.abs(a.q-b.q),Math.abs(a.r-b.r),Math.abs(a.q+a.r-b.q-b.r))!==1)continue;
-        const from=hexPosition(a),to=hexPosition(b),direction=to.clone().sub(from).normalize();from.addScaledVector(direction,1.3).setY(0.03);to.addScaledVector(direction,-1.3).setY(0.03);ringLine([from,to],0xf5e8bc,0.52,currentGroup,true);
+      const chartState = next.preview ? next.forecast.state : next.state;
+      if (next.forecast.weather.storm && next.state.status === 'playing') {
+        for (const island of chartState.islands) {
+          const before = next.state.islands.find(item => item.id === island.id)!;
+          const cells = shelterCells({ ...island, growth: before.growth }, next.forecast.weather.direction);
+          if (!cells.length) continue;
+          const from = hexPosition(island).setY(0.035), end = hexPosition(cells[cells.length - 1]).setY(0.035);
+          const direction = end.clone().sub(from).normalize(), side = new THREE.Vector3(-direction.z, 0, direction.x);
+          const start = from.clone().addScaledVector(direction, 1.3), finish = end.clone().addScaledVector(direction, 0.65);
+          const corners = [start.clone().addScaledVector(side, 0.74), start.clone().addScaledVector(side, -0.74), finish.clone().addScaledVector(side, 0.33), finish.clone().addScaledVector(side, -0.33)];
+          const geometry = new THREE.BufferGeometry(); geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 1, 2, 1, 3, 2].flatMap(i => corners[i].toArray()), 3));
+          currentGroup.add(new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x8be1ca, transparent: true, opacity: island.id === next.selectedId ? 0.2 : 0.1, side: THREE.DoubleSide, depthWrite: false })));
+          for (const sign of [-1, 1]) ringLine([start.clone().addScaledVector(side, sign * 0.74), finish.clone().addScaledVector(side, sign * 0.33)], 0xb1edcf, island.id === next.selectedId ? 0.65 : 0.33, currentGroup, true);
+          for (const cell of cells) {
+            const p = hexPosition(cell);
+            ringLine(circlePoints(0.38, 0.055, 24).map(point => point.add(p)), 0xb1edcf, 0.4, currentGroup, true);
+          }
+        }
+      }
+      const connectedIds = new Set(next.preview ? next.forecast.connectedIds : getConnectedIds(chartState));
+      const connected = chartState.islands.filter(island => connectedIds.has(island.id));
+      for (let i = 0; i < connected.length; i++) for (let j = i + 1; j < connected.length; j++) {
+        const a = connected[i], b = connected[j]; if (hexDistance(a, b) !== 1) continue;
+        const from = hexPosition(a).setY(0.13), to = hexPosition(b).setY(0.13), direction = to.clone().sub(from).normalize();
+        from.addScaledVector(direction, 1.15); to.addScaledVector(direction, -1.15);
+        seaStroke([from, to], 0xffd591, 0.055, 0.88, currentGroup);
+        const middle = from.clone().lerp(to, 0.5);
+        const buoy = new THREE.Mesh(new THREE.TorusGeometry(0.092, 0.025, 5, 12), new THREE.MeshBasicMaterial({ color: 0xffe6b6 }));
+        buoy.rotation.x = -Math.PI / 2; buoy.position.copy(middle); currentGroup.add(buoy);
+      }
+      const missing = missingConnection(chartState);
+      const empty = missing.filter(hex => !chartState.islands.some(island => sameHex(island, hex)));
+      if (missing.length) {
+        const points = missing.map(hex => hexPosition(hex).setY(0.15));
+        ringLine(points, 0xefaf96, 0.76, currentGroup, true);
+        for (const hex of empty) {
+          const center = hexPosition(hex);
+          ringLine(circlePoints(0.47, 0.15, 6).map(point => point.add(center)), 0xefaf96, 0.9, currentGroup, true);
+        }
+        if ((next.preview || next.selectedId === 'bell') && empty.length) {
+          const midpoint = hexPosition(empty[Math.floor(empty.length / 2)]).add(new THREE.Vector3(0, 0.18, -0.5));
+          chartLabel(`${empty.length} empty ${empty.length === 1 ? 'link' : 'links'} to Heart`, midpoint, 'is-missing-link');
+        }
       }
     }
     // The whale travels outside the playable map, a small promise of a larger world.
@@ -277,9 +355,39 @@ export default function World(props:WorldProps) {
         }else if(view.signature!==sig){
           const oldPosition=view.group.position.clone();scene.remove(view.group);disposeObject(view.group);view.group=makeIsland(island,next.state.seed,hero);view.group.position.copy(oldPosition);scene.add(view.group);view.signature=sig;
         }
-        view.target.copy(hexPosition(island));view.label.textContent=island.name;view.label.classList.toggle('is-selected',island.id===next.selectedId);view.label.classList.toggle('is-bell',island.kind==='bell');view.label.classList.toggle('is-stressed',island.stress>=2);view.label.setAttribute('aria-label',`Select ${island.name}, ${island.kind==='ordinary'?(island.building||'undeveloped island'):island.kind+' island'}`);view.label.setAttribute('aria-pressed',String(island.id===next.selectedId));
+        view.target.copy(hexPosition(island));
+        const after = next.forecast.state.islands.find(item => item.id === island.id)!;
+        const move = next.forecast.moves.find(item => item.id === island.id);
+        const currentStats = getIslandStats(next.state, island.id), production = tideProduction(next.state, next.forecast, island.id);
+        const stressDelta = after.stress - island.stress, growthDelta = after.growth - island.growth;
+        const changes: string[] = [];
+        if (move) changes.push(move.blocked ? 'Drift blocked' : 'Drifts next tide');
+        else if (island.anchored) changes.push('Anchored this tide');
+        if (growthDelta > 0) changes.push(`Growth +${growthDelta}`);
+        else if (island.nourished) changes.push('Growth waits');
+        if (stressDelta) changes.push(`Stress ${stressDelta > 0 ? '+' : '−'}${Math.abs(stressDelta)}`);
+        if (next.forecast.weather.storm) changes.push(next.forecast.shelteredIds.includes(island.id) ? 'Sheltered after drift' : 'Exposed after drift');
+        const yields: string[] = [];
+        if (island.building === 'garden') yields.push(production.food === currentStats.food ? `Produces ${production.food} food` : `Food ${currentStats.food} → ${production.food}`);
+        if (island.building === 'grove') yields.push(production.timber === currentStats.timber ? `Produces ${production.timber} timber` : `Timber ${currentStats.timber} → ${production.timber}`);
+        if (island.kind === 'bell') yields.push(next.forecast.connectedIds.includes(island.id) ? 'Linked to Heart after tide' : 'Heart link missing');
+        const name = document.createElement('span'); name.className = 'island-label-name'; name.textContent = island.name;
+        view.label.replaceChildren(name);
+        const details = (next.preview || island.id === next.selectedId) && next.state.status === 'playing';
+        if (details) {
+          const summary = document.createElement('span'); summary.className = 'island-forecast-text';
+          const selected = island.id === next.selectedId;
+          const compactChanges = changes.filter(change => !change.includes('after drift')).map(change => change.replace('Drifts next tide', 'Drifts').replace('Anchored this tide', 'Anchored'));
+          const line = document.createElement('span'); line.textContent = selected ? (changes.length ? changes.join(' · ') : 'Holds position') : (compactChanges.join(' · ') || 'Holds position'); summary.append(line);
+          if (yields.length) { const yieldLine = document.createElement('span'); yieldLine.textContent = yields.map(yieldText => selected ? yieldText : yieldText.replace('Produces ', '+').replace('Linked to Heart after tide', 'Heart linked')).join(' · '); summary.append(yieldLine); }
+          view.label.append(summary);
+        }
+        const connection = next.forecast.connectedIds.includes(island.id) ? 'connected to Heart' : 'disconnected from Heart';
+        const accessibility = next.state.status === 'playing' ? `. After the tide: ${[...changes, ...yields, connection].join('. ')}` : '';
+        view.label.classList.toggle('is-selected',island.id===next.selectedId);view.label.classList.toggle('is-bell',island.kind==='bell');view.label.classList.toggle('is-stressed',after.stress>=3);view.label.classList.toggle('has-forecast',details);view.label.classList.toggle('is-blocked',Boolean(move?.blocked));
+        view.label.setAttribute('aria-label',`Select ${island.name}, ${island.kind==='ordinary'?(island.building||'undeveloped island'):island.kind+' island'}${accessibility}`);view.label.setAttribute('aria-pressed',String(island.id===next.selectedId));
       }
-      updateCurrent(next.state);
+      updatePlanning(next);
       disposeObject(targetsGroup);targetsGroup.clear();targetMeshes.length=0;
       for(const hex of next.towTargets){
         const center=hexPosition(hex);const target=new THREE.Group();target.position.copy(center);targetsGroup.add(target);
@@ -294,6 +402,7 @@ export default function World(props:WorldProps) {
         const from=hexPosition(move.from),to=hexPosition(move.to);if(from.distanceTo(to)<0.1)continue;
         const p=new THREE.Group();p.position.copy(to);previewGroup.add(p);ringLine(circlePoints(1.2,0.06),0xfbf0c6,0.75,p,true);
         const ghost=mesh(new THREE.CylinderGeometry(1.04,1.13,0.45,24),new THREE.MeshBasicMaterial({color:0xfff0bf,transparent:true,opacity:0.13,depthWrite:false}),p,0,0.25,0);ghost.castShadow=false;
+        chartLabel('Tide end', to.clone().add(new THREE.Vector3(0, 0.12, 0)), 'is-destination');
         from.y=0.11;to.y=0.11;ringLine([from,to],0xffe5a8,0.72,previewGroup,true);
         const direction=to.clone().sub(from).normalize(),side=new THREE.Vector3(-direction.z,0,direction.x);ringLine([to.clone().addScaledVector(direction,-0.36).addScaledVector(side,0.21),to,to.clone().addScaledVector(direction,-0.36).addScaledVector(side,-0.21)],0xffebba,0.9,previewGroup);
       }
@@ -314,14 +423,25 @@ export default function World(props:WorldProps) {
         view.label.style.transform=`translate(${x}px,${y}px) translate(-50%,0)`;view.label.style.visibility=projected.z>1?'hidden':'visible';
         if(id===latest.current.selectedId){selection.visible=true;selection.position.copy(view.group.position);selectionRing.material.opacity=reduce?0.92:0.83+Math.sin(elapsed*2)*0.12;}
       });if(!latest.current.selectedId)selection.visible=false;
+      for (const particle of driftParticles) particle.object.position.copy(particle.from).lerp(particle.to, reduce ? 0.52 : (elapsed * 0.38 + particle.phase) % 1).setY(0.11);
+      const occupiedLabels = Array.from(islands.values()).map(view => view.label.getBoundingClientRect());
+      const mapBounds = container!.getBoundingClientRect();
+      for (const note of chartLabels) {
+        projected.copy(note.position).project(camera);
+        let x = (projected.x * 0.5 + 0.5) * container!.clientWidth, y = (-projected.y * 0.5 + 0.5) * container!.clientHeight;
+        const offsets = [[0, 0], [0, -26], [-55, -26], [55, -26], [-75, 0], [75, 0], [0, -52]];
+        const clear = offsets.find(([dx, dy]) => occupiedLabels.every(rect => x + dx + note.width / 2 + 4 < rect.left - mapBounds.left || x + dx - note.width / 2 - 4 > rect.right - mapBounds.left || y + dy + note.height / 2 + 4 < rect.top - mapBounds.top || y + dy - note.height / 2 - 4 > rect.bottom - mapBounds.top));
+        if (clear) { x += clear[0]; y += clear[1]; }
+        note.label.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`; note.label.style.visibility = projected.z > 1 ? 'hidden' : 'visible';
+      }
       const drift=reduce?0:elapsed*0.017;whale.position.set(-11+Math.sin(drift)*2.3,0,6+Math.cos(drift)*2);whale.rotation.y=-0.8+Math.sin(drift)*0.2;
       gulls.forEach((gull,i)=>{const t=(reduce?0:elapsed*0.1)+i*1.25;gull.position.set(Math.sin(t)*6.6,3.2+i*0.22,Math.cos(t)*5-2);gull.rotation.y=-t;gull.rotation.z=reduce?0:Math.sin(elapsed*2+i)*0.08;});
       renderer.render(scene,camera);
     }
     animate();
     const onContextLost=(event:Event)=>{event.preventDefault();setError(true);};renderer.domElement.addEventListener('webglcontextlost',onContextLost);
-    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());};
+    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());chartLabels.forEach(({label})=>label.remove());};
   },[]);
   useEffect(()=>{runtime.current?.update(props);},[props.state,props.forecast,props.selectedId,props.towTargets,props.preview,props.quality,props.reducedMotion]);
-  return <div className="world-root" ref={host}><div className="world-vignette"/><div className="world-labels" ref={labels}/>{error&&<div className="world-unavailable"><strong>The sea needs a little more graphics power.</strong><p>This game requires WebGL 2. Enable hardware acceleration or try a current desktop browser, then reload.</p></div>}<div className="world-chart-mark" aria-hidden="true"><span>N</span><svg viewBox="0 0 50 50"><path d="M25 4 31 25 25 46 19 25Z" fill="none" stroke="currentColor"/><path d="M4 25H46M25 4V46" fill="none" stroke="currentColor"/><circle cx="25" cy="25" r="15" fill="none" stroke="currentColor" opacity=".4"/></svg></div></div>;
+  return <div className="world-root" ref={host}><div className="world-vignette"/><div className="world-labels" ref={labels}/><div className="world-legend" aria-label="Sea chart legend"><span className="legend-drift">→ Drift</span><span className="legend-blocked">× Blocked</span><span className="legend-chain">— Heart links</span>{props.forecast.weather.storm&&<span className="legend-shelter">▱ Shelter wake</span>}</div>{error&&<div className="world-unavailable"><strong>The sea needs a little more graphics power.</strong><p>This game requires WebGL 2. Enable hardware acceleration or try a current desktop browser, then reload.</p></div>}<div className="world-chart-mark" aria-hidden="true"><span>N</span><svg viewBox="0 0 50 50"><path d="M25 4 31 25 25 46 19 25Z" fill="none" stroke="currentColor"/><path d="M4 25H46M25 4V46" fill="none" stroke="currentColor"/><circle cx="25" cy="25" r="15" fill="none" stroke="currentColor" opacity=".4"/></svg></div></div>;
 }

@@ -207,7 +207,7 @@ function resolveMovement(state: GameState): Forecast['moves'] {
 
 export function resolveTide(state: GameState): Forecast {
   const weather = getWeather(state);
-  if (state.status !== 'playing') return { state, moves: [], foodDelta: 0, timberDelta: 0, weather, shelteredIds: state.islands.filter(island => isSheltered(state, island, weather)).map(island => island.id), connectedIds: getConnectedIds(state), events: [] };
+  if (state.status !== 'playing') return { state, moves: [], foodDelta: 0, timberDelta: 0, production: { food: 0, timber: 0 }, rations: 0, weather, shelteredIds: state.islands.filter(island => isSheltered(state, island, weather)).map(island => island.id), connectedIds: getConnectedIds(state), events: [] };
   const next = copy(state);
   const moves = resolveMovement(state);
   const events: string[] = [];
@@ -253,7 +253,7 @@ export function resolveTide(state: GameState): Forecast {
   } else next.tide += 1;
   next.actions = next.status === 'playing' ? RULES.actions : 0;
   next.log = [...next.log, `Tide ${state.tide}: ${weather.name}.`, ...events].slice(-12);
-  return { state: next, moves, foodDelta: next.food - state.food, timberDelta: next.timber - state.timber, weather, shelteredIds, connectedIds, events };
+  return { state: next, moves, foodDelta: next.food - state.food, timberDelta: next.timber - state.timber, production: { food: foodProduced, timber: timberProduced }, rations: RULES.rations, weather, shelteredIds, connectedIds, events };
 }
 
 export function forecastTide(state: GameState): Forecast { return resolveTide(copy(state)); }

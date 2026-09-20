@@ -1,5 +1,11 @@
 # First playable verification
 
+## Roadmap checkpoint: planning and clarity
+
+20 September 2026: 31 automated checks passed (14 simulation, 10 saves, 3 achievements, 4 planning overlays). TypeScript and production build passed. Under concurrent Blender/audio work, the 1,000-seed simulation check needed a 30-second timeout; its assertions passed.
+
+A real Chromium eight-tide playthrough verified pointer and keyboard cost callouts, immediate food changes, undo, forecast rations, sea-focus persistence after reload, a six-growth victory, and medal retention after restart. Layout inspected at 1366×768 and checked at 1920×1080; no horizontal overflow or JavaScript exceptions in the playthrough. Review also corrected cost descriptions for screen readers, focus restoration from collapsed panels, and medal wording on defeat.
+
 Build: 0.1.0, The First Bell. Verified locally on 20 September 2026.
 
 ## Automated checks

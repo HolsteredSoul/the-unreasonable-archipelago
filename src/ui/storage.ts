@@ -1,7 +1,7 @@
 import { BOARD_RADIUS, createGame, getConnectedIds } from '../game';
 import type { GameState, Island } from '../game/types';
 
-export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low' };
+export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low'; seaFocus?: boolean; musicVolume?: number; effectsVolume?: number; musicEnabled?: boolean };
 export type SavedSession = { version: 1; state: GameState; undo: GameState[]; settings: Settings; seenIntro: boolean };
 const SAVE_KEY = 'unreasonable-archipelago.session.v1';
 const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -44,6 +44,12 @@ export function validateSession(value: unknown): value is SavedSession {
   if (!value.undo.every((snapshot, index) => validateGameState(snapshot) && snapshot.seed === state.seed && snapshot.tide === state.tide && snapshot.integrity === state.integrity && snapshot.status === 'playing' && snapshot.actions === 3 - index && snapshot.actions > state.actions)) return false;
   if (value.undo.length > 0 && state.status !== 'playing') return false;
   if (!record(value.settings) || typeof value.settings.sound !== 'boolean' || typeof value.settings.reducedMotion !== 'boolean' || typeof value.settings.quality !== 'string' || !['high', 'low'].includes(value.settings.quality) || typeof value.seenIntro !== 'boolean') return false;
+  if (value.settings.seaFocus !== undefined && typeof value.settings.seaFocus !== 'boolean') return false;
+  if (value.settings.musicEnabled !== undefined && typeof value.settings.musicEnabled !== 'boolean') return false;
+  for (const key of ['musicVolume', 'effectsVolume']) {
+    const amount = value.settings[key];
+    if (amount !== undefined && (typeof amount !== 'number' || !Number.isFinite(amount) || amount < 0 || amount > 1)) return false;
+  }
   return true;
 }
 

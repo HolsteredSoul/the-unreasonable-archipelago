@@ -2,6 +2,10 @@
 
 Priorities reflect their effect on comprehension, spatial play, and the value of a second voyage.
 
+## Checkpoint: spatial planning and resource clarity — complete
+
+The first four items below are implemented: anchored cost feedback, on-water planning layers, sea-focus panels, and persistent medals. Verified with 31 automated checks and a complete eight-tide browser victory, including keyboard action feedback, undo, refresh, and medal retention. Generation, the whale encounter, and piano are the next integration checkpoint.
+
 ## P0 — Teach the two-food problem in place
 
 **Evaluation:** This is the first likely rules misunderstanding. Nourish spends 2 food immediately; town rations consume another 2 food only when the tide resolves. The matching numbers make two different timings look like one rule.

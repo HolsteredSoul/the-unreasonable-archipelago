@@ -27,6 +27,7 @@ export type Forecast = {
   state: GameState;
   moves: { id: string; from: Hex; to: Hex; blocked: boolean }[];
   foodDelta: number; timberDelta: number; weather: Weather;
+  production: { food: number; timber: number }; rations: number;
   shelteredIds: string[]; connectedIds: string[]; events: string[];
 };
 export type CommandResult = { state: GameState; error?: string };

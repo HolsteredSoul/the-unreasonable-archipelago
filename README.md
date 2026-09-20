@@ -36,6 +36,10 @@ actions in the current tide. Advance Tide commits the turn.
 Select islands directly in the world or use the island list. Tow targets are available as
 both clickable water cells and buttons. Drag to orbit, scroll to zoom. Help and settings
 explain keyboard controls and offer reduced motion and lower graphics quality.
+Press **F** for Sea focus, **P** for the forecast, and **Escape** to restore panels.
+The water shows drift arrows, storm shelter wakes, and the Heart connection chain.
+Action feedback separates food spent now from the town's two rations at the tide.
+Your best medal for each seed stays beside its name and in voyage settings.
 The game saves automatically in this browser. Seed links recreate an opening, not a saved voyage.
 
 ## Scope
