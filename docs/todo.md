@@ -65,6 +65,17 @@ Priorities reflect their effect on comprehension, spatial play, and the value of
 - Preview the destination on the water and support undo, save, replay, accessibility, and deterministic seed behavior.
 - Playtest whether the encounter creates rescue routes without replacing ordinary Tow and Anchor decisions.
 
+## P2 — Add an adaptive piano score
+
+**Evaluation:** The quiet diorama would benefit from a restrained musical identity. The score should add warmth and mild unease without masking action feedback or becoming repetitive across eight tides.
+
+- Compose or commission an original, fully licensed solo-piano score with an off-kilter but inviting theme.
+- Use a small set of seamless layers or variations that respond to calm tides, storms, a disconnected bell, and the final tide.
+- Keep action chimes and important warnings intelligible above the music; use gentle ducking during result moments.
+- Add separate music and effects volume controls, plus mute, and persist those preferences locally.
+- Start audio only after user interaction to satisfy browser autoplay rules and avoid a blocking prompt.
+- Crossfade cleanly between variations and suspend playback when the page is hidden.
+- Test a full eight-tide session for repetition, fatigue, and performance on integrated graphics.
 ## Evaluation order
 
 1. Resource comprehension during tides 1–3.
@@ -73,3 +84,4 @@ Priorities reflect their effect on comprehension, spatial play, and the value of
 4. Medal persistence and second-voyage motivation.
 5. Generated opening geometry and solvability.
 6. Whale asset and Whale Tow encounter.
+7. Adaptive piano score and audio mix.
