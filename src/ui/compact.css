@@ -1,0 +1,113 @@
+/* The sea stays readable: details belong to the selected island. */
+.island-marker { display: none; }
+.world-labels .island-label.is-marker { min-width: 24px; height: 24px; padding: 2px 5px; border-radius: 14px; background: #dce9d5a6; font-size: 10px; letter-spacing: 0; box-shadow: none; }
+.world-labels .island-label.is-marker .island-marker { display: block; }
+.world-labels .island-label.is-marker .island-label-name { display: none; }
+.world-labels .island-label.is-marker:hover .island-label-name,
+.world-labels .island-label.is-marker:focus-visible .island-label-name { display: block; position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); padding: 5px 8px; border-radius: 6px; background: #fff2d9; color: #294e42; white-space: nowrap; }
+.world-labels .island-label.is-marker:not(.is-bell):not(.has-event-change) { background: #dce9d550; color: #214e45; }
+.world-labels .island-label.is-marker::before,.world-labels .island-label.is-marker::after { content: none; }
+.world-labels .island-label.is-marker.is-final-unsafe { border-color: #cb815c; background: #f5d4b7; }
+.world-labels .island-label.is-marker.is-stressed:not(.has-event-change) { border-color: #cb815c; background: #f5d4b7; color: #7c3626; }
+.world-labels .island-label.is-marker.is-weather-hit.has-event-change { background: #ffd9b3; border-color: #b97451; color: #7c3626; }
+.world-labels .island-label.is-selected { max-width: 260px; white-space: normal; border-radius: 9px; }
+.world-labels .island-label.is-selected .island-label-name { font-size: 12px; }
+.world-labels .island-forecast-text { font-size: 10px; line-height: 1.45; }
+
+/* A single edge row opens one panel at a time; action costs remain in view. */
+.sea-focus.game-app { min-height: 0; height: 100dvh; overflow: hidden; }
+.sea-focus .hud { min-height: 0; }
+.sea-focus .world-stage { height: 100%; }
+.sea-focus .topbar { top: 16px; left: 20px; right: 20px; }
+.sea-focus .brand h1 { font-size: 20px; }
+.sea-focus .brand h1 em { font-size: 23px; }
+.sea-focus .resources { padding: 9px 15px; gap: 17px; border-radius: 9px; }
+.sea-focus .resource strong { font-size: 19px; }
+.sea-focus .top-right { gap: 8px; }
+.sea-focus .tide-tracker { top: 0; left: 50%; }
+.sea-focus .tide-label strong { font-size: 30px; }
+.sea-focus .tide-dots { margin: 6px 0; }
+.sea-focus .tide-tracker p { display: none; }
+.sea-focus .sea-toolbar { top: 72px; }
+.sea-focus .sea-toolbar button { padding: 7px 11px; font-size: 11px; }
+.sea-focus .sea-chips { top: 116px; left: 20px; right: 20px; flex-direction: row; align-items: center; gap: 6px; }
+.sea-focus .sea-chips button { padding: 7px 11px; font-size: 11px; min-height: 32px; }
+.sea-focus .sea-chips .weather-chip { position: static; margin-left: auto; }
+.sea-focus .selected-chip-name { max-width: 155px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sea-focus .sea-chips .close-sea-panel { padding: 7px; }
+.sea-focus .weather-stack { display: none; top: 157px; right: 20px; max-height: calc(100dvh - 330px); overflow-y: auto; width: 265px; }
+.sea-focus.reveal-weather .weather-stack { display: flex; }
+.sea-focus.reveal-objective .objective-stack,.sea-focus.reveal-islands .objective-stack { top: 157px; left: 20px; width: 260px; max-height: calc(100dvh - 330px); overflow-y: auto; }
+.sea-focus.reveal-objective .objective-bottom { display: flex; }
+.sea-focus .island-list { max-height: none; }
+.sea-focus .bottom-hud { left: 20px; right: 20px; bottom: 42px; display: grid; grid-template-columns: minmax(0,480px) minmax(210px,250px); justify-content: center; align-items: end; gap: 20px; }
+.sea-focus .action-area { grid-column: 1; grid-row: 1; max-width: none; width: 100%; }
+.sea-focus .advance-area { grid-column: 2; grid-row: 1; padding: 0; }
+.sea-focus .selected-panel { position: fixed; left: 20px; top: 157px; bottom: auto; width: 280px; max-height: calc(100dvh - 330px); overflow-y: auto; min-height: 0; padding: 15px; }
+.sea-focus .selected-traits { font-size: 11px; }
+.sea-focus .selected-stats small { font-size: 10px; }
+.sea-focus .action-heading { margin: 0 0 7px; }
+.sea-focus .action-dock { padding: 5px; }
+.sea-focus .action-dock .action-button { display: flex; height: 76px; padding: 6px 3px; gap: 5px; }
+.sea-focus .action-button > svg { width: 18px; height: 18px; }
+.sea-focus .action-button > strong { font-size: 11px; align-self: center; }
+.sea-focus .action-button > span { font-size: 10px; white-space: nowrap; align-self: center; }
+.sea-focus .action-button > small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.sea-focus .action-button.whale-action > small { position: static; width: auto; height: auto; clip-path: none; font-size: 9px; }
+.sea-focus .action-button.whale-action > svg { display: none; }
+.sea-focus .action-footnote { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.sea-focus .forecast-resources { margin-bottom: 7px; padding: 5px 8px; }
+.sea-focus .forecast-resources > span:not(.eyebrow) { font-size: 12px; }
+.sea-focus .tide-economy { display: none; }
+.sea-focus .advance-button { height: 55px; padding: 10px 14px; }
+.sea-focus .advance-button strong { font-size: 24px; }
+.sea-focus .advance-button small { display: none; }
+.sea-focus .advance-footnote { font-size: 10px; margin-top: 5px; }
+.sea-focus .bell-outlook:not(.final-tide):not(.needs-care) { display: none; }
+.sea-focus .bell-outlook { font-size: 10px; padding: 6px 9px; }
+.sea-focus .footer { bottom: 8px; left: 20px; right: 20px; }
+.sea-focus .footer > span:first-child { display: none; }
+.sea-focus .seed-and-medal { margin-left: auto; }
+.sea-focus .seed-and-medal button { font-size: 9px; padding: 4px 7px; }
+.sea-focus .world-legend,.sea-focus .world-chart-mark { display: none; }
+.sea-focus .world-root:not(.is-preview) .weather-ribbon { display: none; }
+.sea-focus .weather-ribbon { top: 158px; padding: 6px 10px; max-width: 380px; }
+.sea-focus .tide-sequence { top: 84px; width: min(540px,calc(100vw - 40px)); padding: 9px 14px; }
+.sea-focus .tide-sequence-copy > strong { font-family: inherit; font-size: 14px; margin-top: 5px; }
+.sea-focus .tide-sequence p { margin: 5px 0 2px; font-size: 11px; }
+.sea-focus .tide-sequence-steps { display: none; }
+.sea-focus .hud .build-menu { top: 157px; left: 20px; width: 270px; max-height: calc(100dvh - 305px); }
+.sea-focus .toast { bottom: 178px; max-width: calc(100vw - 40px); }
+.sea-focus .mode-banner { bottom: 190px; }
+.sea-focus.is-advancing .sea-chips,.sea-focus.is-advancing .sea-toolbar { visibility: hidden; }
+
+@media(max-width:800px) {
+  .sea-focus .topbar { left: 12px; right: 12px; top: 12px; }
+  .sea-focus .brand h1 { font-size: 16px; }.sea-focus .brand h1 em { font-size: 19px; }
+  .sea-focus .resources { gap: 10px; padding: 7px 9px; }.sea-focus .resource strong { font-size: 16px; }
+  .sea-focus .sea-toolbar { top: 68px; }.sea-focus .sea-toolbar kbd { display: none; }
+  .sea-focus .sea-chips { top: 109px; left: 12px; right: 12px; gap: 4px; }
+  .sea-focus .sea-chips button { font-size: 10px; padding: 6px 8px; }.sea-focus .selected-chip-name { display: none; }
+  .sea-focus .sea-chips .weather-chip { max-width: none; }
+  .sea-focus .bottom-hud { left: 12px; right: 12px; gap: 12px; grid-template-columns: minmax(0,1fr) 210px; bottom: 39px; }
+  .sea-focus .action-dock .action-button { height: 76px; }
+  .sea-focus .action-button > strong { font-size: 10px; }.sea-focus .action-button > span { font-size: 9px; }
+  .sea-focus .hud .build-menu { top: 150px; left: 12px; width: 240px; }
+  .sea-focus .selected-panel { top: 150px; left: 12px; }
+  .sea-focus.reveal-objective .objective-stack,.sea-focus.reveal-islands .objective-stack { top: 150px; left: 12px; }
+  .sea-focus .weather-stack { top: 150px; right: 12px; }
+  .sea-focus .weather-ribbon { top: 151px; }
+}
+@media(max-width:600px) {
+  .sea-focus .brand { display: none; }.sea-focus .tide-tracker { left: 40px; width: 80px; }
+  .sea-focus .top-right { margin-left: auto; }.sea-focus .utility-nav { position: fixed; left: 12px; top: 60px; }
+  .sea-focus .sea-toolbar { top: 62px; left: auto; right: 12px; transform: none; gap: 4px; }
+  .sea-focus .sea-toolbar button { padding: 7px; }.sea-focus .sea-toolbar button:first-child span { display: none; }
+  .sea-focus .sea-chips { flex-wrap: wrap; }.sea-focus .sea-chips .weather-chip { font-size: 9px; }
+  .sea-focus .bottom-hud { grid-template-columns: 1fr; gap: 8px; bottom: 36px; }
+  .sea-focus .action-area { grid-row: 2; grid-column: 1; }.sea-focus .advance-area { grid-row: 1; grid-column: 1; display: flex; gap: 8px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+  .sea-focus .forecast-resources { margin: 0; }.sea-focus .advance-button { width: auto; height: 40px; gap: 10px; }.sea-focus .advance-button strong { font-size: 19px; }
+  .sea-focus .advance-footnote { margin: 0; font-size: 9px; }.sea-focus .bell-outlook { margin: 0; }
+  .sea-focus .forecast-warning { margin: 0; }
+  .sea-focus .selected-panel,.sea-focus .weather-stack,.sea-focus .hud .build-menu,.sea-focus.reveal-objective .objective-stack,.sea-focus.reveal-islands .objective-stack { max-height: calc(100dvh - 375px); }
+}

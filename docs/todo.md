@@ -27,6 +27,22 @@ This is a deliberately forgiving first chapter: a player who lets the introducto
 
 ## Next evaluation
 
+- Completed after clutter feedback: automatic compact layout on smaller windows,
+  a single edge row for optional panels, one detailed selected-island label, small
+  growth/stress markers, and a shorter action dock that preserves resource costs.
+  Full view remains available; keyboard focus and final-tide checks are retained.
+- FPS benchmarking deferred at the user's request. Evaluate visual clarity and
+  decision-making with human play before adding more persistent overlays.
+
+- Completed after weather-comprehension feedback: directional animated storm bands,
+  shore impacts, breakwater interception, exact safe cells, and calm recovery.
+  Tide resolution now shows drift, weather effects, and harvest in order, with
+  per-island stress/production/growth events, a skip control, and reduced motion.
+- Completed: unspent breakwater previews on the actual post-drift geometry, including
+  protected islands, replacement production and resource cost. Build choices move
+  to the edge; selected exposed bells show the missing windbreak cell in Forecast.
+- Evaluate whether these visible causes and effects teach shelter without opening
+  a guide, and whether the skippable tide sequence has the right pace over a campaign.
 - Completed after first-player defeat feedback: persistent per-bell shelter/stress,
   an optional four-condition checklist with exact shelter direction, a warning before
   a losing final advance, and simulator-verified one-action rescue suggestions.

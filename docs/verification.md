@@ -1,5 +1,61 @@
 # Gameplay verification
 
+## Visible weather, breakwater placement, and tide events
+
+20 September 2026. **133 tests pass across 18 files**. Weather presentation adds
+12 model tests and 6 renderer tests to the existing 115 checks. They cover resolved drift, exact shelter rays, pre-growth
+breakwater reach, real build costs and legality, calm recovery, prospective protection,
+all six wind bearings, breakwater wave interception, harvest growth, reduced motion,
+non-pickable overlays, and GPU disposal. TypeScript and the production build pass;
+the JavaScript bundle is approximately 289 KB gzipped with the existing chunk advisory.
+
+Real production-browser controls completed all eight campaign maps again, preserving
+every unlock, with no JavaScript/console errors or failed HTTP responses. The final
+thirteen-island fleet showed weather events at 1366×768 and 1920×1080. Selected-island
+labels carry detail; other islands use small growth/stress markers. Captions reserve
+map-label space, and inactive corner panels clear during the sequence. Skip commits the same resolved tide;
+underlying action panels are inert to pointer and keyboard input.
+
+A separate First Light run watched all phases: actual movement, an exposed island's
+stress rising 0→1, a bell sheltered by its neighbor staying at 0, calm recovery 1→0,
+production/rations, and growth. A proposed breakwater on Porridge spent nothing during
+preview, named the Heart as newly protected, included the removed garden production
+and build cost in its resource forecast, then cost exactly one action/three timber
+when built. The actual storm left the Heart at zero stress, and the nourished breakwater
+grew. The committed turn survived reload. Low graphics, reduced motion, a final-tide
+defeat, saved replanning, and a successful rescue also passed.
+
+Build choices now sit at the edge, with Breakwater first while its preview is active,
+so the proposed gold cells remain visible. The preview uses real post-drift simulation;
+it never promises protection on a later tide with a different wind. The effects use
+15 bounded instanced batches, static reduced-motion frames, and no new image/model
+assets. The game rules and save schema are unchanged. Human observation should still
+check whether the visible sequence teaches shelter and whether its pace feels right.
+
+## Compact planning after clutter feedback
+
+Sea focus now activates automatically at widths up to 1450px or heights up to 820px,
+without rewriting the saved preference. Full view remains an explicit, working override.
+A horizontal chip row opens one detail panel at a time; Build and Tow close competing
+panels. Island-list selection closes the list and restores focus to the selected map
+label. Escape closes a detail panel and restores focus to its chip. Bell growth and
+stress warnings remain visible, along with action costs, rations, final-tide warnings,
+and the optional after-tide bell inspector.
+
+Production-browser checks at 1366×768, 1024×640, and 768×600 found no document overflow;
+the action dock and Advance tide stayed inside the viewport. The 13-island fleet used
+one detailed label and 12 small markers, including in Forecast and the storm sequence.
+The detailed desktop view was also checked at 1920×1080. No JavaScript errors occurred.
+The 850px forced minimum height is removed in sea focus, the whale card stays inside
+Weather details, and redundant map prose is limited to the selected island.
+
+FPS benchmarking is deferred at the user's request; this release makes no frame-rate
+claim. The renderer retains single-pass transparent sea overlays. Phone play remains
+an evaluation item rather than a promised complete mobile experience.
+
+Inspected screenshots: [1024×640 planning](compact-sea.jpg) and
+[13-island storm sequence](weather-events.jpg).
+
 ## First Light defeat clarity and final-tide recovery
 
 20 September 2026. **115 tests pass across 16 files**. TypeScript and the final production

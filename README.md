@@ -7,6 +7,11 @@ and one action per tide, ending with thirteen islands and a four-bell choir.
 
 **[Play in your browser](https://holsteredsoul.github.io/the-unreasonable-archipelago/)**
 
+Smaller browser windows automatically use the compact sea view: optional panels open
+from an edge row, most islands use small markers, and selecting an island reveals its
+name, growth and shelter/stress details. Action costs and tide warnings remain visible.
+Use **Full view** to restore the expanded panels.
+
 ## Play locally
 ```sh
 npm install
@@ -64,6 +69,21 @@ both clickable water cells and buttons. Drag to orbit, scroll to zoom. Help and 
 explain keyboard controls and offer reduced motion and lower graphics quality.
 Press **F** for Sea focus, **P** for the forecast, and **Escape** to restore panels.
 The water shows drift arrows, storm shelter wakes, and the Heart connection chain.
+Storms now travel visibly across the sea, with a camera-aligned direction arrow,
+wave impacts on exposed shores, and exact green protected cells. Forecast shows
+those cells after drift. Selecting an exposed bell in Forecast also marks its
+missing windbreak cell and an available breakwater site when one helps.
+Open **Build** on an ordinary island to preview a breakwater: gold cells show its
+post-drift reach, the panel names protected islands and the resulting food/timber,
+and no resources are spent until you choose the building. The choices sit at the
+edge so the water remains visible.
+
+Advancing now unfolds as **drift → weather → harvest**. Islands move, waves meet
+their windbreaks, stress changes appear beside each shore, and growth pulses gold.
+The Heart shows its town rations; gardens and groves show production. **Skip**
+finishes the same tide immediately. Reduced motion keeps the effects static,
+and ordinary controls stay inactive until the tide settles.
+
 Action feedback separates food spent now from the town's two rations at the tide.
 Your best medal for each seed stays beside its name and in voyage settings.
 The opening screen introduces the objective and charts all eight maps. Continue resumes

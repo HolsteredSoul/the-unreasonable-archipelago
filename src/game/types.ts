@@ -37,9 +37,13 @@ export type Forecast = {
   shelteredIds: string[]; connectedIds: string[]; events: string[];
 };
 export type CommandResult = { state: GameState; error?: string };
+export type TideStage = 'plan' | 'drift' | 'weather' | 'harvest';
 export type WorldProps = {
   state: GameState; forecast: Forecast; selectedId: string | null;
   onSelectIsland: (id: string) => void;
   towTargets: Hex[]; onSelectHex: (hex: Hex) => void;
   preview: boolean; reducedMotion: boolean; quality: 'high' | 'low';
+  tideStage?: TideStage;
+  layoutKey?: string;
+  breakwaterPreview?: { state: GameState; forecast: Forecast } | null;
 };
