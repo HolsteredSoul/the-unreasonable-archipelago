@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { worldAsset } from './assets';
 
 /** A visual passenger: loading, animation, or fallback availability never changes game state. */
 export function createWhaleVisual() {
@@ -36,7 +37,7 @@ export function createWhaleVisual() {
     root.traverse(child => { if (child instanceof THREE.Mesh || child instanceof THREE.Line) { geometries.add(child.geometry); (Array.isArray(child.material) ? child.material : [child.material]).forEach(material => materials.add(material)); } });
     geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose());
   }
-  new GLTFLoader().load('/assets/whale.glb', gltf => {
+  new GLTFLoader().load(worldAsset('whale.glb'), gltf => {
     if (disposed) { release(gltf.scene); return; }
     model = gltf.scene; model.traverse(child => { if (child instanceof THREE.Mesh) { child.castShadow = false; child.receiveShadow = false; } });
     fallback.visible = false; pose.add(model);

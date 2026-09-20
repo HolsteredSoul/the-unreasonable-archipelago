@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { applyCommand, createGame, DIRECTIONS, forecastTide, getConnectedIds } from '../game';
-import { hexDistance, missingConnection, sameHex, shelterCells, tideProduction } from './planning';
+import { hexDistance, missingConnection, missingConnections, sameHex, shelterCells, tideProduction } from './planning';
 
 describe('on-water planning data', () => {
   it('shows production before the growth that the same tide awards', () => {
@@ -47,5 +47,33 @@ describe('on-water planning data', () => {
     const bell = state.islands.find(island => island.kind === 'bell')!;
     bell.q = 0; bell.r = -1;
     expect(missingConnection(state)).toEqual([]);
+  });
+
+  it('gives every disconnected bell a valid path in a thirteen-island sea', () => {
+    const state = createGame('first-light');
+    const bell = state.islands.find(island => island.kind === 'bell')!;
+    const ordinary = state.islands.find(island => island.kind === 'ordinary')!;
+    state.islands.push(
+      { ...bell, id: 'bell-2', name: 'Second bell', q: -3, r: 0 },
+      { ...bell, id: 'bell-3', name: 'Third bell', q: 0, r: 3 },
+      { ...bell, id: 'bell-4', name: 'Fourth bell', q: 0, r: -3 },
+      { ...ordinary, id: 'far-east', q: 4, r: 0 },
+      { ...ordinary, id: 'far-west', q: -4, r: 2 },
+      { ...ordinary, id: 'far-south', q: 2, r: 2 },
+    );
+    const paths = missingConnections(state);
+    expect(state.islands).toHaveLength(13);
+    expect(paths.map(item => item.id)).toEqual(['bell', 'bell-2', 'bell-3', 'bell-4']);
+    const connected = state.islands.filter(island => getConnectedIds(state).includes(island.id));
+    for (const { id, path } of paths) {
+      expect(sameHex(path[0], state.islands.find(island => island.id === id)!)).toBe(true);
+      expect(connected.some(island => sameHex(island, path[path.length - 1]))).toBe(true);
+      expect(path.some(hex => !state.islands.some(island => sameHex(island, hex)))).toBe(true);
+      for (let index = 1; index < path.length; index++) expect(hexDistance(path[index - 1], path[index])).toBe(1);
+    }
+    Object.assign(state.islands.find(island => island.id === 'bell-2')!, { q: 0, r: -1 });
+    expect(missingConnections(state).some(item => item.id === 'bell-2')).toBe(false);
+    expect(missingConnections(state).length).toBeGreaterThan(0);
+    expect(missingConnection(state, 'heart')).toEqual([]);
   });
 });

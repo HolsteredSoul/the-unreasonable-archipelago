@@ -10,6 +10,7 @@ export const DIRECTIONS: Hex[] = [
 ];
 const STILL: Hex = { q: 0, r: 0 };
 const RULES = { actions: 3, rations: 2, tow: 1, build: 3, anchor: 1, nourish: 2, maxGrowth: 3, stressLimit: 3 };
+export const getActionBudget = (state: Pick<GameState, 'campaignMap'>): number => state.campaignMap ? 3 + Math.floor((state.campaignMap - 1) / 2) : RULES.actions;
 const BUILDINGS: Building[] = ['garden', 'grove', 'breakwater'];
 const key = (hex: Hex) => `${hex.q},${hex.r}`;
 const same = (a: Hex, b: Hex) => a.q === b.q && a.r === b.r;
@@ -62,7 +63,7 @@ export function getWeather(state: GameState): Weather {
     if (state.tide === 5) return { ...weather, name: 'The Moon Exhales', description: 'Every unanchored island drifts outward from the Heart. Exposed islands gain 1 stress. Follow the arrows; blocked islands stay put.', direction: (weather.direction + offset) % 6 };
     if (state.tide === 6) return { ...weather, description: 'Calm water and inward streams. Next tide, one crosscurrent carries the fleet with the wind; the Heart stays rooted.', direction: (weather.direction + offset) % 6 };
     if (state.tide === 7) return { ...weather, name: 'The Sideways Sea', description: 'One crosscurrent carries all unanchored islands with the wind. The Heart stays put. Exposed islands gain 1 stress; check tomorrow’s connection.', direction: (3 + offset) % 6 };
-    if (state.tide === 8) return { ...weather, description: 'No drift. Exposed islands gain 2 stress. The mature bell must finish linked to the Heart, sheltered, and below 3 stress to ring.', direction: (weather.direction + offset) % 6 };
+    if (state.tide === 8) return { ...weather, description: 'No drift. Exposed islands gain 2 stress. Every bell must be grown, linked to the Heart, sheltered, and below 3 stress to ring.', direction: (weather.direction + offset) % 6 };
   }
   const description = state.currentRotation && state.tide % 4 !== 0
     ? `${weather.storm ? `A squall adds ${weather.strength} stress to exposed islands.` : 'Calm water. A good tide to grow.'} This sea has rotated currents; follow the arrows on the water.`
@@ -321,7 +322,7 @@ export function resolveTide(state: GameState): Forecast {
     next.status = won ? 'won' : 'lost';
     events.push(won ? 'The bell rings. The Moon agrees to an extension. You saved this unreasonable archipelago.' : !conditions.grown || !conditions.connected ? 'The final tide arrived before the bell was grown and connected. The Moon politely declines.' : !conditions.sheltered ? 'The bell reached home, but the final squall drowned its voice. It needed shelter.' : 'The bell reached shelter with too much stress to ring. It needed time to recover.');
   } else next.tide += 1;
-  next.actions = next.status === 'playing' ? RULES.actions : 0;
+  next.actions = next.status === 'playing' ? getActionBudget(next) : 0;
   next.whaleTowedId = null;
   next.log = [...next.log, `Tide ${state.tide}: ${weather.name}.`, ...events].slice(-12);
   return { state: next, moves, foodDelta: next.food - state.food, timberDelta: next.timber - state.timber, production: { food: foodProduced, timber: timberProduced }, rations: RULES.rations, weather, shelteredIds, connectedIds, events };

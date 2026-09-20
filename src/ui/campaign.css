@@ -1,0 +1,69 @@
+.start-modal { width: min(1120px, calc(100vw - 64px)); max-width: none; padding: 0; background: #f5f0e2; overflow: auto; border: 1px solid #f9f6e9; box-shadow: 0 30px 100px #082e3290; }
+.campaign-screen { display: grid; grid-template-columns: .95fr 1.1fr; }
+.campaign-intro { padding: 35px 38px 28px; background: linear-gradient(155deg, #143f44, #206064); color: #f9f2dc; }
+.campaign-seal { width: 62px; height: 62px; border: 1px solid #e0c48470; border-radius: 50%; display: grid; place-items: center; color: #dfc688; margin-bottom: 20px; }
+.campaign-intro .eyebrow { color: #d1c8a9; font-size: 9px; letter-spacing: 2px; }
+.campaign-intro h2 { color: #fff9e9; font-size: clamp(34px, 3.2vw, 48px); line-height: 1.07; margin: 18px 0; }
+.campaign-intro h2 em { color: #dfc688; }
+.campaign-premise { font-family: Georgia, serif; font-size: 20px; line-height: 1.5; margin: 0 0 16px; }
+.campaign-instructions { color: #d1e0d8; line-height: 1.75; font-size: 12px; max-width: 360px; }
+.campaign-primer { display: grid; gap: 10px; margin: 24px 0; }
+.campaign-primer span { display: grid; grid-template-columns: 67px 1fr; gap: 10px; color: #c1d7ce; font-size: 11px; line-height: 1.5; }
+.campaign-primer strong { color: #e9d6a2; font-weight: 500; }
+.campaign-intro .primary-button { background: #ebd59d; color: #173f43; }
+.campaign-intro .text-button { color: #d8e3d6; margin: 14px auto 0; }
+.campaign-chart { padding: 37px 30px 25px; }
+.campaign-chart-heading { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.campaign-chart-heading .eyebrow { font-size: 9px; }
+.campaign-chart-heading > strong { white-space: nowrap; color: #526d61; font-size: 12px; }
+.campaign-progression { font-size: 12px; line-height: 1.6; color: #69786e; margin: 17px 0 22px; }
+.campaign-pair { margin-bottom: 15px; }
+.campaign-pair > p { display: flex; align-items: center; gap: 6px; margin: 0 0 7px; color: #385c55; font-size: 11px; }
+.campaign-pair > p span { margin-left: auto; color: #7c8170; font-size: 10px; }
+.campaign-pair > div { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.campaign-map { display: flex; gap: 10px; align-items: center; text-align: left; min-height: 65px; border: 1px solid #cbd1b9; border-radius: 5px; padding: 10px; background: #fffbee; color: #254d49; transition: border-color .2s, background .2s; }
+.campaign-map:hover:not(:disabled), .campaign-map.current { border-color: #6c9d85; background: #edf2df; }
+.campaign-map:disabled { opacity: .5; }
+.campaign-map-number { flex: 0 0 24px; font-family: Georgia, serif; font-size: 20px; color: #69927e; display: grid; place-items: center; }
+.campaign-map strong { display: block; font-family: Georgia, serif; font-weight: normal; font-size: 15px; }
+.campaign-map small { display: block; font-size: 9px; line-height: 1.4; color: #738073; margin-top: 4px; }
+.campaign-save-note { font-size: 10px; line-height: 1.7; color: #7b8072; margin: 19px 0 0; }
+.is-splash .hud { visibility: hidden; }
+.is-splash .world-labels, .is-splash .world-legend { visibility: hidden; }
+.is-splash .modal-backdrop { background: #183f4440; backdrop-filter: none; }
+.campaign-objectives { margin-top: 12px; display: grid; gap: 4px; }
+.campaign-bell { display: flex; align-items: center; gap: 8px; background: #e6ecdd; padding: 7px 9px; border: 1px solid transparent; border-radius: 4px; width: 100%; color: #34564c; text-align: left; }
+.campaign-bell.selected { border-color: #a2b68c; }
+.campaign-bell > span { flex: 1; font-size: 11px; }
+.campaign-bell strong { font-size: 12px; }
+.campaign-bell small { display: block; font-size: 9px; color: #6c7b65; margin-top: 2px; }
+.campaign-objective .flourishing-progress { margin-top: 5px; padding: 5px 0; }
+.campaign-objective h2 { font-size: 21px; line-height: 1.1; margin: 8px 0; }
+.campaign-objective > p { font-size: 10px; line-height: 1.45; margin: 5px 0; }
+.campaign-objective .campaign-objectives { margin-top: 8px; gap: 3px; }
+.campaign-objective .campaign-bell { padding: 4px 7px; min-height: 36px; }
+.campaign-objective .campaign-bell > span { font-size: 10px; }
+.campaign-objective .campaign-bell small { font-size: 8px; margin-top: 1px; }
+.campaign-objective .objective-bottom { padding-top: 7px; padding-bottom: 7px; }
+.island-browser:has(.island-list) { z-index: 15; }
+.island-list { max-height: min(380px, 50vh); overflow: auto; }
+.result-modal.result-lost { border-top: 4px solid #b77863; }
+.result-modal.result-won { border-top: 4px solid #b89d5b; }
+.result-modal h2 { font-size: 40px; }
+.result-modal .result-verdict { font-size: 12px; letter-spacing: 4px; font-weight: 700; color: #42755d; }
+.result-modal.result-lost .result-verdict { color: #aa604e; }
+.result-conditions { display: grid; gap: 7px; padding: 13px 15px; background: #e9ecdf; border-radius: 6px; margin: 16px 0; text-align: left; }
+.result-conditions > div { display: flex; gap: 12px; justify-content: space-between; font-size: 11px; line-height: 1.5; }
+.result-conditions strong { color: #345f4f; font-weight: 500; }
+.result-conditions .needs-care { color: #a75f4d; }
+.campaign-unlock { color: #567b56; border-top: 1px solid #d6d5ba; padding-top: 12px; font-size: 12px; line-height: 1.6; }
+.game-app.voyage-lost .world-stage { filter: saturate(.4) brightness(.82); transition: filter 1.8s; }
+.game-app.voyage-won .world-stage { filter: saturate(1.12); transition: filter 1.8s; }
+.reduced-motion .world-stage { transition: none; }
+@media (max-height: 820px) and (min-width: 1101px) {
+  .campaign-objective { padding-top: 10px; }
+  .campaign-objective h2 { display: none; }
+  .campaign-objective .flourishing-progress { padding: 3px 0; }
+}
+@media (max-height: 820px) { .campaign-intro { padding-top: 27px; } .campaign-seal { width: 47px; height: 47px; margin-bottom: 15px; } .campaign-primer { margin: 17px 0; } .campaign-chart { padding-top: 30px; } .campaign-pair { margin-bottom: 12px; } .campaign-progression { margin-bottom: 16px; } }
+@media (max-width: 850px) { .campaign-screen { grid-template-columns: 1fr; } .campaign-intro { padding: 25px; } .campaign-chart { padding: 25px; } .start-modal { width: calc(100vw - 24px); } }

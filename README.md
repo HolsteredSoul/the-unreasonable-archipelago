@@ -1,8 +1,11 @@
 # The Unreasonable Archipelago
 A tiny civilization. A rather unreasonable sea.
 
-This first playable chapter, **The First Bell**, is a complete single-player browser game:
-seven drifting islands, eight tides, one botanical bell to grow and bring home.
+An eight-map single-player browser campaign about floating towns and botanical bells.
+Start with seven islands and one bell. Every two victories add another bell, two islands,
+and one action per tide, ending with thirteen islands and a four-bell choir.
+
+**[Play in your browser](https://holsteredsoul.github.io/the-unreasonable-archipelago/)**
 
 ## Play locally
 ```sh
@@ -15,12 +18,13 @@ For a production build: `npm run build`, then `npm run preview`.
 Use an HTTP server; opening index.html directly from disk is unsupported.
 
 ## Your objective
-Nourish the Sleeping Bell three times. When tide 8 resolves, it must be connected to
+Nourish every bell three times. When tide 8 resolves, each must be connected to
 the Heart through neighboring islands, sheltered from the final squall, and below
 3 stress. Keep the Heart intact.
 For an extra challenge, earn **Flourishing Shores** by developing six growth stages across your ordinary islands. Your final medal reflects how much of the archipelago flourishes.
 
-Each tide gives you three actions:
+Each tide gives you three actions in the opening maps and free voyages, increasing
+to four, five, and six in later campaign pairs. Every action below spends one action:
 - **Tow** an island one empty neighboring hex: 1 food.
 - **Build** a garden, grove, or breakwater on an ordinary island: 3 timber.
 - **Anchor** an island through one tide: 1 timber.
@@ -55,14 +59,24 @@ Press **F** for Sea focus, **P** for the forecast, and **Escape** to restore pan
 The water shows drift arrows, storm shelter wakes, and the Heart connection chain.
 Action feedback separates food spent now from the town's two rations at the tide.
 Your best medal for each seed stays beside its name and in voyage settings.
-The game saves automatically in this browser. Seed links recreate an opening, not a saved voyage.
+The opening screen introduces the objective and charts all eight maps. Continue resumes
+your saved tide; the compass opens the campaign chart at any time. A victory unlocks the
+next map. Each map starts with a fresh town; retries preserve completed maps and medals.
+Gold bell rings and a rising musical chord mark victory. Darker seas, a falling bell,
+and explicit defeat text mark failure; the result lists every bell's missing condition.
+Reduced motion replaces the cinematic with a quick transition to the result.
+
+The game saves automatically in this browser. Localhost and the public site have separate
+browser saves. Seed links recreate procedural free voyages, not campaign progress.
 Settings include separate piano and effects volumes, a piano toggle, and master mute.
 The original score starts after your first interaction and pauses when the page is hidden.
 
 ## Scope
-This chapter demonstrates the core rules, procedural scenery and growth, forecast currents,
-local persistence, accessible controls, audio, and a complete win/loss flow.
-The 13-island campaign, three-bell chorus, expanded hazards and phone layouts belong to later stages.
+The campaign contains eight authored, deterministic puzzles with verified winning routes.
+Different maps change geography, currents, final winds, and food and shelter demands.
+Procedural free voyages remain available from the opening screen or settings.
+Mobile expansion is deferred. Broader device testing and human difficulty tuning remain
+future work; a verified solution establishes solvability rather than enjoyment.
 `first-light` keeps the authored introductory layout. Other seeds change island positions,
 starting structures, and current patterns. Every generated opening is verified against the
 real simulator with a complete winning route. Settings show the new sea's characteristics
@@ -71,6 +85,11 @@ Saves made before the late-current update keep the original final objective. Res
 or begin a new voyage to play the revised tides; previously earned medals remain saved.
 
 ## Development
+GitHub Actions runs the tests and builds the public site on each main-branch push.
+`VITE_BASE_PATH=/the-unreasonable-archipelago/` sets the production repository path;
+local development and ordinary builds use `/`. Models, favicon, and the audio worker
+resolve under the configured base. Pages uses the GitHub Actions publishing source.
+
 `npm test` verifies simulation and persistence.
 `npm run build` type-checks and creates the static site in dist.
 

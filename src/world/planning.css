@@ -7,6 +7,11 @@
   padding: 5px 10px;
 }
 .island-label-name { display: block; overflow: hidden; text-overflow: ellipsis; }
+.island-label-leaders { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.island-label-leaders line { stroke: #e4efd7; stroke-width: 1; opacity: .62; }
+.world-root.is-crowded .island-label:not(.is-selected) { max-width: 156px; padding: 4px 8px; font-size: 10px; }
+.world-root.is-crowded .island-label.is-bell { border-color: #e5c79483; }
+.world-root.is-crowded .island-label.is-bell.has-forecast:not(.is-selected) { max-width: 180px; }
 .island-label.is-bell::before, .island-label.is-stressed::after { content: none; }
 .island-label.is-bell .island-label-name::before { content: '✧ '; color: #8c642f; }
 .island-label.is-stressed .island-label-name::after { content: ' !'; color: #ae4c32; }

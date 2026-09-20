@@ -15,11 +15,21 @@ The original inner ring let a grown bell coast through the rest of the voyage. N
 
 This is a deliberately forgiving first chapter: a player who lets the introductory bell drift can still rescue it with one well-placed final tow. Higher medals compete for the spare actions. More demanding chapters should follow observation of real first-time play, rather than assuming that solvable routes establish fun.
 
-## Next evaluation and later scope
+## Eight-map campaign and presentation — September 2026
 
-1. Observe first-time players: can they explain the final shelter rule, predict the surge, and choose a recovery without instructions? Record confusion and retry choices.
-2. Tune difficulty from those observations; preserve a forgiving introductory sea and avoid anchor-only chores.
-3. Develop the larger multi-bell campaign, additional hazards, phone layout, wider device/audio/accessibility QA, and public hosting as subsequent slices.
+- Implemented: opening splash and campaign chart, resumable local save, sequential map unlocks, replay without losing victories, and eight distinct deterministic maps.
+- Implemented: an extra bell and two islands after maps 2, 4, and 6, with one extra action per tide. The final pair has four bells, thirteen islands, and six actions.
+- Implemented: map-specific food and construction pressure, different currents and final winds, and legal eight-tide winning routes for every map. Leaving the fleet unattended or neglecting an added bell loses.
+- Implemented: unambiguous victory/defeat cinematics, separate musical stingers, meaningful result text, and a per-bell explanation of missing conditions. Reduced motion and master mute remain supported.
+- Implemented: all-bell connection paths, separated map labels and larger-fleet framing. Whale direction remains a forecastable constraint; its existing tail, flippers, spray, and tow response remain animated.
+- Publishing: GitHub Pages with automated tests and deployment from main. See verification.md for release evidence.
+- Explicitly deferred at the user's request: phone/mobile expansion.
+
+## Next evaluation
+
+1. Observe campaign play: retry choices, food pressure, and whether maps 4–8 create interesting choices rather than repetitive anchoring.
+2. Tune difficulty from human play while preserving solvable openings and multiple approaches. Automated witnesses prove a route, not fun or the only good strategy.
+3. Wider desktop/audio/accessibility testing and any additional hazards come after this campaign release.
 
 ## Roadmap implementation — complete
 

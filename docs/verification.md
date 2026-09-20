@@ -1,4 +1,22 @@
-# First playable verification
+# Gameplay verification
+
+## Eight-map campaign, opening screen, and dramatic outcomes
+
+20 September 2026. **98 tests pass across 14 files** with `npm test -- --maxWorkers=1`. The final TypeScript and production build pass. The JavaScript bundle is approximately 282 KB gzipped; the existing Vite chunk-size advisory remains.
+
+The campaign has eight distinct, authored starting arrangements. Maps 1–2 have one bell and seven islands; maps 3–4 have two bells and nine islands; maps 5–6 have three bells and eleven islands; maps 7–8 have four bells and thirteen islands. Actions per tide scale from three to six. Every map keeps eight tides, starts with no bell growth, and has a legal command-only winning route through the actual simulation. All unattended runs lose, all added bells must succeed, and abandoning preparation for the last two tides loses every map. Winning witnesses retain four or five Heart integrity. The larger maps introduce garden construction, tighter food reserves, staggered growth, and several final windbreak arrangements. These witnesses establish solvability, not unique solutions or a guarantee of fun.
+
+Campaign progress advances only for the next unlocked map. Retries and free voyages preserve completed maps. Every action and tide of all eight routes roundtrips through save validation, including six-action undo histories. Invalid chapter sizes, action budgets, cross-map undo, and impossible rules are rejected. Existing single-bell and legacy-rule saves remain valid. Campaign medals have separate identities from procedural voyages. Explicit shared-seed first visits can continue from the new splash screen.
+
+Real Chromium controls completed all eight campaign maps, unlocked each successive map, reloaded mid-map with undo intact, and reached the completed chart. Two additional final-map losses verified explicit defeat, retry, preserved victories, and reduced motion. A production-browser eight-tide win also checked an explicit shared seed, Whale Tow's one-action/zero-food cost, map advancement, reload, and muting after the last Advance click but before its delayed outcome. No production JavaScript/console errors or failed HTTP responses occurred.
+
+Screenshots were inspected at 1366×768 and 1920×1080. The first larger-fleet pass found the objective panel covering the island selector; the laptop campaign panel is now compact enough for even a nourished island with forecast details. A real selection of the thirteenth island passed with a 4 px gap in that demanding layout and no horizontal overflow. Multiple bell labels have separate connection hints and leader lines. A short 1920×1080, thirteen-island, high-quality sea-focus sample measured approximately 59 FPS on this machine; this is not a device-wide performance guarantee.
+
+Victory uses expanding gold rings, bell movement, sparks, and a rising chord. Defeat uses dark moving sea bands, fading light, a descending chord, and large explicit text. The result identifies missing growth, Heart links, shelter, and excessive stress for each bell. Underlying controls are inert during the cinematic and results. Reduced motion uses a brief static transition. Audio checks verify the mute race mechanically; subjective listening and longer-term musical fatigue still need human evaluation.
+
+GitHub Pages is configured to publish the verified build from main. The deployment workflow tests and builds with the repository base path. A local Pages-path smoke build served the HTML, favicon, JS/CSS, both GLBs, and music worker successfully; the GLB headers were checked. The live release is at https://holsteredsoul.github.io/the-unreasonable-archipelago/ . Campaign saves remain browser/origin-local. Phone expansion is explicitly deferred.
+
+Visual evidence: `campaign-splash.jpg`, `campaign-fleet.jpg`, and `campaign-defeat.jpg`. These are actual browser captures, not concept art. Remaining evaluation is human difficulty tuning, alternative strategies on later maps, and wider desktop/audio/accessibility coverage.
 
 ## Whale Tow discoverability and action cost
 

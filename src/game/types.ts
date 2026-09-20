@@ -12,6 +12,8 @@ export type GameState = {
   currentRotation?: number; whaleTowedId?: string | null;
   /** Omission preserves voyages saved before the late-current rules. */
   voyageRules?: 'moonwake';
+  /** Campaign chapter, 1–8. Omission retains three-action free voyages. */
+  campaignMap?: number;
 };
 export type Command =
   | { type: 'tow'; id: string; to: Hex }

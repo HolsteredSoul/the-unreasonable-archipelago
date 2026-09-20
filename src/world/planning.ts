@@ -24,8 +24,8 @@ export function shelterCells(island: Island, weatherDirection: number): Hex[] {
 }
 
 /** Lowest number of empty cells between the bell and any Heart-connected island. */
-export function missingConnection(state: GameState): Hex[] {
-  const bell = state.islands.find(island => island.kind === 'bell');
+export function missingConnection(state: GameState, bellId?: string): Hex[] {
+  const bell = state.islands.find(island => island.kind === 'bell' && (!bellId || island.id === bellId));
   const connectedIds = getConnectedIds(state);
   if (!bell || connectedIds.includes(bell.id)) return [];
   const goals = new Set(state.islands.filter(island => connectedIds.includes(island.id)).map(key));
@@ -47,4 +47,11 @@ export function missingConnection(state: GameState): Hex[] {
     }
   }
   return [];
+}
+
+/** A separate path for every disconnected bell; callers may combine overlapping chart marks. */
+export function missingConnections(state: GameState): { id: string; path: Hex[] }[] {
+  return state.islands.filter(island => island.kind === 'bell').map(island => ({
+    id: island.id, path: missingConnection(state, island.id),
+  })).filter(item => item.path.length > 0);
 }

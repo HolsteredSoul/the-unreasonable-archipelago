@@ -115,6 +115,14 @@ describe('saved game validation', () => {
 });
 
 describe('local persistence recovery', () => {
+  it('makes an explicit shared seed playable from the splash on a first visit', () => {
+    browserStorage('?seed=moonlit-teapot');
+    const loaded = initialSession();
+    expect(loaded.state.seed).toBe('moonlit-teapot');
+    expect(loaded.state.campaignMap).toBeUndefined();
+    expect(loaded.seenIntro).toBe(true);
+  });
+
   it('roundtrips a real save including planning actions and undo', () => {
     browserStorage();
     const before = createGame();

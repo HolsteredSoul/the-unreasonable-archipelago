@@ -3,10 +3,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { Hex, Island, WorldProps } from '../game/types';
-import { getConnectedIds, getIslandStats, getWhaleEncounter } from '../game';
-import { hexDistance, missingConnection, sameHex, shelterCells, tideProduction } from './planning';
+import { BOARD_RADIUS, getConnectedIds, getIslandStats, getWhaleEncounter } from '../game';
+import { hexDistance, missingConnections, sameHex, shelterCells, tideProduction } from './planning';
 import { createWhaleVisual } from './Whale';
 import { batchIsland } from './batchIsland';
+import { worldAsset } from './assets';
+import { placeMapLabel, type LabelRect } from './labelLayout';
 import './world.css';
 import './planning.css';
 import './whale.css';
@@ -218,7 +220,7 @@ const waterFragment=`
   }
 `;
 
-type IslandView={group:THREE.Group;target:THREE.Vector3;label:HTMLButtonElement;signature:string;width:number;height:number};
+type IslandView={group:THREE.Group;target:THREE.Vector3;label:HTMLButtonElement;leader:SVGLineElement;signature:string;width:number;height:number;priority:number};
 type Runtime={update:(props:WorldProps)=>void};
 
 export default function World(props:WorldProps) {
@@ -243,6 +245,9 @@ export default function World(props:WorldProps) {
     const water=new THREE.Mesh(new THREE.PlaneGeometry(250,250),waterMat);water.rotation.x=-Math.PI/2;water.position.y=-0.07;scene.add(water);
     const shadowFloor=new THREE.Mesh(new THREE.PlaneGeometry(48,48),new THREE.ShadowMaterial({color:0x244f48,opacity:0.15}));shadowFloor.rotation.x=-Math.PI/2;shadowFloor.position.y=-0.055;shadowFloor.receiveShadow=true;scene.add(shadowFloor);
     const islands=new Map<string,IslandView>();const selection=new THREE.Group();scene.add(selection);
+    let labelOrder: [string, IslandView][] = [];
+    const leaderLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    leaderLayer.classList.add('island-label-leaders'); leaderLayer.setAttribute('aria-hidden', 'true'); labelContainer.append(leaderLayer);
     const selectionRing=ringLine(circlePoints(1.55,0.08),0xffe6a7,0.96,selection);ringLine(circlePoints(1.64,0.07),0xffedc4,0.32,selection);selection.visible=false;
     const targetsGroup=new THREE.Group(),previewGroup=new THREE.Group(),currentGroup=new THREE.Group(),boundaryGroup=new THREE.Group();scene.add(targetsGroup,previewGroup,currentGroup,boundaryGroup);
     const targetMeshes:THREE.Object3D[]=[];
@@ -256,12 +261,12 @@ export default function World(props:WorldProps) {
     let projectedWidth=30;
     // A fine perimeter is a chart mark, not a wall around the world.
     // Outline the outside edges of valid hexes, leaving boundary-cell islands inside the chart.
-    for(let q=-4;q<=4;q++)for(let r=-4;r<=4;r++){
-      if(Math.max(Math.abs(q),Math.abs(r),Math.abs(q+r))>4)continue;
+    for(let q=-BOARD_RADIUS;q<=BOARD_RADIUS;q++)for(let r=-BOARD_RADIUS;r<=BOARD_RADIUS;r++){
+      if(Math.max(Math.abs(q),Math.abs(r),Math.abs(q+r))>BOARD_RADIUS)continue;
       const center=hexPosition({q,r});
       for(const direction of AXIAL){
         const nextQ=q+direction.q,nextR=r+direction.r;
-        if(Math.max(Math.abs(nextQ),Math.abs(nextR),Math.abs(nextQ+nextR))<=4)continue;
+        if(Math.max(Math.abs(nextQ),Math.abs(nextR),Math.abs(nextQ+nextR))<=BOARD_RADIUS)continue;
         const normal=hexPosition(direction),angle=Math.atan2(normal.z,normal.x);
         const points=[angle-Math.PI/6,angle+Math.PI/6].map(a=>new THREE.Vector3(center.x+Math.cos(a)*SPACING,0.012,center.z+Math.sin(a)*SPACING));
         ringLine(points,0xd6eee2,0.2,boundaryGroup,true);
@@ -315,18 +320,21 @@ export default function World(props:WorldProps) {
         const buoy = new THREE.Mesh(new THREE.TorusGeometry(0.092, 0.025, 5, 12), new THREE.MeshBasicMaterial({ color: 0xffe6b6 }));
         buoy.rotation.x = -Math.PI / 2; buoy.position.copy(middle); currentGroup.add(buoy);
       }
-      const missing = missingConnection(chartState);
-      const empty = missing.filter(hex => !chartState.islands.some(island => sameHex(island, hex)));
-      if (missing.length) {
-        const points = missing.map(hex => hexPosition(hex).setY(0.15));
+      const markedEmpty = new Set<string>();
+      for (const missing of missingConnections(chartState)) {
+        const empty = missing.path.filter(hex => !chartState.islands.some(island => sameHex(island, hex)));
+        const points = missing.path.map(hex => hexPosition(hex).setY(0.15));
         ringLine(points, 0xefaf96, 0.76, currentGroup, true);
         for (const hex of empty) {
+          const key = `${hex.q},${hex.r}`; if (markedEmpty.has(key)) continue; markedEmpty.add(key);
           const center = hexPosition(hex);
           ringLine(circlePoints(0.47, 0.15, 6).map(point => point.add(center)), 0xefaf96, 0.9, currentGroup, true);
         }
-        if ((next.preview || next.selectedId === 'bell') && empty.length) {
+        if ((next.preview || next.selectedId === missing.id) && empty.length) {
           const midpoint = hexPosition(empty[Math.floor(empty.length / 2)]).add(new THREE.Vector3(0, 0.18, -0.5));
-          chartLabel(`${empty.length} empty ${empty.length === 1 ? 'link' : 'links'} to Heart`, midpoint, 'is-missing-link');
+          const bell = chartState.islands.find(island => island.id === missing.id)!;
+          const prefix = chartState.islands.filter(island => island.kind === 'bell').length > 1 ? `${bell.name}: ` : '';
+          chartLabel(`${prefix}${empty.length} empty ${empty.length === 1 ? 'link' : 'links'} to Heart`, midpoint, 'is-missing-link');
         }
       }
     }
@@ -344,7 +352,7 @@ export default function World(props:WorldProps) {
       if (whaleEncounter) {
         whaleHeading.copy(hexPosition(whaleEncounter.direction)).normalize();
         const selectedOffer = next.state.actions > 0 ? whaleEncounter.offers.find(item => item.id === next.selectedId) : undefined;
-        const offer = selectedOffer ?? whaleEncounter.offers.find(item => item.id === 'bell') ?? whaleEncounter.offers[0];
+        const offer = selectedOffer ?? whaleEncounter.offers.find(item => next.state.islands.some(island => island.id === item.id && island.kind === 'bell')) ?? whaleEncounter.offers[0];
         const leadIsland = next.state.islands.find(island => island.id === (next.state.whaleTowedId || offer?.id));
         if (leadIsland) {
           const origin = hexPosition(leadIsland);
@@ -385,11 +393,14 @@ export default function World(props:WorldProps) {
     const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(container);
     function update(next:WorldProps){
       if(disposed)return;
+      const dense = next.state.islands.length > 9, bellCount = next.state.islands.filter(island => island.kind === 'bell').length;
+      container!.classList.toggle('is-crowded', dense);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio,next.quality==='high'?1.75:1));renderer.shadowMap.enabled=next.quality==='high';sun.castShadow=next.quality==='high';
       renderer.shadowMap.needsUpdate=true;
-      if(lastSeed!==next.state.seed){
-        islands.forEach(view=>{scene.remove(view.group);disposeObject(view.group);view.label.remove();});islands.clear();lastSeed=next.state.seed;
-        controls.target.set(0,0,-0.4);camera.position.set(13,21,26);camera.zoom=1.34;projectedWidth=29;resize();
+      const voyageKey = `${next.state.seed}:${next.state.islands.map(island => island.id).join(',')}`;
+      if(lastSeed!==voyageKey){
+        islands.forEach(view=>{scene.remove(view.group);disposeObject(view.group);view.label.remove();view.leader.remove();});islands.clear();lastSeed=voyageKey;
+        controls.target.set(0,0,-0.4);camera.position.set(13,21,26);camera.zoom=dense?1.2:1.34;projectedWidth=dense?31:29;resize();
       }
       for(const island of next.state.islands){
         const sig=`${island.kind}|${island.building}|${island.growth}|${island.anchored}|${island.nourished}|${!!hero}`;
@@ -397,7 +408,8 @@ export default function World(props:WorldProps) {
         if(!view){
           const group=makeIsland(island,next.state.seed,hero);group.position.copy(hexPosition(island));scene.add(group);
           const label=document.createElement('button');label.type='button';label.className='island-label';label.dataset.island=island.id;label.textContent=island.name;label.addEventListener('click',()=>latest.current.onSelectIsland(island.id));labelContainer!.append(label);
-          view={group,target:hexPosition(island),label,signature:sig,width:0,height:0};islands.set(island.id,view);
+          const leader=document.createElementNS('http://www.w3.org/2000/svg','line');leaderLayer.append(leader);
+          view={group,target:hexPosition(island),label,leader,signature:sig,width:0,height:0,priority:0};islands.set(island.id,view);
         }else if(view.signature!==sig){
           const oldPosition=view.group.position.clone();scene.remove(view.group);disposeObject(view.group);view.group=makeIsland(island,next.state.seed,hero);view.group.position.copy(oldPosition);scene.add(view.group);view.signature=sig;
         }
@@ -424,9 +436,9 @@ export default function World(props:WorldProps) {
         const finalReadiness = finalBellForecast
           ? `Final shelter: ${finalSheltered ? 'safe' : 'exposed'}${finalSheltered && after.stress >= 3 ? ' · stress too high' : ''}`
           : finalBellRule && next.state.tide >= 4 && next.preview ? 'Final bell needs shelter' : '';
-        const name = document.createElement('span'); name.className = 'island-label-name'; name.textContent = island.name;
+        const name = document.createElement('span'); name.className = 'island-label-name'; name.textContent = island.kind === 'bell' && bellCount > 1 ? `${island.growth}/3 · ${island.name}` : island.name;
         view.label.replaceChildren(name);
-        const details = (next.preview || island.id === next.selectedId || finalBellForecast) && next.state.status === 'playing';
+        const details = ((next.preview && (!dense || island.kind === 'bell' || growthDelta > 0)) || island.id === next.selectedId || finalBellForecast) && next.state.status === 'playing';
         if (details) {
           const summary = document.createElement('span'); summary.className = 'island-forecast-text';
           const selected = island.id === next.selectedId;
@@ -443,9 +455,12 @@ export default function World(props:WorldProps) {
         const accessibility = next.state.status === 'playing' ? `. After the tide: ${[...changes, ...yields, connection, ...(finalReadiness ? [finalReadiness] : [])].join('. ')}` : '';
         view.label.classList.toggle('is-selected',island.id===next.selectedId);view.label.classList.toggle('is-bell',island.kind==='bell');view.label.classList.toggle('is-stressed',after.stress>=3);view.label.classList.toggle('has-forecast',details);view.label.classList.toggle('is-blocked',Boolean(move?.blocked));
         view.label.classList.toggle('is-final-unsafe', finalBellUnsafe);
+        view.priority=island.id===next.selectedId?4:island.kind==='bell'?3:island.kind==='heart'?2:1;
+        view.label.style.zIndex=String(view.priority);view.label.title=island.name;
         view.label.setAttribute('aria-label',`Select ${island.name}, ${island.kind==='ordinary'?(island.building||'undeveloped island'):island.kind+' island'}${accessibility}`);view.label.setAttribute('aria-pressed',String(island.id===next.selectedId));
         view.width=view.label.offsetWidth;view.height=view.label.offsetHeight;
       }
+      labelOrder=[...islands.entries()].sort((a,b)=>b[1].priority-a[1].priority);
       updatePlanning(next);
       updateWhale(next);
       disposeObject(targetsGroup);targetsGroup.clear();targetMeshes.length=0;
@@ -469,7 +484,7 @@ export default function World(props:WorldProps) {
     }
     runtime.current={update};update(latest.current);resize();
     // Loading a hero model is optional: the carefully built procedural flower remains a complete fallback.
-    const loader=new GLTFLoader();loader.load('/assets/bell-flower.glb',gltf=>{
+    const loader=new GLTFLoader();loader.load(worldAsset('bell-flower.glb'),gltf=>{
       if(disposed){disposeObject(gltf.scene);return;}hero=gltf.scene;hero.traverse(child=>{if(child instanceof THREE.Mesh){child.castShadow=true;child.receiveShadow=true;}});update(latest.current);
     },undefined,()=>{});
     const clock=new THREE.Clock();const projected=new THREE.Vector3();
@@ -477,16 +492,21 @@ export default function World(props:WorldProps) {
       if(disposed)return;raf=requestAnimationFrame(animate);const delta=Math.min(clock.getDelta(),0.05),elapsed=clock.elapsedTime,reduce=latest.current.reducedMotion;waterMat.uniforms.uTime.value=reduce?0:elapsed;
       controls.update();
       const width=container!.clientWidth,height=container!.clientHeight;
-      const occupiedLabels:{left:number;right:number;top:number;bottom:number}[]=[];
-      islands.forEach((view,id)=>{
+      const occupiedLabels:LabelRect[]=[];
+      for (const [id,view] of labelOrder) {
         if(view.group.position.distanceToSquared(view.target)>0.0001)renderer.shadowMap.needsUpdate=true;
         view.group.position.lerp(view.target,reduce?1:0.12);
         if(!reduce)view.group.rotation.z=Math.sin(elapsed*0.4+view.target.x)*0.0025;
         projected.copy(view.group.position).add(new THREE.Vector3(0,0.1,1.48)).project(camera);const x=(projected.x*0.5+0.5)*width,y=(-projected.y*0.5+0.5)*height;
-        occupiedLabels.push({left:x-view.width/2,right:x+view.width/2,top:y,bottom:y+view.height});
-        view.label.style.transform=`translate(${x}px,${y}px) translate(-50%,0)`;view.label.style.visibility=projected.z>1?'hidden':'visible';
+        const visible=projected.z<=1&&x>=-view.width&&x<=width+view.width&&y>=-view.height&&y<=height+view.height;
+        const placed=placeMapLabel({x,y},{width:view.width,height:view.height},occupiedLabels,{width,height});
+        if(visible)occupiedLabels.push(placed.rect);
+        view.label.style.transform=`translate(${placed.x}px,${placed.y}px) translate(-50%,0)`;view.label.style.visibility=visible?'visible':'hidden';
+        const shifted=Math.hypot(placed.x-x,placed.y-y)>10;
+        view.leader.style.display=visible&&shifted?'':'none';
+        if(visible&&shifted){view.leader.setAttribute('x1',String(x));view.leader.setAttribute('y1',String(y));view.leader.setAttribute('x2',String(placed.x));view.leader.setAttribute('y2',String(placed.y+Math.min(view.height/2,12)));}
         if(id===latest.current.selectedId){selection.visible=true;selection.position.copy(view.group.position);selectionRing.material.opacity=reduce?0.92:0.83+Math.sin(elapsed*2)*0.12;}
-      });if(!latest.current.selectedId)selection.visible=false;
+      }if(!latest.current.selectedId)selection.visible=false;
       const towedIsland = latest.current.state.whaleTowedId ? islands.get(latest.current.state.whaleTowedId) : null;
       if (whaleEncounter) {
         if (whaleEncounter.used && towedIsland) whaleGoal.copy(towedIsland.group.position).add(whaleTowOffset).setY(0.18);
@@ -510,18 +530,18 @@ export default function World(props:WorldProps) {
       for (const particle of driftParticles) particle.object.position.copy(particle.from).lerp(particle.to, reduce ? 0.52 : (elapsed * 0.38 + particle.phase) % 1).setY(0.11);
       for (const note of chartLabels) {
         projected.copy(note.position).project(camera);
-        let x = (projected.x * 0.5 + 0.5) * width, y = (-projected.y * 0.5 + 0.5) * height;
-        const offsets = [[0, 0], [0, -26], [-55, -26], [55, -26], [-75, 0], [75, 0], [0, -52]];
-        const clear = offsets.find(([dx, dy]) => occupiedLabels.every(rect => x + dx + note.width / 2 + 4 < rect.left || x + dx - note.width / 2 - 4 > rect.right || y + dy + note.height / 2 + 4 < rect.top || y + dy - note.height / 2 - 4 > rect.bottom));
-        if (clear) { x += clear[0]; y += clear[1]; }
-        note.label.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`; note.label.style.visibility = projected.z > 1 ? 'hidden' : 'visible';
+        const x = (projected.x * 0.5 + 0.5) * width, y = (-projected.y * 0.5 + 0.5) * height;
+        const placed=placeMapLabel({x,y:y-note.height/2},{width:note.width,height:note.height},occupiedLabels,{width,height});
+        const visible=projected.z<=1&&x>=0&&x<=width&&y>=0&&y<=height&&!placed.overlap;
+        if(visible)occupiedLabels.push(placed.rect);
+        note.label.style.transform = `translate(${placed.x}px,${placed.y}px) translate(-50%,0)`; note.label.style.visibility = visible ? 'visible' : 'hidden';
       }
       gulls.forEach((gull,i)=>{const t=(reduce?0:elapsed*0.1)+i*1.25;gull.position.set(Math.sin(t)*6.6,3.2+i*0.22,Math.cos(t)*5-2);gull.rotation.y=-t;gull.rotation.z=reduce?0:Math.sin(elapsed*2+i)*0.08;});
       renderer.render(scene,camera);
     }
     animate();
     const onContextLost=(event:Event)=>{event.preventDefault();setError(true);};renderer.domElement.addEventListener('webglcontextlost',onContextLost);
-    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);whaleVisual.dispose();disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());chartLabels.forEach(({label})=>label.remove());};
+    return()=>{disposed=true;cancelAnimationFrame(raf);runtime.current=null;resizeObserver.disconnect();controls.dispose();renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('webglcontextlost',onContextLost);whaleVisual.dispose();disposeObject(scene);if(hero)disposeObject(hero);renderer.dispose();renderer.domElement.remove();islands.forEach(view=>view.label.remove());leaderLayer.remove();chartLabels.forEach(({label})=>label.remove());};
   },[]);
   useEffect(()=>{runtime.current?.update(props);},[props.state,props.forecast,props.selectedId,props.towTargets,props.preview,props.quality,props.reducedMotion]);
   return <div className="world-root" ref={host}><div className="world-vignette"/><div className="world-labels" ref={labels}/><div className="world-legend" aria-label="Sea chart legend"><span className="legend-drift">→ Drift</span><span className="legend-blocked">× Blocked</span><span className="legend-chain">— Heart links</span>{props.forecast.weather.storm&&<span className="legend-shelter">▱ Shelter wake</span>}</div>{error&&<div className="world-unavailable"><strong>The sea needs a little more graphics power.</strong><p>This game requires WebGL 2. Enable hardware acceleration or try a current desktop browser, then reload.</p></div>}<div className="world-chart-mark" aria-hidden="true"><span>N</span><svg viewBox="0 0 50 50"><path d="M25 4 31 25 25 46 19 25Z" fill="none" stroke="currentColor"/><path d="M4 25H46M25 4V46" fill="none" stroke="currentColor"/><circle cx="25" cy="25" r="15" fill="none" stroke="currentColor" opacity=".4"/></svg></div></div>;
