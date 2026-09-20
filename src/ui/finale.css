@@ -1,0 +1,21 @@
+.campaign-bell.needs-shelter { border-color: #be8b665c; background: #f0e4ce; }
+.campaign-bell.needs-shelter small { color: #975a36; }
+.finale-inspector { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0; background: none; border: 0; color: #46644e; font-size: 10px; text-align: left; }
+button.bell-outlook { display: block; width: 100%; cursor: pointer; text-align: left; border: 1px solid #b8c8ac; }
+button.bell-outlook.needs-care { border-color: #b8835e; color: #82452f; background: #f2dfc6; }
+.finale-check-modal .finale-checks { display: grid; gap: 12px; margin: 18px 0; }
+.finale-checks section { padding: 14px; background: #e8eddf; border-radius: 6px; text-align: left; }
+.finale-checks h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; margin: 0 0 12px; color: #34564b; }
+.finale-checks ul { display: grid; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; margin: 0; gap: 9px 12px; }
+.finale-checks li { display: flex; align-items: start; gap: 6px; font-size: 11px; line-height: 1.5; }
+.finale-checks li svg { flex-shrink: 0; margin-top: 2px; }
+.finale-checks .ready { color: #38694e; }
+.finale-checks .not-ready { color: #9a5134; font-weight: 600; }
+.finale-checks section > p { margin: 13px 0 0; font-size: 12px; line-height: 1.6; color: #4d6555; }
+.finale-checks .secondary-button { margin-top: 12px; min-height: 34px; font-size: 11px; }
+.finale-check-modal .finale-rule, .finale-retry p { color: #6f7866; font-size: 11px; line-height: 1.6; margin: 12px 0; }
+.finale-check-modal .final-accept { margin: 16px auto 0; color: #956446; }
+.finale-retry { border-top: 1px solid #d2d9c1; margin-top: 15px; padding-bottom: 12px; }
+.finale-retry p { margin: 12px 0; }
+.campaign-bell .queued-growth { white-space: nowrap; font-size: 8px; color: #477254; }
+.tow-directions button.suggested-rescue, .build-menu button.suggested-rescue { background: #d5e4b9; outline: 2px solid #6c8855; outline-offset: -2px; }

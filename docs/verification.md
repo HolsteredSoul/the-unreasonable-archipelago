@@ -1,5 +1,32 @@
 # Gameplay verification
 
+## First Light defeat clarity and final-tide recovery
+
+20 September 2026. **115 tests pass across 16 files**. TypeScript and the final production
+build pass; the existing Vite large-chunk advisory remains (approximately 284 KB gzipped
+JavaScript). Fourteen new advice tests cover the exposed mature/connected bell failure,
+stress recovery, exact upstream shelter cells, legal winning tow/build suggestions,
+whole-fleet victory, unavailable resources/actions, completed states, and legacy rules.
+Three recovery tests cover an exact, persistent start-of-tide snapshot, old-save
+compatibility, and rejection of mismatched checkpoints.
+
+A real Chromium First Light playthrough grew the bell, let the later currents carry it,
+and reached a losing tide-8 forecast with a healthy Heart. The warning prevented any
+mutation until explicitly accepted. Defeat survived reload; Replan the final tide
+restored the exact original resources, actions, positions, and growth. Show this move
+spent nothing, highlighted the suggested tow, and the actual one-action/one-food tow
+won the voyage. Victory unlocked map 2 and cleared the checkpoint. No JavaScript or
+console errors occurred in the recovery/win flow.
+
+Screenshots of the checklist and suggested controls were inspected at 1366×768 and
+1920×1080. The compact objective exposes shelter and forecast stress even when an
+ordinary island is selected. Rescue suggestions remain visible on the action controls;
+queued growth remains visible beside current bell growth. `finale-warning.jpg` shows
+the actual losing-tide warning. Earlier completed saves cannot gain a historical
+checkpoint retroactively. Replanning is limited to map 1; harder positions may still
+need an earlier decision or a fresh attempt. These changes teach and expose existing
+rules; they do not change the simulation's victory conditions.
+
 ## Eight-map campaign, opening screen, and dramatic outcomes
 
 20 September 2026. **98 tests pass across 14 files** with `npm test -- --maxWorkers=1`. The final TypeScript and production build pass. The JavaScript bundle is approximately 282 KB gzipped; the existing Vite chunk-size advisory remains.

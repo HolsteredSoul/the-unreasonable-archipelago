@@ -46,11 +46,18 @@ and tide 7 carries them together in a crosscurrent while the Heart stays rooted.
 Spend timber to hold key islands, or ride the current and spend food reconnecting.
 An ordinary island can be both a bridge and a windbreak. Anchors stop drift, not storms.
 The optional **Tide chart** explains the later tides and this seed's final shelter direction.
-On tide 8, the forecast names any missing requirement or tells you the bell will ring.
+The objective tracks each bell's shelter and stress after the next tide. **After-tide bell
+checks** explains the four conditions and the windward shelter hex. On tide 8 it can
+suggest a legal tow or breakwater that the actual simulator verifies will win.
+An unsafe final advance opens a warning before committing; you can keep planning
+or explicitly accept defeat.
 
 Use the preview before committing: ghost islands show movements, arrows show currents,
 and the tide panel shows the next weather and resource change. Undo only rewinds planning
-actions in the current tide. Advance Tide commits the turn.
+actions in the current tide. Advance Tide commits the turn. First Light has one teaching
+exception: after a final-tide defeat, **Replan the final tide** restores the actual start
+of tide 8, including resources and actions. This checkpoint survives reload. Older
+completed saves have no checkpoint and still need a fresh attempt.
 
 Select islands directly in the world or use the island list. Tow targets are available as
 both clickable water cells and buttons. Drag to orbit, scroll to zoom. Help and settings

@@ -27,6 +27,16 @@ This is a deliberately forgiving first chapter: a player who lets the introducto
 
 ## Next evaluation
 
+- Completed after first-player defeat feedback: persistent per-bell shelter/stress,
+  an optional four-condition checklist with exact shelter direction, a warning before
+  a losing final advance, and simulator-verified one-action rescue suggestions.
+  Suggested tow destinations/buildings stay highlighted on their actual controls.
+- Completed: First Light final-tide replanning from a saved, genuine start-of-tide
+  checkpoint. Later maps keep normal retries; older completed saves are not rewritten.
+- Continue observing whether shelter recovery (one stress removed per tide) is learned
+  early enough. A one-action hint is offered only when it wins the whole voyage;
+  harder positions may need earlier planning or a fresh attempt.
+
 1. Observe campaign play: retry choices, food pressure, and whether maps 4–8 create interesting choices rather than repetitive anchoring.
 2. Tune difficulty from human play while preserving solvable openings and multiple approaches. Automated witnesses prove a route, not fun or the only good strategy.
 3. Wider desktop/audio/accessibility testing and any additional hazards come after this campaign release.

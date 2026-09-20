@@ -2,7 +2,7 @@ import { BOARD_RADIUS, createGame, getActionBudget, getVictoryConditions } from 
 import type { GameState, Island } from '../game/types';
 
 export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low'; seaFocus?: boolean; musicVolume?: number; effectsVolume?: number; musicEnabled?: boolean };
-export type SavedSession = { version: 1; state: GameState; undo: GameState[]; settings: Settings; seenIntro: boolean; campaignCompleted?: number };
+export type SavedSession = { version: 1; state: GameState; undo: GameState[]; settings: Settings; seenIntro: boolean; campaignCompleted?: number; finaleCheckpoint?: GameState };
 const SAVE_KEY = 'unreasonable-archipelago.session.v1';
 const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 const integer = (value: unknown, min: number, max: number): value is number => typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
@@ -49,6 +49,10 @@ export function validateSession(value: unknown): value is SavedSession {
   if (value.campaignCompleted !== undefined && !integer(value.campaignCompleted, 0, 8)) return false;
   const state = value.state;
   const budget = getActionBudget(state);
+  if (value.finaleCheckpoint !== undefined) {
+    const checkpoint = value.finaleCheckpoint;
+    if (!validateGameState(checkpoint) || state.campaignMap !== 1 || state.status !== 'lost' || state.tide !== 8 || checkpoint.campaignMap !== 1 || checkpoint.status !== 'playing' || checkpoint.tide !== 8 || checkpoint.actions !== budget || checkpoint.seed !== state.seed || checkpoint.voyageRules !== state.voyageRules || checkpoint.currentRotation !== state.currentRotation) return false;
+  }
   if (state.status === 'playing' && value.undo.length !== budget - state.actions) return false;
   if (!value.undo.every((snapshot, index) => validateGameState(snapshot) && snapshot.campaignMap === state.campaignMap && snapshot.seed === state.seed && snapshot.tide === state.tide && snapshot.integrity === state.integrity && snapshot.status === 'playing' && snapshot.actions === budget - index && snapshot.actions > state.actions)) return false;
   if (value.undo.length > 0 && state.status !== 'playing') return false;
@@ -74,7 +78,7 @@ export function initialSession(): SavedSession {
       const parsed: unknown = JSON.parse(raw);
       if (validateSession(parsed)) {
         if (!urlSeed || parsed.state.seed === urlSeed) return parsed;
-        return { ...parsed, state: createGame(urlSeed), undo: [], seenIntro: true };
+        return { ...parsed, state: createGame(urlSeed), undo: [], seenIntro: true, finaleCheckpoint: undefined };
       }
     }
   } catch { /* A blocked or damaged local save must never prevent play. */ }

@@ -15,6 +15,9 @@ import { CAMPAIGN_MAPS, createCampaignGame } from './game/campaign';
 import { CampaignScreen } from './ui/CampaignScreen';
 import { OutcomeEffect } from './ui/OutcomeEffect';
 import { recordCampaignWin, lossExplanation } from './ui/campaignProgress';
+import { getFinaleAdvice } from './game/finaleAdvice';
+import { finalTideCheckpoint, replanFinalTide } from './ui/finaleRecovery';
+import { FinaleCheck } from './ui/FinaleCheck';
 import './styles.css';
 import './ui/roadmap.css';
 import './ui/campaign.css';
@@ -58,7 +61,7 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(() => game.islands.find(island => island.kind === 'bell')?.id || null);
   const [mode, setMode] = useState<'tow' | 'build' | null>(null);
   const [preview, setPreview] = useState(false);
-  const [modal, setModal] = useState<'start' | 'intro' | 'help' | 'settings' | 'restart' | 'medals' | 'tides' | 'whale' | null>('start');
+  const [modal, setModal] = useState<'start' | 'intro' | 'help' | 'settings' | 'restart' | 'medals' | 'tides' | 'whale' | 'finale' | 'finalWarning' | null>('start');
   const [resultOpen, setResultOpen] = useState(game.status !== 'playing');
   const [outcome, setOutcome] = useState<'won' | 'lost' | null>(null);
   const campaignCompleted = session.campaignCompleted ?? 0;
@@ -92,6 +95,8 @@ export default function App() {
   const allConnected = connectedBells === bells.length;
   const moonwake = game.voyageRules === 'moonwake';
   const finalConditions = getVictoryConditions(forecast.state);
+  const finaleAdvice = useMemo(() => getFinaleAdvice(game), [game]);
+  const suggestedRescue = finaleAdvice.find(info => info.rescue?.id === selectedId)?.rescue;
   const finalNeeds = [!finalConditions.grown && 'growth 3', !finalConditions.connected && 'a Heart link', !finalConditions.sheltered && 'shelter', !finalConditions.rested && 'less stress', forecast.state.integrity === 0 && 'a surviving Heart'].filter(Boolean).join(' · ');
   const active = game.status === 'playing' && !advancing && !outcome;
   const encounter = getWhaleEncounter(game);
@@ -202,11 +207,17 @@ export default function App() {
   }
   function advance() {
     if (!active || modal || resultOpen) return;
+    if (game.tide === game.maxTides && forecast.state.status === 'lost') { setModal('finalWarning'); return; }
+    commitTide();
+  }
+  function commitTide() {
+    if (!active || resultOpen) return;
+    setModal(null);
     showSpend('advance', game, forecast.state);
     setMode(null); setAdvancing(true); chime('tide');
     advanceTimer.current = setTimeout(() => {
       const result = resolveTide(game);
-      setSession(previous => ({ ...previous, state: result.state, undo: [], campaignCompleted: recordCampaignWin(previous.campaignCompleted ?? 0, result.state) }));
+      setSession(previous => ({ ...previous, state: result.state, undo: [], finaleCheckpoint: finalTideCheckpoint(previous, result.state), campaignCompleted: recordCampaignWin(previous.campaignCompleted ?? 0, result.state) }));
       setAdvancing(false);
       if (result.state.status !== 'playing') { setFeedback(null); setToast(''); setOutcome(result.state.status); chime(result.state.status === 'won' ? 'win' : 'loss'); }
       else announce(result.events[0] || 'The sea has rearranged a few things.');
@@ -224,11 +235,21 @@ export default function App() {
   function startVoyage(state: typeof game) {
     if (advanceTimer.current) clearTimeout(advanceTimer.current);
     setOutcome(null);
-    setSession(previous => ({ ...previous, state, undo: [], seenIntro: true }));
+    setSession(previous => ({ ...previous, state, undo: [], seenIntro: true, finaleCheckpoint: undefined }));
     setSelectedId(state.islands.find(island => island.kind === 'bell')?.id || null);
     setSeedDraft(state.seed); setModal(null); setResultOpen(false); setMode(null); setPreview(false); setAdvancing(false); setToast('');
     setFeedback(null); setFocusPanel(null); taught.current.clear();
     updateSeedUrl(state.campaignMap ? '' : state.seed); chime('tide');
+  }
+  function retryFinalTide() {
+    const restored = replanFinalTide(session);
+    if (!restored) return;
+    setSession(restored); setResultOpen(false); setOutcome(null); setModal('finale'); setFeedback(null); setToast(''); setMode(null); setPreview(true);
+    setSelectedId(restored.state.islands.find(island => island.kind === 'bell')?.id || null);
+  }
+  function planRescue(command: Command) {
+    setSelectedId(command.id); setModal(null); setMode(command.type === 'tow' ? 'tow' : command.type === 'build' ? 'build' : null); setPreview(false); setShowIslands(false);
+    if (seaFocus) setFocusPanel('selected');
   }
   function finishIntro() { setSession(previous => ({ ...previous, seenIntro: true })); setModal(null); }
   function setting<K extends keyof Settings>(key: K, value: Settings[K]) { setSession(previous => ({ ...previous, settings: { ...previous.settings, [key]: value } })); }
@@ -254,7 +275,6 @@ export default function App() {
 
   const shortage = forecast.state.food === 0 && forecast.foodDelta < 0;
   const atRisk = forecast.state.integrity < game.integrity;
-  const mature = bells.every(island => island.growth === 3);
   const flourishing = growthTotal(game);
   const flourishTitle = medalName(flourishing >= 6 ? 3 : flourishing >= 3 ? 2 : 1);
   const helpContent = <>
@@ -302,9 +322,9 @@ export default function App() {
       <aside className={`objective-panel panel ${bells.length > 1 ? 'campaign-objective' : ''}`}>
         <div className="panel-heading"><span className="eyebrow">{campaignMap ? `MAP ${campaignMap.id} · THE GRAND PLAN` : 'THE LITTLE GRAND PLAN'}</span><Bell size={16} /></div>
         <h2>{bells.length === 1 ? <>A bell against<br />the impossible.</> : <>A choir of {bells.length}.</>}</h2><p>Grow {bells.length === 1 ? 'the bell' : 'every bell'}. Bring {bells.length === 1 ? 'it' : 'them'} home.<br />{moonwake ? 'Shelter every voice on tide 8.' : 'Weather the final tide together.'}</p>
-        <div className="campaign-objectives">{bells.map(island => { const linked = getIslandStats(game, island.id).connected; return <button className={`campaign-bell ${selectedId === island.id ? 'selected' : ''}`} key={island.id} onClick={() => selectIsland(island.id)} aria-label={`Select ${island.name}. Growth ${island.growth} of 3.`}><Bell size={17} /><span>{island.name}<small>{linked ? 'Linked to the Heart' : 'Heart link missing'}{island.nourished ? ' · growth queued' : ''}</small></span><strong>{island.growth}/3</strong></button>; })}</div>
+        <div className="campaign-objectives">{bells.map(island => { const info = finaleAdvice.find(item => item.bellId === island.id)!; const safe = (!moonwake || info.sheltered && info.rested) && info.connected; return <button className={`campaign-bell ${selectedId === island.id ? 'selected' : ''} ${safe ? '' : 'needs-shelter'}`} key={island.id} onClick={() => selectIsland(island.id)} aria-label={`Select ${island.name}. Growth ${island.growth} of 3.${island.nourished ? ' Growth queued.' : ''} ${moonwake ? `After tide: ${info.sheltered ? 'sheltered' : 'exposed'}, stress ${info.forecastStress}.` : ''}`}><Bell size={17} /><span>{island.name}<small>{info.connected ? 'Home' : 'Adrift'}{moonwake && ` · ${info.sheltered ? 'sheltered' : 'EXPOSED'} · stress ${info.forecastStress}`}</small></span><strong>{island.growth}/3{island.nourished && <small className="queued-growth">+ queued</small>}</strong></button>; })}</div>
         <div className="flourishing-progress"><span><Sprout size={12} />Flourishing shores</span><strong>{flourishing}<small> / 6</small></strong><div><i style={{ width: `${Math.min(100, flourishing / 6 * 100)}%` }} /></div></div>
-        <div className="objective-bottom"><span>{moonwake ? game.tide === 8 ? finalConditions.ready ? 'The forecast says: ready to ring.' : 'Check every bell’s final shelter.' : mature ? 'Grown. Now keep a harbour.' : 'Tide chart: surges on 5 and 7.' : mature && allConnected ? 'Ready for the last tide' : 'Stay curious. Stay afloat.'}</span><Sparkles size={13} /></div>
+        <div className="objective-bottom"><button className="finale-inspector" onClick={() => setModal('finale')}>After-tide bell checks<ArrowRight size={12} /></button></div>
       </aside>
       <div className="island-browser"><button className={`island-browser-toggle ${showIslands ? 'open' : ''}`} onClick={() => setShowIslands(value => !value)} aria-expanded={showIslands}><Menu size={15} /><span>Your {game.islands.length} little islands</span><ChevronDown size={14} /></button>{showIslands && <div className="island-list panel" aria-label="Select an island">{game.islands.map((island, index) => <button key={island.id} onClick={() => selectIsland(island.id)} className={selectedId === island.id ? 'selected' : ''}><span className="island-number">{index + 1}</span>{island.kind === 'bell' ? <Bell size={15} /> : island.kind === 'heart' ? <Heart size={15} /> : <Sprout size={15} />}<span>{island.name}</span>{selectedId === island.id && <Check size={14} />}</button>)}</div>}</div>
       </div>
@@ -318,7 +338,7 @@ export default function App() {
         {encounter && !encounter.used && encounter.offers.length > 0 && game.actions > 0 && <><label className="sr-only" htmlFor="whale-island">Choose island for Whale Tow</label><select id="whale-island" value={offer ? selectedId! : ''} disabled={!active} onChange={event => selectIsland(event.target.value)}><option value="" disabled>Choose an eligible island…</option>{encounter.offers.map(item => <option key={item.id} value={item.id}>{game.islands.find(island => island.id === item.id)?.name}</option>)}</select></>}
       </aside>}</div>
       {preview && <div className="preview-banner"><Eye size={15} /><span>Tomorrow, for a moment.</span><span className="preview-banner-detail">Ghosts show the next tide. Nothing has moved yet.</span></div>}
-      {mode === 'tow' && <div className="mode-banner"><Move size={16} /><span>Choose a lit patch of water</span><button onClick={() => setMode(null)} aria-label="Cancel towing"><X size={15} /></button></div>}
+      {mode === 'tow' && <div className="mode-banner"><Move size={16} /><span>{suggestedRescue?.type === 'tow' && selected ? `Suggested: ${directionName({ q: suggestedRescue.to.q - selected.q, r: suggestedRescue.to.r - selected.r })} (${suggestedRescue.to.q}, ${suggestedRescue.to.r}) · 1 food` : 'Choose a lit patch of water'}</span><button onClick={() => setMode(null)} aria-label="Cancel towing"><X size={15} /></button></div>}
       {toast && <div className="toast" role="status"><Sparkles size={15} /><span>{toast}</span><button onClick={() => setToast('')} aria-label="Dismiss notification"><X size={14} /></button></div>}
       {feedback && !modal && !resultOpen && !outcome && <div key={feedback.key} className="resource-callout" role="status" style={{ left: feedback.x, top: feedback.y }}><button aria-label="Dismiss resource feedback" onClick={() => setFeedback(null)}><X size={13} /></button><strong>{feedback.title}</strong><span>{feedback.detail}</span><small>{feedback.balance}</small></div>}
 
@@ -329,12 +349,12 @@ export default function App() {
             <div className="selected-stats"><span><Leaf size={13} /><strong>{stats.food}</strong><small>food / tide</small></span><span><Trees size={13} /><strong>{stats.timber}</strong><small>timber / tide</small></span><span className="mini-growth" title={`Growth ${selected.growth} of 3`}><Sprout size={13} />{[1, 2, 3].map(value => <i key={value} className={selected.growth >= value ? 'filled' : ''} />)}</span></div>
             {selected.nourished && <div className="nourished-note"><Sparkles size={12} />Nourished · waiting for a gentle tide</div>}
             {preview && nextSelected && <div className="next-position">Next tide: ({nextSelected.q}, {nextSelected.r}) · growth {nextSelected.growth}/3</div>}
-            {mode === 'tow' && <div className="tow-directions" aria-label="Keyboard accessible tow destinations">{towTargets.map(target => <button key={`${target.q},${target.r}`} onClick={() => execute({ type: 'tow', id: selected.id, to: target })}>{directionName({ q: target.q - selected.q, r: target.r - selected.r })}<span>{target.q}, {target.r}</span></button>)}</div>}
+            {mode === 'tow' && <div className="tow-directions" aria-label="Keyboard accessible tow destinations">{towTargets.map(target => <button className={suggestedRescue?.type === 'tow' && suggestedRescue.to.q === target.q && suggestedRescue.to.r === target.r ? 'suggested-rescue' : undefined} key={`${target.q},${target.r}`} onClick={() => execute({ type: 'tow', id: selected.id, to: target })}>{directionName({ q: target.q - selected.q, r: target.r - selected.r })}<span>{target.q}, {target.r}</span></button>)}</div>}
           </> : <p className="empty-selection">Choose an island.<br /><em>They all have their reasons.</em></p>}
         </section>
 
         <section className="action-area" aria-label="Island actions">
-          {mode === 'build' && selected && <div className="build-menu panel"><div className="panel-heading"><span className="eyebrow">A LITTLE ROOM FOR SOMETHING</span><button className="icon-button" onClick={() => setMode(null)} aria-label="Close building choices"><X size={15} /></button></div>{BUILDINGS.map(building => <button key={building.id} disabled={!canCommand({ type: 'build', id: selected.id, building: building.id })} onClick={() => execute({ type: 'build', id: selected.id, building: building.id })}><span className="build-icon"><building.icon size={22} strokeWidth={1.4} /></span><span><strong>{building.name}</strong><small>{building.description}</small></span><span className="build-cost">3<Trees size={13} /></span></button>)}</div>}
+          {mode === 'build' && selected && <div className="build-menu panel"><div className="panel-heading"><span className="eyebrow">A LITTLE ROOM FOR SOMETHING</span><button className="icon-button" onClick={() => setMode(null)} aria-label="Close building choices"><X size={15} /></button></div>{BUILDINGS.map(building => <button className={suggestedRescue?.type === 'build' && suggestedRescue.building === building.id ? 'suggested-rescue' : undefined} key={building.id} disabled={!canCommand({ type: 'build', id: selected.id, building: building.id })} onClick={() => execute({ type: 'build', id: selected.id, building: building.id })}><span className="build-icon"><building.icon size={22} strokeWidth={1.4} /></span><span><strong>{building.name}{suggestedRescue?.type === 'build' && suggestedRescue.building === building.id ? ' · suggested' : ''}</strong><small>{building.description}</small></span><span className="build-cost">3<Trees size={13} /></span></button>)}</div>}
           <div className="action-heading"><span className="eyebrow">ACTIONS THIS TIDE</span><div className="action-pips" aria-label={`${game.actions} of ${actionBudget} actions remaining`}>{Array.from({ length: actionBudget }, (_, index) => index + 1).map(value => <i key={value} className={game.actions >= value ? 'available' : ''} />)}<span>{game.actions} / {actionBudget}</span></div><button className="undo-button" onClick={undo} disabled={!active || session.undo.length === 0} title="Undo last action (Ctrl Z)" aria-label="Undo last action"><Undo2 size={15} /></button></div>
           <div className="action-dock with-whale">
             <button className={`action-button ${mode === 'tow' ? 'active' : ''}`} aria-label="Tow island" aria-describedby="tow-cost tow-purpose" disabled={!canTow} onClick={() => setMode(value => value === 'tow' ? null : 'tow')} title={selected?.kind === 'heart' ? 'The heart stays in place' : ACTION_COPY.tow.detail}><Move size={22} strokeWidth={1.3} /><strong>Tow</strong><span id="tow-cost">−1 food now</span><small id="tow-purpose">Move one hex</small></button>
@@ -348,7 +368,7 @@ export default function App() {
         <section className="advance-area" aria-label="Advance tide"><div className="forecast-resources"><span className="eyebrow">AFTER THE TIDE</span><span className={forecast.foodDelta < 0 ? 'negative' : ''}><Leaf size={13} />{forecast.state.food}<small>({signed(forecast.foodDelta)})</small></span><span className={forecast.timberDelta < 0 ? 'negative' : ''}><Trees size={13} />{forecast.state.timber}<small>({signed(forecast.timberDelta)})</small></span></div>
           {(atRisk || shortage) && <p className="forecast-warning"><Heart size={12} />{atRisk ? 'The heart will take damage' : 'Food reserves will run out'}</p>}
           {game.status === 'playing' && <div className="tide-economy" aria-label="Food after the tide"><span>{game.food} stored + {forecast.production.food} grown <strong>−2 rations</strong></span><span>= {forecast.state.food} food after tide</span></div>}
-          {moonwake && game.status === 'playing' && game.tide >= 4 && <p className={`bell-outlook ${game.tide === 8 ? finalConditions.ready ? 'ready' : 'needs-care' : !bells.every(island => forecast.connectedIds.includes(island.id)) ? 'needs-care' : ''}`} role="status">{game.tide === 8 ? finalConditions.ready ? 'After tide: every bell will ring' : `After tide: needs ${finalNeeds}` : `After tide: ${bells.filter(island => forecast.connectedIds.includes(island.id)).length}/${bells.length} bells linked to the Heart`}</p>}
+          {moonwake && game.status === 'playing' && game.tide >= 4 && <button onClick={() => setModal('finale')} className={`bell-outlook ${game.tide === 8 ? finalConditions.ready ? 'ready' : 'needs-care' : !bells.every(island => forecast.connectedIds.includes(island.id)) ? 'needs-care' : ''}`}>{game.tide === 8 ? finalConditions.ready ? 'Final tide: every bell will ring' : `DEFEAT forecast · check ${finalNeeds}` : `After tide: ${bells.filter(island => forecast.connectedIds.includes(island.id)).length}/${bells.length} bells linked to the Heart`}</button>}
           {game.status === 'playing' ? <button className="advance-button" aria-describedby="rations-cost" onClick={advance} disabled={!active}><span><small>{advancing ? 'A MOMENT, PLEASE' : game.tide === game.maxTides ? 'HERE COMES THE GREAT TIDE' : 'WHEN YOU’RE READY'}</small><strong>{advancing ? 'The sea is thinking…' : 'Advance tide'}</strong></span><ArrowRight size={25} strokeWidth={1.3} /></button> : <button className="advance-button" disabled={!!outcome} onClick={() => setResultOpen(true)}><span><small>THE VOYAGE IS COMPLETE</small><strong>{game.status === 'won' ? 'Victory · view result' : 'Defeat · view result'}</strong></span><Flag size={22} /></button>}
           <p id="rations-cost" className="advance-footnote">{game.status === 'playing' ? <>−2 food when the tide ends · town rations <kbd>↵</kbd></> : 'Every ending is another possible shore.'}</p>
         </section>
@@ -359,6 +379,11 @@ export default function App() {
     {outcome && <OutcomeEffect status={outcome} reducedMotion={session.settings.reducedMotion} onComplete={() => { setOutcome(null); setResultOpen(true); }} />}
     {modal === 'start' && <Modal label="The Unreasonable Archipelago campaign" className="start-modal"><CampaignScreen state={game} completed={campaignCompleted} resumable={session.seenIntro} onResume={() => { setModal(null); if (game.status !== 'playing') setResultOpen(true); }} onMap={startCampaignMap} onFreeVoyage={() => { setSeedDraft('tide-' + crypto.randomUUID().slice(0, 8)); setModal('restart'); }} /></Modal>}
     {(modal === 'intro' || modal === 'help') && <Modal label={modal === 'intro' ? 'Welcome to the Unreasonable Archipelago' : 'How to play'} onClose={modal === 'intro' ? undefined : () => setModal(null)} className="guide-modal">{helpContent}</Modal>}
+    {(modal === 'finale' || modal === 'finalWarning') && <Modal label={modal === 'finalWarning' ? 'Final tide warning' : 'Bell safety check'} onClose={() => setModal(null)} className="finale-check-modal">
+      <FinaleCheck state={game} advice={finaleAdvice} warning={modal === 'finalWarning'} onPlan={planRescue} />
+      <button className="primary-button wide" onClick={() => { setModal(null); setPreview(true); }}>Keep planning<ArrowRight size={16} /></button>
+      {modal === 'finalWarning' && <button className="text-button final-accept" onClick={commitTide}>Advance anyway · accept defeat</button>}
+    </Modal>}
     {modal === 'tides' && <Modal label="Tide chart" onClose={() => setModal(null)} className="tide-chart-modal"><TideChart state={game} /><button className="primary-button wide" onClick={() => setModal(null)}>Back to the water<ArrowRight size={16} /></button></Modal>}
     {modal === 'whale' && <Modal label="How Whale Tow works" onClose={() => setModal(null)} className="guide-modal">
       <div className="modal-emblem"><Waves size={30} strokeWidth={1.2} /></div><p className="eyebrow">ONE FAVOUR PER VISIT</p><h2>Whale Tow.<br /><em>A lift towards home.</em></h2>
@@ -386,6 +411,7 @@ export default function App() {
       })}</div>
       <p className="flourish-title"><Sprout size={14} />{game.status === 'won' ? flourishTitle : 'Your flourishing shores'}<span>{flourishing} shore growth · Heart {game.integrity}/5</span></p>
       {game.status === 'won' && game.campaignMap && game.campaignMap < 8 && <p className="campaign-unlock">Map {game.campaignMap + 1} unlocked.{game.campaignMap % 2 === 0 ? ' The fleet grows: +1 bell, +2 islands, +1 action per tide.' : ' A different shore is waiting.'}</p>}
+      {game.status === 'lost' && session.finaleCheckpoint && <div className="finale-retry"><p>First Light is a learning sea. Replan tide 8 with your original resources and actions.</p><button className="primary-button wide" onClick={retryFinalTide}><Undo2 size={16} />Replan the final tide</button></div>}
       <div className="dialog-buttons"><button className="secondary-button" onClick={() => newVoyage(game.seed)}><RotateCcw size={15} />{game.campaignMap ? 'Retry this map' : 'Try this seed again'}</button><button className="primary-button" onClick={() => game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? startCampaignMap(game.campaignMap + 1) : setModal('start')}>{game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? `Sail to map ${game.campaignMap + 1}` : 'Campaign chart'}<ArrowRight size={16} /></button></div>
       <button className="text-button" onClick={() => setResultOpen(false)}>Linger over the islands</button>
     </Modal>}
