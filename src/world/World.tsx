@@ -416,20 +416,32 @@ export default function World(props:WorldProps) {
         if (island.building === 'garden') yields.push(production.food === currentStats.food ? `Produces ${production.food} food` : `Food ${currentStats.food} → ${production.food}`);
         if (island.building === 'grove') yields.push(production.timber === currentStats.timber ? `Produces ${production.timber} timber` : `Timber ${currentStats.timber} → ${production.timber}`);
         if (island.kind === 'bell') yields.push(next.forecast.connectedIds.includes(island.id) ? 'Linked to Heart after tide' : 'Heart link missing');
+        const finalBellRule = island.kind === 'bell' && 'voyageRules' in next.state && next.state.voyageRules === 'moonwake' && next.state.status === 'playing';
+        const finalBellForecast = finalBellRule && next.state.tide === next.state.maxTides;
+        const finalSheltered = next.forecast.shelteredIds.includes(island.id);
+        const finalBellUnsafe = finalBellForecast && (!finalSheltered || after.stress >= 3);
+        const finalReadiness = finalBellForecast
+          ? `Final shelter: ${finalSheltered ? 'safe' : 'exposed'}${finalSheltered && after.stress >= 3 ? ' · stress too high' : ''}`
+          : finalBellRule && next.state.tide >= 4 && next.preview ? 'Final bell needs shelter' : '';
         const name = document.createElement('span'); name.className = 'island-label-name'; name.textContent = island.name;
         view.label.replaceChildren(name);
-        const details = (next.preview || island.id === next.selectedId) && next.state.status === 'playing';
+        const details = (next.preview || island.id === next.selectedId || finalBellForecast) && next.state.status === 'playing';
         if (details) {
           const summary = document.createElement('span'); summary.className = 'island-forecast-text';
           const selected = island.id === next.selectedId;
           const compactChanges = changes.filter(change => !change.includes('after drift')).map(change => change.replace('Drifts next tide', 'Drifts').replace('Anchored this tide', 'Anchored'));
           const line = document.createElement('span'); line.textContent = selected ? (changes.length ? changes.join(' · ') : 'Holds position') : (compactChanges.join(' · ') || 'Holds position'); summary.append(line);
           if (yields.length) { const yieldLine = document.createElement('span'); yieldLine.textContent = yields.map(yieldText => selected ? yieldText : yieldText.replace('Produces ', '+').replace('Linked to Heart after tide', 'Heart linked')).join(' · '); summary.append(yieldLine); }
+          if (finalReadiness) {
+            const readiness = document.createElement('span'); readiness.className = `island-final-readiness${finalBellUnsafe ? ' is-unsafe' : finalBellForecast ? ' is-safe' : ''}`;
+            readiness.textContent = finalReadiness; summary.append(readiness);
+          }
           view.label.append(summary);
         }
         const connection = next.forecast.connectedIds.includes(island.id) ? 'connected to Heart' : 'disconnected from Heart';
-        const accessibility = next.state.status === 'playing' ? `. After the tide: ${[...changes, ...yields, connection].join('. ')}` : '';
+        const accessibility = next.state.status === 'playing' ? `. After the tide: ${[...changes, ...yields, connection, ...(finalReadiness ? [finalReadiness] : [])].join('. ')}` : '';
         view.label.classList.toggle('is-selected',island.id===next.selectedId);view.label.classList.toggle('is-bell',island.kind==='bell');view.label.classList.toggle('is-stressed',after.stress>=3);view.label.classList.toggle('has-forecast',details);view.label.classList.toggle('is-blocked',Boolean(move?.blocked));
+        view.label.classList.toggle('is-final-unsafe', finalBellUnsafe);
         view.label.setAttribute('aria-label',`Select ${island.name}, ${island.kind==='ordinary'?(island.building||'undeveloped island'):island.kind+' island'}${accessibility}`);view.label.setAttribute('aria-pressed',String(island.id===next.selectedId));
         view.width=view.label.offsetWidth;view.height=view.label.offsetHeight;
       }

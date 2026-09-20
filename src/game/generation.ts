@@ -17,6 +17,7 @@ export type GeneratedOpening = {
 type CurrentState = GameState & { currentRotation?: number };
 const DIRECTIONS: Hex[] = [{ q: 1, r: 0 }, { q: 1, r: -1 }, { q: 0, r: -1 }, { q: -1, r: 0 }, { q: -1, r: 1 }, { q: 0, r: 1 }];
 const radius = ({ q, r }: Hex) => Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
+const distance = (a: Hex, b: Hex) => radius({ q: a.q - b.q, r: a.r - b.r });
 const key = ({ q, r }: Hex) => `${q},${r}`;
 const cloneState = (state: GameState): GameState => structuredClone(state);
 const cloneOpening = (opening: GeneratedOpening): GeneratedOpening => structuredClone(opening);
@@ -103,10 +104,82 @@ function routeToHeart(state: GameState): Hex[] | null {
   return null;
 }
 
+type RouteNode = { state: GameState; commands: Command[] };
+
+function towCommands(state: GameState, id: string): Command[] {
+  const island = state.islands.find(item => item.id === id);
+  if (!island || state.food < 1) return [];
+  return DIRECTIONS.map(direction => ({ q: island.q + direction.q, r: island.r + direction.r }))
+    .filter(to => radius(to) <= 4 && !state.islands.some(other => key(other) === key(to)))
+    .map(to => ({ type: 'tow', id, to }));
+}
+
+/** Find a legal final shelter without turning seed entry into an expensive game-tree search. */
+function finishInShelter(state: GameState, bellId: string, engine: OpeningEngine): Command[] | null {
+  if (engine.resolveTide(state).state.status === 'won') return [];
+  const bell = state.islands.find(island => island.id === bellId)!;
+  if (bell.growth < 2 || (bell.growth < 3 && !bell.nourished)) return null;
+  // Most harbours need only a bell tow. Paths to the same hex have identical consequences on
+  // this motionless final tide, so breadth-first search visits each destination at most once.
+  const visited = new Set([key(bell)]);
+  const queue: RouteNode[] = [{ state, commands: [] }];
+  for (let index = 0; index < queue.length; index++) {
+    const node = queue[index];
+    if (!node.state.actions) continue;
+    for (const command of towCommands(node.state, bellId)) {
+      if (command.type !== 'tow' || visited.has(key(command.to))) continue;
+      const result = engine.applyCommand(node.state, command);
+      if (result.error) continue;
+      visited.add(key(command.to));
+      const commands = [...node.commands, command];
+      if (engine.resolveTide(result.state).state.status === 'won') return commands;
+      queue.push({ state: result.state, commands });
+    }
+  }
+
+  // Crowded shores can require moving a shelter provider or extending its reach. A small beam
+  // explores those genuine player commands, always checking victory with the production rules.
+  const fingerprint = (value: GameState) => value.islands.map(island => `${key(island)}:${island.building ?? '-'}`).join('|');
+  const seen = new Set([fingerprint(state)]);
+  let beam: RouteNode[] = [{ state, commands: [] }];
+  for (let depth = 0; depth < state.actions; depth++) {
+    const candidates: (RouteNode & { score: number })[] = [];
+    for (const node of beam) {
+      for (const island of node.state.islands) {
+        if (island.kind === 'heart') continue;
+        const commands = towCommands(node.state, island.id);
+        if (island.kind === 'ordinary' && island.building !== 'breakwater' && node.state.timber >= 3)
+          commands.push({ type: 'build', id: island.id, building: 'breakwater' });
+        for (const command of commands) {
+          const result = engine.applyCommand(node.state, command);
+          if (result.error) continue;
+          const signature = fingerprint(result.state);
+          if (seen.has(signature)) continue;
+          seen.add(signature);
+          const sequence = [...node.commands, command];
+          const forecast = engine.resolveTide(result.state);
+          if (forecast.state.status === 'won') return sequence;
+          const finalBell = forecast.state.islands.find(item => item.id === bellId)!;
+          const connected = forecast.connectedIds.includes(bellId);
+          const sheltered = forecast.shelteredIds.includes(bellId);
+          const nearby = forecast.state.islands.filter(item => item.id !== bellId && distance(item, finalBell) === 1).length;
+          const score = Number(connected) * 40 + Number(sheltered) * 45 - finalBell.stress * 6
+            - radius(finalBell) * 3 + nearby * 2 + forecast.state.integrity;
+          candidates.push({ state: result.state, commands: sequence, score });
+        }
+      }
+    }
+    candidates.sort((a, b) => b.score - a.score);
+    beam = candidates.slice(0, 8);
+    if (!beam.length) break;
+  }
+  return null;
+}
+
 /**
  * Construct a small ordinary-command witness, then accept it only after all eight real tides win.
- * This is bounded route construction, not a search tree on the UI thread. The safe inner ring is
- * a consequence of the chapter's actual currents; if that rule changes, verification rejects it.
+ * Early turns use bounded route construction; moonwake's two surges are forecast before anchoring.
+ * Only the final shelter may need a small bounded search. Every witness must win the actual rules.
  */
 function winningRoute(opening: GameState, engine: OpeningEngine): Command[][] | null {
   let state = cloneState(opening);
@@ -140,6 +213,17 @@ function winningRoute(opening: GameState, engine: OpeningEngine): Command[][] | 
     }
     const bell = state.islands.find(island => island.id === bellId)!;
     if (state.actions && bell.growth < 3 && !bell.nourished) perform({ type: 'nourish', id: bellId });
+    if (state.voyageRules === 'moonwake') {
+      if ((tide === 5 || tide === 7) && state.actions) {
+        const afterDrift = engine.resolveTide(state).state.islands.find(island => island.id === bellId)!;
+        if (radius(afterDrift) > 1 && !perform({ type: 'anchor', id: bellId })) return null;
+      }
+      if (tide === opening.maxTides) {
+        const finish = finishInShelter(state, bellId, engine);
+        if (!finish) return null;
+        for (const command of finish) if (!perform(command)) return null;
+      }
+    }
     solution.push(commands);
     state = engine.resolveTide(state).state;
   }

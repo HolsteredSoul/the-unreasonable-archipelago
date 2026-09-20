@@ -10,6 +10,8 @@ export type GameState = {
   food: number; timber: number; integrity: number; actions: number;
   status: 'playing' | 'won' | 'lost'; islands: Island[]; log: string[];
   currentRotation?: number; whaleTowedId?: string | null;
+  /** Omission preserves voyages saved before the late-current rules. */
+  voyageRules?: 'moonwake';
 };
 export type Command =
   | { type: 'tow'; id: string; to: Hex }

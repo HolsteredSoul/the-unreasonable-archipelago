@@ -2,6 +2,23 @@
 
 Priorities reflect their effect on comprehension, spatial play, and the value of a second voyage.
 
+## Gameplay depth follow-up — implemented
+
+The original inner ring let a grown bell coast through the rest of the voyage. New voyages now have an outward surge on tide 5 and a fleet-wide crosscurrent on tide 7. The final bell must be mature, connected, sheltered, and below 3 stress. Existing actions and resources supply the responses: hold a harbour with anchors, ride the current and tow home, or move an ordinary island into a bridge and windbreak.
+
+- Keep the introductory geometry and a command-only reference route; preserve the rules of existing saves.
+- Telegraph the late currents through the optional tide chart and weather descriptions. Put exact final safety on the bell and the after-tide strip.
+- Verify alternative strategies and generated winning routes, rather than adding mandatory actions to every tide.
+- Check save/undo, failure/retry, and both desktop layouts with actual browser controls.
+
+This is a deliberately forgiving first chapter: a player who lets the introductory bell drift can still rescue it with one well-placed final tow. Higher medals compete for the spare actions. More demanding chapters should follow observation of real first-time play, rather than assuming that solvable routes establish fun.
+
+## Next evaluation and later scope
+
+1. Observe first-time players: can they explain the final shelter rule, predict the surge, and choose a recovery without instructions? Record confusion and retry choices.
+2. Tune difficulty from those observations; preserve a forgiving introductory sea and avoid anchor-only chores.
+3. Develop the larger multi-bell campaign, additional hazards, phone layout, wider device/audio/accessibility QA, and public hosting as subsequent slices.
+
 ## Roadmap implementation — complete
 
 All seven items below are implemented. The first checkpoint delivered resource feedback, on-water planning, sea focus, and saved medals. The second adds verified generated openings, the animated Blender whale with its optional tow, and an original adaptive piano score. See `verification.md` for automated and browser evidence. Player judgement of repeated-run enjoyment and musical fatigue remains a human playtest question, not an automated-test claim.

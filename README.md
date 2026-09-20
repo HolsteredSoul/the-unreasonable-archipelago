@@ -15,8 +15,9 @@ For a production build: `npm run build`, then `npm run preview`.
 Use an HTTP server; opening index.html directly from disk is unsupported.
 
 ## Your objective
-Nourish the Sleeping Bell three times, then keep it connected to the Heart through
-neighboring islands when the eighth tide resolves. Keep the Heart intact.
+Nourish the Sleeping Bell three times. When tide 8 resolves, it must be connected to
+the Heart through neighboring islands, sheltered from the final squall, and below
+3 stress. Keep the Heart intact.
 For an extra challenge, earn **Flourishing Shores** by developing six growth stages across your ordinary islands. Your final medal reflects how much of the archipelago flourishes.
 
 Each tide gives you three actions:
@@ -29,6 +30,13 @@ Each tide gives you three actions:
 The Heart is rooted and cannot move. Gardens like open water. Groves like neighbors.
 Breakwaters shield themselves and islands downstream. Calm tides permit growth everywhere.
 Pay two food per tide; shortages damage the Heart. Nourishment waits until conditions allow growth.
+
+The harbour changes after the opening: tide 5 pushes unanchored islands outward,
+and tide 7 carries them together in a crosscurrent while the Heart stays rooted.
+Spend timber to hold key islands, or ride the current and spend food reconnecting.
+An ordinary island can be both a bridge and a windbreak. Anchors stop drift, not storms.
+The optional **Tide chart** explains the later tides and this seed's final shelter direction.
+On tide 8, the forecast names any missing requirement or tells you the bell will ring.
 
 Use the preview before committing: ghost islands show movements, arrows show currents,
 and the tide panel shows the next weather and resource change. Undo only rewinds planning
@@ -52,7 +60,9 @@ The 13-island campaign, three-bell chorus, expanded hazards and phone layouts be
 `first-light` keeps the authored introductory layout. Other seeds change island positions,
 starting structures, and current patterns. Every generated opening is verified against the
 real simulator with a complete winning route. Settings show the new sea's characteristics
-before you set sail; existing saved voyages retain their original geometry.
+before you set sail; existing saved voyages retain their original geometry and rules.
+Saves made before the late-current update keep the original final objective. Restart
+or begin a new voyage to play the revised tides; previously earned medals remain saved.
 
 ## Development
 `npm test` verifies simulation and persistence.
@@ -70,6 +80,7 @@ before you set sail; existing saved voyages retain their original geometry.
 - src/ui/music.ts and music.worker.ts: original adaptive piano and instrument synthesis.
 - docs/verification.md: test evidence, browser playthroughs, and current limitations.
 - docs/roadmap-whale.jpg: actual gameplay with the whale encounter.
+- docs/late-voyage.jpg: the revised late-current chapter in the browser.
 - docs/concept.png: visual target, generated concept art (not a gameplay screenshot).
 
 No account, paid asset library, API key, backend, or runtime AI service is required.

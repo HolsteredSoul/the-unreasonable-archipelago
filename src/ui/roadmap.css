@@ -1,4 +1,17 @@
 /* Planning feedback sits close to its cause; sea focus leaves room for the map. */
+/* Keep the encounter below its weather card and above the turn controls. */
+.weather-stack{position:absolute;top:151px;right:24px;width:270px;display:flex;flex-direction:column;gap:8px}
+.game-app .weather-stack .weather-panel,.game-app .weather-stack .whale-encounter{position:relative;inset:auto;width:100%;transform:none;max-height:none}
+.weather-stack .weather-panel>.preview-button{display:none}
+.weather-stack .weather-meta{margin-top:12px;padding-bottom:12px}
+.sea-focus .weather-stack{top:212px;width:280px;z-index:6}
+.sea-focus.reveal-weather .weather-stack .weather-panel{top:auto}
+@media(min-width:1101px){.world-legend{left:calc(50% + 190px)}}
+@media(min-width:1600px){.weather-stack{top:181px;right:47px;width:290px}.world-legend{top:126px}}
+@media(min-width:801px) and (max-width:1100px){.world-legend{top:155px;left:50%;transform:translateX(-50%)}.preview-banner{top:191px}.weather-stack{right:18px;width:235px;top:191px}}
+@media(max-width:800px){.weather-stack{top:267px;right:12px;width:205px}.sea-focus .weather-stack{top:267px;width:230px}.world-legend{top:151px}}
+.bell-outlook{margin:0 0 8px;padding:8px 10px;border:1px solid #879e7245;border-radius:7px;background:#e8efdbed;font-size:11px;line-height:1.4;color:#3f6147}.bell-outlook.needs-care{color:#8f492f;background:#fae8cfed;border-color:#bf82575c}.bell-outlook.ready{color:#315c44;background:#dbead6ed}
+.tide-chart{padding:0;list-style:none;margin:20px 0;display:grid;gap:12px}.tide-chart li{display:flex;gap:13px;align-items:flex-start;padding:10px;border-left:2px solid #93a38544;border-radius:4px}.tide-chart li.current{border-color:#a48344;background:#e4e6d7}.tide-chart li>span{font:22px Georgia,serif;color:#9b885e;min-width:26px}.tide-chart strong{display:block;font-size:12px;margin-bottom:4px}.tide-chart p{font-size:11px;line-height:1.5;color:#546b51}.tide-chart-modal{max-width:540px}.tide-chart-modal h2{font-size:39px}.tide-chart-modal .modal-lead{font-size:11px;line-height:1.55}
 /* Translucent fills keep the paper look without repeatedly blurring the animated WebGL surface. */
 .hud .resources,.hud .panel,.hud .island-browser-toggle,.hud .preview-banner,.hud .mode-banner,.hud .action-dock,.hud .sea-toolbar button,.hud .sea-chips button,.world-labels .island-label{backdrop-filter:none}
 .whale-encounter{position:absolute;bottom:246px;left:50%;transform:translateX(-50%);width:440px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#dcefedf2;border:1px solid #87bbb3;pointer-events:auto;z-index:4}.whale-encounter>svg{flex-shrink:0;color:#416f72}.whale-encounter>div{flex:1}.whale-encounter strong{font-size:12px;color:#365c59}.whale-encounter p{font-size:11px;line-height:1.45;margin:4px 0 0;color:#476965}.whale-encounter button{font-size:11px;padding:9px;white-space:nowrap;flex-shrink:0}.opening-summary{padding:12px;background:#e3e8d7;border-left:3px solid #8a9d6c;font-size:12px;line-height:1.6;color:#3c5a41;margin:12px 0}.setting-row p{max-width:280px}

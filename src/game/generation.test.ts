@@ -20,6 +20,8 @@ describe('generated opening witnesses', () => {
     const bellDistances = new Set<number>();
     const families = new Set<string>();
     let buildRoutes = 0;
+    let lateRoutes = 0;
+    let shelterFinishes = 0;
     for (let seed = 0; seed < 400; seed++) {
       const source = template(`generated-sea-${seed}`);
       const original = JSON.stringify(source);
@@ -34,7 +36,9 @@ describe('generated opening witnesses', () => {
       const bell = generated.state.islands.find(island => island.kind === 'bell')!;
       bellDistances.add(Math.max(Math.abs(bell.q), Math.abs(bell.r), Math.abs(bell.q + bell.r)));
       families.add(generated.family);
-      if (generated.solution.flat().some(command => command.type === 'build')) buildRoutes++;
+      if (generated.solution.slice(0, 4).flat().some(command => command.type === 'build')) buildRoutes++;
+      if (generated.solution.slice(4).some(commands => commands.length > 0)) lateRoutes++;
+      if (generated.solution[7].some(command => command.type === 'tow' || command.type === 'build')) shelterFinishes++;
       // Start from the public game factory: never feed an already-generated state back as a template.
       // Names differ from the authored template, while the seed's geometry and economics must match.
       let state = createGame(source.seed);
@@ -61,6 +65,8 @@ describe('generated opening witnesses', () => {
       expect(state.integrity).toBeGreaterThan(0);
       expect(state.islands.find(island => island.kind === 'bell')?.growth).toBe(3);
       expect(getConnectedIds(state)).toContain(bell.id);
+      expect(resolveTide(state).shelteredIds).toContain(bell.id);
+      expect(state.islands.find(island => island.kind === 'bell')!.stress).toBeLessThan(3);
     }
     expect(layouts.size).toBeGreaterThan(380);
     expect(structures.size).toBeGreaterThan(25);
@@ -69,7 +75,28 @@ describe('generated opening witnesses', () => {
     expect(families.size).toBe(4);
     expect(buildRoutes).toBeGreaterThan(140);
     expect(buildRoutes).toBeLessThan(260);
+    expect(lateRoutes).toBeGreaterThan(380);
+    expect(shelterFinishes).toBeGreaterThan(100);
   }, 30000);
+
+  it('retains ordinary-command witnesses for voyages using the original rules', () => {
+    for (const seed of ['first-light', 'old-save', 'familiar-sea']) {
+      const source = template(seed);
+      delete source.voyageRules;
+      const generated = generateOpening(source, engine);
+      expect(generated.state.voyageRules).toBeUndefined();
+      let state = generated.state;
+      for (const commands of generated.solution) {
+        for (const command of commands) {
+          const result = applyCommand(state, command);
+          expect(result.error).toBeUndefined();
+          state = result.state;
+        }
+        state = resolveTide(state).state;
+      }
+      expect(state.status).toBe('won');
+    }
+  });
 
   it('does not let a caller mutate another restart or its cached solution', () => {
     const source = template('do-not-poison-the-sea');

@@ -1,5 +1,21 @@
 # First playable verification
 
+## Late-voyage decisions and sheltered finale
+
+20 September 2026. **67 tests pass across ten files**, including the 1,000-seed invariants and 400 complete generated winning routes. The production build and TypeScript checks pass; the existing Vite large-chunk advisory remains (approximately 276 KB gzipped JavaScript).
+
+New voyages use `voyageRules: 'moonwake'`. Tide 5 pushes unanchored islands radially outward; tide 7 carries them with the seed's crosswind, while the Heart stays rooted. Tide 8 requires a mature, connected, sheltered bell below 3 stress. Omitted rules preserve original saves, currents, victory conditions, and undo. Validation rejects unknown rules, mixed-rule undo histories, and new saves claiming an unsafe victory. Previously earned medals remain intact.
+
+The original introductory opening followed by five empty turns now loses. Two different command-only wins are regression-tested and were completed with real production-browser controls: hold the bell with anchors on tides 5 and 7, or let it ride both currents and tow a garden into a bridge and windbreak on tide 8. The latter keeps the bell offshore. A separate command-only simulation also reaches the top medal with six ordinary growth stages, 16 food, and 15 timber remaining.
+
+Generated witnesses use conservative anchors and a bounded final shelter search. Across a cold 400-seed probe, all four opening families remained represented, every witness took late actions, 216 repaired final shelter, and no fallback layouts were needed. Local generation timings: median 1.75 ms, p95 6.4 ms, maximum 20.9 ms. These timings are a local sample, not a cross-device guarantee.
+
+Headed Chromium production playthroughs covered both introductory strategies and generated seed `moonlit-teapot`, plus a complete defeat, reload, and retry. Verified tide-chart bearings and keyboard focus restoration, resource spending, same-tide undo after reload, forecast changes when a bridge is built or undone, safe/exposed map labels and their accessible descriptions, and exact final readiness. No JavaScript exceptions or failed HTTP responses occurred.
+
+Inspected actual screenshots at 1366×768 and 1920×1080. A first visual pass found the longer weather card overlapping the whale and the new toolbar overlapping the chart legend. The weather and encounter cards now flow vertically, the duplicate preview control is hidden, and the legend is separated from the toolbar. Final 1366×768 measurements on tides 5 and 7 leave 8 px between weather and whale and 15 px before the turn controls, with no horizontal overflow. `docs/late-voyage.jpg` shows the verified production build. No new rendering geometry or per-frame work was added.
+
+The introductory sea is still forgiving: riding the currents can be repaired with one final bell tow. This pass establishes consequences and alternative spatial solutions, not sustained campaign difficulty. Repeated-run enjoyment still requires human playtesting. The records below describe earlier checkpoints and their then-current rules.
+
 ## Completed roadmap: generated seas, whale encounters, and piano
 
 20 September 2026. All 54 tests pass across eight files: 14 core simulation, 6 generated-opening, 8 whale/current, 10 original save, 6 roadmap save, 3 medal, 4 planning, and 3 scenery-batching tests. Final command: `npm test -- --maxWorkers=1`. The heavy 1,000-seed invariant test has an explicit 30-second budget for concurrent desktop work. Generation tests replay 400 complete winning routes through the public game API, covering all six current rotations, three initial bell distances, and four structure families. Old fixed-layout saves are preserved without regeneration.

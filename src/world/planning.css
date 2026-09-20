@@ -14,6 +14,10 @@
 .island-label.is-selected { background: rgba(255, 240, 204, .98); border-color: #dcb675; }
 .island-label.is-blocked { border-bottom-color: #cc896e; }
 .island-forecast-text { display: grid; gap: 3px; margin-top: 4px; padding-top: 4px; border-top: 1px solid #315d4925; font-size: 10px; line-height: 1.35; font-weight: 500; letter-spacing: 0; }
+.island-final-readiness { font-weight: 650; color: #6d542d; }
+.island-final-readiness.is-safe { color: #285b42; }
+.island-final-readiness.is-unsafe { color: #913d2b; }
+.island-label.is-final-unsafe { background: #fce6d4; border-color: #b86b4f; }
 .world-map-note { position: absolute; top: 0; left: 0; max-width: 185px; padding: 4px 8px; border-radius: 6px; background: rgba(34, 73, 67, .9); color: #e7f7e3; font-size: 10px; line-height: 1.3; text-align: center; font-weight: 600; pointer-events: none; box-shadow: 0 2px 8px #163e4026; }
 .world-map-note.is-missing-link { color: #ffe7d8; border: 1px dashed #e9af94; }
 .world-map-note.is-destination { background: rgba(225, 244, 221, .87); color: #28564c; border: 1px dashed #9bcbaf; }

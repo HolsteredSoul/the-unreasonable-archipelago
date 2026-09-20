@@ -29,7 +29,7 @@ export function createGame(seed = 'first-light'): GameState {
     id, name, kind, q, r, building, growth: 0, stress: 0, nourished: false, anchored: false,
   });
   const opening: GameState = {
-    version: 1, seed, tide: 1, maxTides: 8, food: 10, timber: 9, integrity: 5, actions: RULES.actions, status: 'playing',
+    version: 1, seed, tide: 1, maxTides: 8, food: 10, timber: 9, integrity: 5, actions: RULES.actions, status: 'playing', voyageRules: 'moonwake',
     islands: [
       island('heart', 'The Heart', 'heart', 0, 0),
       island('bell', 'The Sleeping Bell', 'bell', 3, -1),
@@ -39,7 +39,7 @@ export function createGame(seed = 'first-light'): GameState {
       island('north', names[(offset + 3) % names.length], 'ordinary', 1, -2),
       island('west', names[(offset + 4) % names.length], 'ordinary', -2, 1),
     ],
-    log: ['The Moon requests its sea back. Grow the bell three times and connect it to the Heart by tide 8.'],
+    log: ['The Moon requests its sea back. Grow the bell three times; finish tide 8 connected to the Heart, sheltered, and below 3 stress.'],
   };
   return seed === 'first-light' ? opening : generateOpening(opening, { applyCommand, resolveTide }).state;
 }
@@ -57,6 +57,13 @@ export function getWeather(state: GameState): Weather {
     { name: 'The Final Tide', description: 'No drift. The final squall adds 2 stress to exposed islands. A mature bell must connect to the Heart.', direction: 2, storm: true, strength: 2 },
   ];
   const weather = schedule[Math.min(7, Math.max(0, state.tide - 1))];
+  if (state.voyageRules === 'moonwake') {
+    if (state.tide === 4) return { ...weather, description: 'Still water. Prepare for tide 5: the Moon pushes every drifting island outward. Anchor a harbour or plan a way home.', direction: (weather.direction + offset) % 6 };
+    if (state.tide === 5) return { ...weather, name: 'The Moon Exhales', description: 'Every unanchored island drifts outward from the Heart. Exposed islands gain 1 stress. Follow the arrows; blocked islands stay put.', direction: (weather.direction + offset) % 6 };
+    if (state.tide === 6) return { ...weather, description: 'Calm water and inward streams. Next tide, one crosscurrent carries the fleet with the wind; the Heart stays rooted.', direction: (weather.direction + offset) % 6 };
+    if (state.tide === 7) return { ...weather, name: 'The Sideways Sea', description: 'One crosscurrent carries all unanchored islands with the wind. The Heart stays put. Exposed islands gain 1 stress; check tomorrow’s connection.', direction: (3 + offset) % 6 };
+    if (state.tide === 8) return { ...weather, description: 'No drift. Exposed islands gain 2 stress. The mature bell must finish linked to the Heart, sheltered, and below 3 stress to ring.', direction: (weather.direction + offset) % 6 };
+  }
   const description = state.currentRotation && state.tide % 4 !== 0
     ? `${weather.storm ? `A squall adds ${weather.strength} stress to exposed islands.` : 'Calm water. A good tide to grow.'} This sea has rotated currents; follow the arrows on the water.`
     : weather.description;
@@ -70,6 +77,8 @@ function rotateHex(hex: Hex, turns: number): Hex {
 }
 
 function currentAt(state: GameState, island: Island): Hex {
+  if (island.kind === 'heart' || island.anchored || state.status !== 'playing') return { ...STILL };
+  if (state.voyageRules === 'moonwake' && state.tide === 7) return { ...DIRECTIONS[getWeather(state).direction] };
   const rotation = state.currentRotation ?? 0;
   const local = { ...island, ...rotateHex(island, 6 - rotation) };
   return rotateHex(unrotatedCurrent(state, local), rotation);
@@ -77,6 +86,11 @@ function currentAt(state: GameState, island: Island): Hex {
 
 function unrotatedCurrent(state: GameState, island: Island): Hex {
   if (island.kind === 'heart' || island.anchored || state.status !== 'playing') return { ...STILL };
+  if (state.voyageRules === 'moonwake' && state.tide === 5) {
+    // Nearest axial bearing in the hex grid's metric; fixed ordering breaks ties deterministically.
+    const projection = (direction: Hex) => 2 * island.q * direction.q + island.q * direction.r + island.r * direction.q + 2 * island.r * direction.r;
+    return { ...DIRECTIONS.reduce((best, direction) => projection(direction) > projection(best) ? direction : best, DIRECTIONS[0]) };
+  }
   switch (state.tide % 4) {
     case 1:
       if (island.q >= 2) return { q: 0, r: 1 };
@@ -136,6 +150,18 @@ export function getIslandStats(state: GameState, id: string): IslandStats {
     growthReady: island.nourished && island.growth < RULES.maxGrowth && sheltered && working,
     openSides: 6 - neighbors, current: currentAt(state, island),
   };
+}
+
+/** Evaluate the actual final arrangement, after drift, storm stress, and growth. */
+export function getVictoryConditions(state: GameState) {
+  const bells = state.islands.filter(island => island.kind === 'bell');
+  const connectedIds = getConnectedIds(state);
+  const grown = bells.length > 0 && bells.every(island => island.growth === RULES.maxGrowth);
+  const connected = bells.length > 0 && bells.every(island => connectedIds.includes(island.id));
+  const sheltered = bells.length > 0 && bells.every(island => isSheltered(state, island, getWeather({ ...state, tide: state.maxTides })));
+  const rested = bells.length > 0 && bells.every(island => island.stress < RULES.stressLimit);
+  const safe = state.voyageRules !== 'moonwake' || (sheltered && rested);
+  return { grown, connected, sheltered, rested, ready: grown && connected && safe && state.integrity > 0 };
 }
 
 export function getLegalTowTargets(state: GameState, id: string): Hex[] {
@@ -282,7 +308,7 @@ export function resolveTide(state: GameState): Forecast {
   for (const island of next.islands) {
     if (fed && island.nourished && island.growth < RULES.maxGrowth && island.stress < RULES.stressLimit && shelteredIds.includes(island.id)) {
       island.growth += 1; island.nourished = false;
-      events.push(island.kind === 'bell' && island.growth === RULES.maxGrowth ? 'The bell has flowered. Keep it connected to the Heart for the final tide.' : `${island.name} grew to stage ${island.growth} of 3.`);
+      events.push(island.kind === 'bell' && island.growth === RULES.maxGrowth ? state.voyageRules === 'moonwake' ? 'The bell has flowered. Bring it through the late currents; it needs a sheltered connection home on tide 8.' : 'The bell has flowered. Keep it connected to the Heart for the final tide.' : `${island.name} grew to stage ${island.growth} of 3.`);
     }
     island.anchored = false;
   }
@@ -290,10 +316,10 @@ export function resolveTide(state: GameState): Forecast {
   const connectedIds = getConnectedIds(next);
   if (next.integrity === 0) { next.status = 'lost'; events.push('The Heart went quiet. A fresh sea is waiting.'); }
   else if (state.tide >= state.maxTides) {
-    const bells = next.islands.filter(island => island.kind === 'bell');
-    const won = bells.length > 0 && bells.every(island => island.growth === RULES.maxGrowth && connectedIds.includes(island.id));
+    const conditions = getVictoryConditions(next);
+    const won = conditions.ready;
     next.status = won ? 'won' : 'lost';
-    events.push(won ? 'The bell rings. The Moon agrees to an extension. You saved this unreasonable archipelago.' : 'The final tide arrived before the bell was grown and connected. The Moon politely declines.');
+    events.push(won ? 'The bell rings. The Moon agrees to an extension. You saved this unreasonable archipelago.' : !conditions.grown || !conditions.connected ? 'The final tide arrived before the bell was grown and connected. The Moon politely declines.' : !conditions.sheltered ? 'The bell reached home, but the final squall drowned its voice. It needed shelter.' : 'The bell reached shelter with too much stress to ring. It needed time to recover.');
   } else next.tide += 1;
   next.actions = next.status === 'playing' ? RULES.actions : 0;
   next.whaleTowedId = null;
@@ -307,5 +333,5 @@ export function forecastTide(state: GameState): Forecast { return resolveTide(co
 export const FIRST_LIGHT_SOLUTION: Command[][] = [
   [{ type: 'tow', id: 'bell', to: { q: 2, r: -1 } }, { type: 'nourish', id: 'bell' }, { type: 'anchor', id: 'bell' }],
   [{ type: 'nourish', id: 'bell' }, { type: 'tow', id: 'bell', to: { q: 1, r: -1 } }],
-  [{ type: 'nourish', id: 'bell' }], [], [], [], [], [],
+  [{ type: 'nourish', id: 'bell' }], [], [{ type: 'anchor', id: 'bell' }], [], [{ type: 'anchor', id: 'bell' }], [],
 ];

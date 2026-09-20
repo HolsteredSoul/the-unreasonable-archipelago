@@ -1,4 +1,4 @@
-import { BOARD_RADIUS, createGame, getConnectedIds } from '../game';
+import { BOARD_RADIUS, createGame, getVictoryConditions } from '../game';
 import type { GameState, Island } from '../game/types';
 
 export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low'; seaFocus?: boolean; musicVolume?: number; effectsVolume?: number; musicEnabled?: boolean };
@@ -27,13 +27,13 @@ export function validateGameState(value: unknown): value is GameState {
   if (value.islands.filter(island => island.kind === 'heart').length !== 1 || value.islands.filter(island => island.kind === 'bell').length !== 1) return false;
   if (new Set(value.islands.map(island => island.id)).size !== value.islands.length || new Set(value.islands.map(island => `${island.q},${island.r}`)).size !== value.islands.length) return false;
   if (value.currentRotation !== undefined && !integer(value.currentRotation, 0, 5)) return false;
+  if (value.voyageRules !== undefined && value.voyageRules !== 'moonwake') return false;
   if (value.whaleTowedId !== undefined && value.whaleTowedId !== null && (!text(value.whaleTowedId, 100) || ![2, 5, 7].includes(value.tide) || value.status !== 'playing' || value.actions === 3 || !value.islands.some(island => island.id === value.whaleTowedId && island.kind !== 'heart'))) return false;
   if (!Array.isArray(value.log) || value.log.length > 1000 || !value.log.every(item => typeof item === 'string' && item.length <= 1000)) return false;
   if (value.status === 'playing' && value.integrity === 0) return false;
   if (value.status !== 'playing' && value.actions !== 0) return false;
   if (value.status === 'won') {
-    const bell = value.islands.find(island => island.kind === 'bell')!;
-    if (value.tide !== value.maxTides || value.integrity === 0 || bell.growth !== 3 || !getConnectedIds(value as unknown as GameState).includes(bell.id)) return false;
+    if (value.tide !== value.maxTides || !getVictoryConditions(value as unknown as GameState).ready) return false;
   }
   if (value.status === 'lost' && value.integrity > 0 && value.tide !== value.maxTides) return false;
   return true;
@@ -46,6 +46,7 @@ export function validateSession(value: unknown): value is SavedSession {
   if (!value.undo.every((snapshot, index) => validateGameState(snapshot) && snapshot.seed === state.seed && snapshot.tide === state.tide && snapshot.integrity === state.integrity && snapshot.status === 'playing' && snapshot.actions === 3 - index && snapshot.actions > state.actions)) return false;
   if (value.undo.length > 0 && state.status !== 'playing') return false;
   if (!value.undo.every(snapshot => ((snapshot as GameState).currentRotation ?? 0) === (state.currentRotation ?? 0))) return false;
+  if (!value.undo.every(snapshot => (snapshot as GameState).voyageRules === state.voyageRules)) return false;
   const history = [...value.undo as GameState[], state];
   if (history.some((snapshot, index) => index > 0 && history[index - 1].whaleTowedId && history[index - 1].whaleTowedId !== snapshot.whaleTowedId)) return false;
   if (!record(value.settings) || typeof value.settings.sound !== 'boolean' || typeof value.settings.reducedMotion !== 'boolean' || typeof value.settings.quality !== 'string' || !['high', 'low'].includes(value.settings.quality) || typeof value.seenIntro !== 'boolean') return false;
