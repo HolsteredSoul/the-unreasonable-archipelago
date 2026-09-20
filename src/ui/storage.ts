@@ -1,0 +1,76 @@
+import { BOARD_RADIUS, createGame, getConnectedIds } from '../game';
+import type { GameState, Island } from '../game/types';
+
+export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low' };
+export type SavedSession = { version: 1; state: GameState; undo: GameState[]; settings: Settings; seenIntro: boolean };
+const SAVE_KEY = 'unreasonable-archipelago.session.v1';
+const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
+const integer = (value: unknown, min: number, max: number): value is number => typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
+const text = (value: unknown, max: number): value is string => typeof value === 'string' && value.length > 0 && value.length <= max;
+
+function validIsland(value: unknown): value is Island {
+  if (!record(value) || !text(value.id, 100) || !text(value.name, 150)) return false;
+  if (typeof value.kind !== 'string' || !['heart', 'bell', 'ordinary'].includes(value.kind)) return false;
+  if (value.building !== null && (typeof value.building !== 'string' || !['garden', 'grove', 'breakwater'].includes(value.building))) return false;
+  if (value.kind !== 'ordinary' && value.building !== null) return false;
+  if (!integer(value.q, -BOARD_RADIUS, BOARD_RADIUS) || !integer(value.r, -BOARD_RADIUS, BOARD_RADIUS) || Math.abs(value.q + value.r) > BOARD_RADIUS) return false;
+  if (!integer(value.growth, 0, 3) || !integer(value.stress, 0, 5) || typeof value.nourished !== 'boolean' || typeof value.anchored !== 'boolean') return false;
+  if (value.kind === 'heart' && (value.id !== 'heart' || value.q !== 0 || value.r !== 0 || value.growth !== 0 || value.nourished)) return false;
+  return value.kind !== 'bell' || value.id === 'bell';
+}
+
+export function validateGameState(value: unknown): value is GameState {
+  if (!record(value) || value.version !== 1 || !text(value.seed, 100)) return false;
+  if (value.maxTides !== 8 || !integer(value.tide, 1, value.maxTides) || !integer(value.food, 0, 100000) || !integer(value.timber, 0, 100000)) return false;
+  if (!integer(value.integrity, 0, 5) || !integer(value.actions, 0, 3) || typeof value.status !== 'string' || !['playing', 'won', 'lost'].includes(value.status)) return false;
+  if (!Array.isArray(value.islands) || value.islands.length !== 7 || !value.islands.every(validIsland)) return false;
+  if (value.islands.filter(island => island.kind === 'heart').length !== 1 || value.islands.filter(island => island.kind === 'bell').length !== 1) return false;
+  if (new Set(value.islands.map(island => island.id)).size !== value.islands.length || new Set(value.islands.map(island => `${island.q},${island.r}`)).size !== value.islands.length) return false;
+  if (!Array.isArray(value.log) || value.log.length > 1000 || !value.log.every(item => typeof item === 'string' && item.length <= 1000)) return false;
+  if (value.status === 'playing' && value.integrity === 0) return false;
+  if (value.status !== 'playing' && value.actions !== 0) return false;
+  if (value.status === 'won') {
+    const bell = value.islands.find(island => island.kind === 'bell')!;
+    if (value.tide !== value.maxTides || value.integrity === 0 || bell.growth !== 3 || !getConnectedIds(value as unknown as GameState).includes(bell.id)) return false;
+  }
+  if (value.status === 'lost' && value.integrity > 0 && value.tide !== value.maxTides) return false;
+  return true;
+}
+
+export function validateSession(value: unknown): value is SavedSession {
+  if (!record(value) || value.version !== 1 || !validateGameState(value.state) || !Array.isArray(value.undo) || value.undo.length > 3) return false;
+  const state = value.state;
+  if (state.status === 'playing' && value.undo.length !== 3 - state.actions) return false;
+  if (!value.undo.every((snapshot, index) => validateGameState(snapshot) && snapshot.seed === state.seed && snapshot.tide === state.tide && snapshot.integrity === state.integrity && snapshot.status === 'playing' && snapshot.actions === 3 - index && snapshot.actions > state.actions)) return false;
+  if (value.undo.length > 0 && state.status !== 'playing') return false;
+  if (!record(value.settings) || typeof value.settings.sound !== 'boolean' || typeof value.settings.reducedMotion !== 'boolean' || typeof value.settings.quality !== 'string' || !['high', 'low'].includes(value.settings.quality) || typeof value.seenIntro !== 'boolean') return false;
+  return true;
+}
+
+export function initialSession(): SavedSession {
+  const urlSeed = new URLSearchParams(window.location.search).get('seed')?.trim().slice(0, 100) || undefined;
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw && raw.length < 250000) {
+      const parsed: unknown = JSON.parse(raw);
+      if (validateSession(parsed)) {
+        if (!urlSeed || parsed.state.seed === urlSeed) return parsed;
+        return { ...parsed, state: createGame(urlSeed), undo: [] };
+      }
+    }
+  } catch { /* A blocked or damaged local save must never prevent play. */ }
+  return {
+    version: 1, state: createGame(urlSeed), undo: [], seenIntro: false,
+    settings: { sound: false, reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, quality: 'high' },
+  };
+}
+
+export function persistSession(session: SavedSession): boolean {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(session)); return true; } catch { return false; }
+}
+
+export function updateSeedUrl(seed: string): void {
+  const url = new URL(window.location.href);
+  url.searchParams.set('seed', seed);
+  window.history.replaceState(null, '', url);
+}

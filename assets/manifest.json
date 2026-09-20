@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "bell-flower",
+      "source": "assets/source/bell-flower.blend",
+      "runtime": "public/assets/bell-flower.glb",
+      "generator": "scripts/create_bell.py",
+      "author": "Original procedural model created for this project",
+      "materials": "Sage stem, coral petals, brushed brass details",
+      "coordinateConvention": "Blender Z-up, glTF Y-up on export",
+      "nominalHeight": 3,
+      "bytes": 265108,
+      "morphTargets": [
+        "Closed"
+      ]
+    }
+  ],
+  "procedural": [
+    "Island coastlines and cliffs",
+    "Settlements and buildings",
+    "Vegetation and crops",
+    "Sea surface and foam",
+    "Decorative boats, gulls and whale"
+  ]
+}
