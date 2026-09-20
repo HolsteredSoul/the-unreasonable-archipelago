@@ -343,7 +343,8 @@ export default function World(props:WorldProps) {
       whaleTowKey = towKey;
       if (whaleEncounter) {
         whaleHeading.copy(hexPosition(whaleEncounter.direction)).normalize();
-        const offer = whaleEncounter.offers.find(item => item.id === next.selectedId) ?? whaleEncounter.offers.find(item => item.id === 'bell') ?? whaleEncounter.offers[0];
+        const selectedOffer = next.state.actions > 0 ? whaleEncounter.offers.find(item => item.id === next.selectedId) : undefined;
+        const offer = selectedOffer ?? whaleEncounter.offers.find(item => item.id === 'bell') ?? whaleEncounter.offers[0];
         const leadIsland = next.state.islands.find(island => island.id === (next.state.whaleTowedId || offer?.id));
         if (leadIsland) {
           const origin = hexPosition(leadIsland);
@@ -360,14 +361,14 @@ export default function World(props:WorldProps) {
           }
         } else whaleGoal.set(-7, 0.18, 4.5);
         if (visitKey !== whaleVisitKey) whale.position.copy(whaleGoal).addScaledVector(whaleHeading, -1.5);
-        chartLabel(whaleEncounter.used ? 'A tow, courteously given' : 'The whale offers a tow', whaleNoteAnchor, 'is-whale');
-        if (offer && !whaleEncounter.used) {
-          const island = next.state.islands.find(item => item.id === offer.id)!;
-          const from = hexPosition(island).setY(0.17), to = hexPosition(offer.to).setY(0.17);
+        chartLabel(whaleEncounter.used ? 'Whale Tow used this visit' : !next.state.actions ? 'Whale Tow · no actions left' : selectedOffer ? 'Whale Tow · 1 action, 0 food' : 'Whale Tow · choose an island', whaleNoteAnchor, 'is-whale');
+        if (selectedOffer && !whaleEncounter.used) {
+          const island = next.state.islands.find(item => item.id === selectedOffer.id)!;
+          const from = hexPosition(island).setY(0.17), to = hexPosition(selectedOffer.to).setY(0.17);
           const direction = to.clone().sub(from).normalize();
-          ringLine(circlePoints(1.3, 0.16).map(point => point.add(hexPosition(offer.to))), 0xa5e5ef, 0.85, currentGroup, true);
+          ringLine(circlePoints(1.3, 0.16).map(point => point.add(hexPosition(selectedOffer.to))), 0xa5e5ef, 0.85, currentGroup, true);
           seaArrow(from.clone().addScaledVector(direction, 1.35), to.clone().addScaledVector(direction, -0.6), 0xa5e5ef, currentGroup, 0.095);
-          chartLabel('Whale tow · 1 action', to.clone().add(new THREE.Vector3(0, 0.06, 0)), 'is-whale-destination');
+          chartLabel(`${island.name} · tow here now`, to.clone().add(new THREE.Vector3(0, 0.06, 0)), 'is-whale-destination');
         }
       }
       whaleVisitKey = visitKey;

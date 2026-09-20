@@ -27,6 +27,12 @@ Each tide gives you three actions:
 - **Nourish** an island's next growth stage: 2 food. It grows after a safe, fed tide.
 - **Whale Tow**, on tides 2, 5, and 7: one action and no food. Accept one tow per visit, one hex in the whale's direction. Currents still apply afterward.
 
+Whale Tow stays beside Tow in the action bar. Select an eligible island from the
+whale card, then press **Whale Tow**; selecting alone costs nothing. Use it when
+the whale's direction helps your plan to save the 1 food ordinary towing costs.
+The island moves immediately, and the next tide can move it again unless anchored.
+The whale card's help button explains the action and its unavailable states.
+
 The Heart is rooted and cannot move. Gardens like open water. Groves like neighbors.
 Breakwaters shield themselves and islands downstream. Calm tides permit growth everywhere.
 Pay two food per tide; shortages damage the Heart. Nourishment waits until conditions allow growth.

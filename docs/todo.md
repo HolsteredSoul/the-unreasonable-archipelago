@@ -4,6 +4,8 @@ Priorities reflect their effect on comprehension, spatial play, and the value of
 
 ## Gameplay depth follow-up — implemented
 
+Whale Tow clarity follow-up: the action now stays beside ordinary Tow in the main dock with **1 action · 0 food** visible even before a visit. The encounter card explains unavailability, names the next visit, and lets players select an eligible island without spending anything. The map shows only that selected island's tow destination. An optional guide explains when the tow helps and why the following current can move the island again. Action feedback shows the action count falling while food remains unchanged.
+
 The original inner ring let a grown bell coast through the rest of the voyage. New voyages now have an outward surge on tide 5 and a fleet-wide crosscurrent on tide 7. The final bell must be mature, connected, sheltered, and below 3 stress. Existing actions and resources supply the responses: hold a harbour with anchors, ride the current and tow home, or move an ordinary island into a bridge and windbreak.
 
 - Keep the introductory geometry and a command-only reference route; preserve the rules of existing saves.

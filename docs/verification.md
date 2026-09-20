@@ -1,5 +1,13 @@
 # First playable verification
 
+## Whale Tow discoverability and action cost
+
+20 September 2026. Whale Tow is now a permanent main action beside ordinary Tow, with **1 action · 0 food**, its direction or next visit, and a distinct available state. The encounter card lists eligible islands, explains disabled states, and opens an optional guide. Choosing an island does not spend an action. On-water destination marks now belong only to the selected eligible island; they no longer fall back to a different island when the Heart or a blocked island is selected. Resource feedback explicitly shows the spent action and unchanged food.
+
+All 67 automated tests pass and the final production build passes. A real Chromium eight-tide production victory used all three whale visits and checked the action count, zero food cost, immediate movement followed by drift, one tow per visit, Heart/blocked/no-actions explanations, exact next-visit wording, selection without spending, keyboard execution, save/reload, and undo restoring the favour. The optional guide preserves game state and returns keyboard focus on Escape. No JavaScript exceptions or failed HTTP responses occurred.
+
+Inspected the actual controls at 1366×768 and 1920×1080, including sea focus. The smaller layout has no horizontal overflow or clipped action buttons; the whale card remains 24 px above the tide controls during the late visit. `docs/whale-controls.jpg` shows the production interface. These changes clarify existing mechanics without changing the whale's rules.
+
 ## Late-voyage decisions and sheltered finale
 
 20 September 2026. **67 tests pass across ten files**, including the 1,000-seed invariants and 400 complete generated winning routes. The production build and TypeScript checks pass; the existing Vite large-chunk advisory remains (approximately 276 KB gzipped JavaScript).
