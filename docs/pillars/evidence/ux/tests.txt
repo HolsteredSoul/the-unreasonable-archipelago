@@ -1,0 +1,36 @@
+npm warn Unknown cli config "--maxWorkers". This will stop working in the next major version of npm.
+
+> the-unreasonable-archipelago@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 C:/DEV/Procedural
+
+ ✓ src/world/labelLayout.test.ts (2 tests) 11ms
+ ✓ src/world/assets.test.ts (1 test) 7ms
+ ✓ src/game/late-voyage.test.ts (9 tests) 115ms
+ ✓ src/world/batchIsland.test.ts (3 tests) 474ms
+ ✓ src/game/whale.test.ts (8 tests) 548ms
+   ✓ the visiting whale > visits only tides 2, 5, and 7, with deterministic seed-dependent directions and offers  485ms
+ ✓ src/ui/achievements.test.ts (3 tests) 24ms
+ ✓ src/ui/late-voyage-storage.test.ts (3 tests) 20ms
+ ✓ src/game/finaleAdvice.test.ts (14 tests) 29ms
+ ✓ src/ui/roadmap-storage.test.ts (6 tests) 48ms
+ ✓ src/world/weatherModel.test.ts (12 tests) 121ms
+ ✓ src/world/WeatherVisual.test.ts (6 tests) 195ms
+ ✓ src/world/planning.test.ts (5 tests) 255ms
+ ✓ src/ui/storage.test.ts (11 tests) 920ms
+   ✓ saved game validation > accepts the real introductory game and every resolved state of seeded voyages  765ms
+ ✓ src/game/campaign.test.ts (21 tests) 567ms
+ ✓ src/ui/finaleRecovery.test.ts (3 tests) 22ms
+ ✓ src/ui/campaignProgress.test.ts (5 tests) 587ms
+   ✓ campaign saves and progression > saves every command, restores every tide, and unlocks each map exactly once  562ms
+ ✓ src/game/generation.test.ts (7 tests) 10491ms
+   ✓ generated opening witnesses > wins 400 different seas using only accepted player commands and the real eight-tide simulation  10357ms
+ ✓ src/game/index.test.ts (14 tests) 12675ms
+   ✓ seed invariants > keeps 1,000 seeded voyages deterministic, in bounds, collision free, and safe to open  12495ms
+
+ Test Files  18 passed (18)
+      Tests  133 passed (133)
+   Start at  20:31:57
+   Duration  21.23s (transform 27.04s, setup 0ms, collect 48.37s, tests 27.11s, environment 15ms, prepare 45.63s)

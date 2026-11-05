@@ -1,0 +1,5 @@
+{
+  "browser": { "browserName": "chromium", "isolated": true, "launchOptions": { "channel": "chrome", "headless": true } },
+  "outputDir": "C:/DEV/Procedural/docs/pillars/evidence/art/postfix-css-browser",
+  "outputMode": "stdout"
+}

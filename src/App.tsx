@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Anchor, ArrowRight, Bell, Check, ChevronDown, CircleHelp, Compass, Copy, Eye, EyeOff, Flag, Heart, Leaf, Menu, Move, Plus, RotateCcw, Settings2, Shield, Sparkles, Sprout, Trees, Undo2, Volume2, VolumeX, Waves, Wind, X } from 'lucide-react';
 import { applyCommand, createGame, DIRECTIONS, forecastTide, getIslandStats, getLegalTowTargets, getWeather, getWhaleEncounter, getVictoryConditions, getActionBudget, resolveTide } from './game';
 import type { Building, Command, Hex, Island, Forecast, TideStage } from './game/types';
 import World from './world/World';
-import { initialSession, persistSession, updateSeedUrl, type Settings } from './ui/storage';
-import { playChime } from './ui/audio';
+import { initialSession, persistSession, updateSeedUrl, hasRecoveredSave, type Settings } from './ui/storage';
+import { playChime, updateEffects, stopEffects } from './ui/audio';
 import { updateMusic, unlockMusic, duckMusic, stopMusic, type MusicMood } from './ui/music';
 import { describeOpening } from './game/generation';
 import { TideChart } from './ui/TideChart';
 import { Maximize2, Minimize2, Award } from 'lucide-react';
 import { ACTION_COPY, balanceChange, type ActionName } from './ui/feedback';
-import { growthTotal, loadAchievements, medalName, recordVictory, saveAchievements, voyageRecordKey } from './ui/achievements';
+import { growthTotal, loadAchievements, medalName, recordVictory, saveAchievements, voyageRecordKey, legacyMedals } from './ui/achievements';
 import { CAMPAIGN_MAPS, createCampaignGame } from './game/campaign';
 import { CampaignScreen } from './ui/CampaignScreen';
 import { OutcomeEffect } from './ui/OutcomeEffect';
@@ -20,10 +20,13 @@ import { finalTideCheckpoint, replanFinalTide } from './ui/finaleRecovery';
 import { FinaleCheck } from './ui/FinaleCheck';
 import { TideSequence } from './ui/TideSequence';
 import { previewBreakwater } from './world/weatherModel';
+import { SaveStatus } from './ui/SaveStatus';
+import { CAMPAIGN_COPY } from './content/campaignCopy';
 import './styles.css';
 import './ui/roadmap.css';
 import './ui/campaign.css';
 import './ui/compact.css';
+import './ui/progress.css';
 
 const BUILDINGS: { id: Building; name: string; icon: typeof Leaf; description: string }[] = [
   { id: 'garden', name: 'Tide garden', icon: Leaf, description: 'A little room to breathe. Earns more food beside open water.' },
@@ -34,7 +37,10 @@ const directionName = ({ q, r }: Hex) => q === 1 && r === 0 ? 'East' : q === 1 &
 const signed = (number: number) => `${number >= 0 ? '+' : ''}${number}`;
 const islandLabel = (island: Island) => island.kind === 'heart' ? 'The heart of the fleet' : island.kind === 'bell' ? 'A bell waiting to bloom' : BUILDINGS.find(item => item.id === island.building)?.name || 'A little possibility';
 
+const SavingContext = createContext(false);
+
 function Modal({ children, onClose, label, className = '' }: { children: ReactNode; onClose?: () => void; label: string; className?: string }) {
+  const failed = useContext(SavingContext);
   const panel = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
@@ -54,7 +60,7 @@ function Modal({ children, onClose, label, className = '' }: { children: ReactNo
     return () => { document.removeEventListener('keydown', handle); prior?.focus(); };
   }, []);
   return <div className="modal-backdrop"><div className={`modal ${className}`} role="dialog" aria-modal="true" aria-label={label} ref={panel}>
-    {onClose && <button className="icon-button modal-close" onClick={onClose} aria-label="Close dialog"><X size={18} /></button>}{children}
+    {onClose && <button className="icon-button modal-close" onClick={onClose} aria-label="Close dialog"><X size={18} /></button>}<SaveStatus failed={failed} variant="inline" announce={false} />{children}
   </div></div>;
 }
 
@@ -64,7 +70,9 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(() => game.islands.find(island => island.kind === 'bell')?.id || null);
   const [mode, setMode] = useState<'tow' | 'build' | null>(null);
   const [preview, setPreview] = useState(false);
-  const [modal, setModal] = useState<'start' | 'intro' | 'help' | 'settings' | 'restart' | 'medals' | 'tides' | 'whale' | 'finale' | 'finalWarning' | null>('start');
+  const [modal, setModal] = useState<'start' | 'intro' | 'help' | 'settings' | 'restart' | 'replace' | 'medals' | 'tides' | 'whale' | 'finale' | 'finalWarning' | null>('start');
+  const [pendingMap, setPendingMap] = useState<number | null>(null);
+  const [restartReturn, setRestartReturn] = useState<'start' | 'settings'>('settings');
   const [resultOpen, setResultOpen] = useState(game.status !== 'playing');
   const [outcome, setOutcome] = useState<'won' | 'lost' | null>(null);
   const campaignCompleted = session.campaignCompleted ?? 0;
@@ -76,17 +84,31 @@ export default function App() {
   const [openingSummary, setOpeningSummary] = useState(() => describeOpening(game));
   const [toast, setToast] = useState('');
   const [saveFailed, setSaveFailed] = useState(false);
+  const [medalSaveFailed, setMedalSaveFailed] = useState(false);
+  const [recoveredSave, setRecoveredSave] = useState(hasRecoveredSave);
+  const savingFailed = saveFailed || medalSaveFailed;
   const [advancing, setAdvancing] = useState(false);
   const [tideStage, setTideStage] = useState<TideStage>('plan');
   const [showBreakwater, setShowBreakwater] = useState(true);
   const [achievements, setAchievements] = useState(loadAchievements);
   const [focusPanel, setFocusPanel] = useState<'objective' | 'islands' | 'weather' | 'selected' | null>(null);
-  const [feedback, setFeedback] = useState<{ key: number; x: number; y: number; title: string; detail: string; balance: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ key: number; x: number; title: string; detail: string; balance: string } | null>(null);
+  const bottomHud = useRef<HTMLDivElement>(null);
   const inputOrigin = useRef<{ x: number; y: number } | null>(null);
   const taught = useRef(new Set<string>());
   const [compactViewport, setCompactViewport] = useState(() => window.matchMedia('(max-width: 1450px), (max-height: 820px)').matches);
   const [seaFocusOverride, setSeaFocusOverride] = useState<boolean | null>(null);
   const seaFocus = seaFocusOverride ?? (compactViewport || (session.settings.seaFocus ?? false));
+  useLayoutEffect(() => {
+    const dock = bottomHud.current;
+    if (!dock) return;
+    const placeNotices = () => dock.parentElement?.style.setProperty('--dock-top', `${dock.getBoundingClientRect().top}px`);
+    placeNotices();
+    const observer = new ResizeObserver(placeNotices);
+    observer.observe(dock);
+    window.addEventListener('resize', placeNotices);
+    return () => { observer.disconnect(); window.removeEventListener('resize', placeNotices); };
+  }, [seaFocus, feedback?.key, toast, game.tide]);
   useEffect(() => {
     const query = window.matchMedia('(max-width: 1450px), (max-height: 820px)');
     const changed = () => { setCompactViewport(query.matches); setSeaFocusOverride(null); setFocusPanel(null); };
@@ -95,7 +117,9 @@ export default function App() {
   }, []);
   const medalKey = voyageRecordKey(game);
   const currentMedal = Object.hasOwn(achievements, medalKey) ? achievements[medalKey] : undefined;
+  const medalLabel = currentMedal ? medalName(currentMedal.rank) : campaignMap && campaignMap.id <= campaignCompleted ? 'Victory recorded' : 'First medal awaits';
   const bestMedal = Object.values(achievements).sort((a, b) => b.rank - a.rank || b.growth - a.growth)[0];
+  const oldMedals = Object.values(legacyMedals(achievements));
   const pendingTide = useRef<Forecast | null>(null);
   const forecast = useMemo(() => forecastTide(game), [game]);
   const selected = game.islands.find(island => island.id === selectedId) || null;
@@ -139,9 +163,10 @@ export default function App() {
   const canWhaleTow = !!selected && canCommand({ type: 'whaleTow', id: selected.id });
   const breakwaterPlan = useMemo(() => active && mode === 'build' && selectedId && showBreakwater ? previewBreakwater(game, selectedId) : null, [active, mode, selectedId, showBreakwater, game]);
 
-  useEffect(() => { setSaveFailed(!persistSession(session)); }, [session]);
+  useEffect(() => { setSaveFailed(!persistSession(session)); setRecoveredSave(hasRecoveredSave()); }, [session]);
   useEffect(() => { updateMusic({ enabled: session.settings.sound && musicEnabled, volume: musicVolume, mood: musicMood }); }, [session.settings.sound, musicEnabled, musicVolume, musicMood]);
-  useEffect(() => () => stopMusic(), []);
+  useEffect(() => { updateEffects({ enabled: session.settings.sound, volume: effectsVolume }); }, [session.settings.sound, effectsVolume]);
+  useEffect(() => () => { stopMusic(); stopEffects(); }, []);
   useEffect(() => {
     if (modal !== 'settings' && modal !== 'restart') return;
     setOpeningSummary('Charting the opening…');
@@ -150,7 +175,7 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [seedDraft, modal, game.seed, game.campaignMap]);
   useEffect(() => { setAchievements(previous => recordVictory(previous, game)); }, [game]);
-  useEffect(() => { saveAchievements(achievements); }, [achievements]);
+  useEffect(() => { setMedalSaveFailed(!saveAchievements(achievements)); }, [achievements, session]);
   useEffect(() => {
     if (!feedback) return;
     const timeout = setTimeout(() => setFeedback(null), game.tide <= 3 ? 6000 : 3500);
@@ -172,12 +197,13 @@ export default function App() {
   function chime(kind: Parameters<typeof playChime>[0]) {
     const sound = audioSettings.current.sound;
     const volume = audioSettings.current.effectsVolume ?? 0.8;
-    if (sound && volume > 0) duckMusic(kind === 'win' || kind === 'loss' || kind === 'error' ? 3.5 : 0.6, kind === 'win' || kind === 'loss' || kind === 'error' ? 0.2 : 0.65);
+    if (kind !== 'select' && sound && volume > 0) duckMusic(kind === 'win' || kind === 'loss' || kind === 'error' ? 3.5 : 0.6, kind === 'win' || kind === 'loss' || kind === 'error' ? 0.2 : 0.65);
     playChime(kind, sound, volume);
   }
   function toggleSound() {
     const enabled = !session.settings.sound;
     setting('sound', enabled);
+    updateEffects({ enabled, volume: effectsVolume });
     updateMusic({ enabled: enabled && musicEnabled, volume: musicVolume, mood: musicMood });
     unlockMusic();
     playChime('select', enabled, effectsVolume);
@@ -187,7 +213,7 @@ export default function App() {
     updateMusic({ enabled: session.settings.sound && !musicEnabled, volume: musicVolume, mood: musicMood });
     unlockMusic();
   }
-  function proposeNewVoyage() { setSeedDraft('tide-' + crypto.randomUUID().slice(0, 8)); setModal('restart'); }
+  function proposeNewVoyage() { setRestartReturn('settings'); setSeedDraft('tide-' + crypto.randomUUID().slice(0, 8)); setModal('restart'); }
   function showSpend(action: ActionName, before: typeof game, after: typeof game) {
     const target = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const rect = target?.getBoundingClientRect();
@@ -196,7 +222,8 @@ export default function App() {
     const explain = game.tide <= 3 && !taught.current.has(lessonKey);
     taught.current.add(lessonKey);
     const queued = action !== 'advance' ? forecastTide(after) : null;
-    setFeedback({ key: performance.now(), x: Math.max(12, Math.min(innerWidth - 310, origin.x - 145)), y: Math.max(12, Math.min(innerHeight - 160, origin.y - 148)), title: ACTION_COPY[action].title, detail: explain ? ACTION_COPY[action].detail : action === 'advance' ? `Gardens +${forecast.production.food} food, then town rations −2.` : ACTION_COPY[action].detail, balance: `${balanceChange(before, after)}${queued ? ` · After tide: ${queued.state.food} food` : ''}` });
+    setToast('');
+    setFeedback({ key: performance.now(), x: Math.max(12, Math.min(innerWidth - 310, origin.x - 145)), title: ACTION_COPY[action].title, detail: explain ? ACTION_COPY[action].detail : action === 'advance' ? `Gardens +${forecast.production.food} food, then town rations −2.` : ACTION_COPY[action].detail, balance: `${balanceChange(before, after)}${queued ? ` · After tide: ${queued.state.food} food` : ''}` });
   }
   function togglePanel(panel: 'objective' | 'islands' | 'weather' | 'selected') {
     setMode(null); setFocusPanel(value => value === panel ? null : panel);
@@ -218,6 +245,12 @@ export default function App() {
     showSpend(command.type, game, result.state);
     setSession(previous => ({ ...previous, state: result.state, undo: [...previous.undo, game] }));
     setMode(null); chime('action');
+    const trigger = document.activeElement;
+    requestAnimationFrame(() => {
+      if (!trigger?.isConnected || (trigger instanceof HTMLButtonElement && trigger.disabled) || document.activeElement === document.body) {
+        document.querySelector<HTMLElement>('.action-area')?.focus();
+      }
+    });
   }
   function undo() {
     if (!active || !session.undo.length || modal || resultOpen) return;
@@ -232,11 +265,12 @@ export default function App() {
     commitTide();
   }
   function commitTide() {
-    if (!active || resultOpen) return;
+    if (!active || resultOpen || pendingTide.current) return;
     setModal(null);
     setFeedback(null); setToast(''); setPreview(false);
     pendingTide.current = resolveTide(game);
     setMode(null); setTideStage('drift'); setAdvancing(true); chime('tide');
+    requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('[aria-label="Skip tide animation"]')?.focus());
   }
   function finishTide() {
     const result = pendingTide.current;
@@ -245,7 +279,7 @@ export default function App() {
     setSession(previous => ({ ...previous, state: result.state, undo: [], finaleCheckpoint: finalTideCheckpoint(previous, result.state), campaignCompleted: recordCampaignWin(previous.campaignCompleted ?? 0, result.state) }));
     setAdvancing(false); setTideStage('plan');
     if (result.state.status !== 'playing') { setFeedback(null); setToast(''); setOutcome(result.state.status); chime(result.state.status === 'won' ? 'win' : 'loss'); }
-    else announce(`Tide ${game.tide} settled: +${result.production.food} food, +${result.production.timber} timber, then −2 town rations.`);
+    else { announce(`Tide ${game.tide} settled: +${result.production.food} food, +${result.production.timber} timber, then −2 town rations.`); requestAnimationFrame(() => document.querySelector<HTMLElement>('.action-area')?.focus()); }
   }
   function newVoyage(seed?: string) {
     const chosen = seed?.trim().slice(0, 100) || ('tide-' + crypto.randomUUID().slice(0, 8));
@@ -253,16 +287,21 @@ export default function App() {
   }
   function startCampaignMap(map: number) {
     if (map > campaignCompleted + 1) return;
+    if (session.seenIntro && game.status === 'playing') {
+      if (game.campaignMap === map) { setModal(null); return; }
+      setPendingMap(map); setModal('replace'); return;
+    }
     startVoyage(createCampaignGame(map));
   }
   function startVoyage(state: typeof game) {
     pendingTide.current = null; setTideStage('plan');
-    setOutcome(null);
+    setOutcome(null); setPendingMap(null);
     setSession(previous => ({ ...previous, state, undo: [], seenIntro: true, finaleCheckpoint: undefined }));
     setSelectedId(state.islands.find(island => island.kind === 'bell')?.id || null);
     setSeedDraft(state.seed); setModal(null); setResultOpen(false); setMode(null); setPreview(false); setAdvancing(false); setToast('');
     setFeedback(null); setFocusPanel(null); taught.current.clear();
     updateSeedUrl(state.campaignMap ? '' : state.seed); chime('tide');
+    requestAnimationFrame(() => document.querySelector<HTMLElement>('.action-area')?.focus());
   }
   function retryFinalTide() {
     const restored = replanFinalTide(session);
@@ -272,7 +311,8 @@ export default function App() {
   }
   function planRescue(command: Command) {
     setSelectedId(command.id); setModal(null); setMode(command.type === 'tow' ? 'tow' : command.type === 'build' ? 'build' : null); setPreview(false); setShowIslands(false);
-    if (seaFocus) setFocusPanel('selected');
+    setFocusPanel(null);
+    requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(command.type === 'nourish' ? '[aria-label="Nourish island"]' : '.suggested-rescue')?.focus());
   }
   function finishIntro() { setSession(previous => ({ ...previous, seenIntro: true })); setModal(null); }
   function setting<K extends keyof Settings>(key: K, value: Settings[K]) { setSession(previous => ({ ...previous, settings: { ...previous.settings, [key]: value } })); }
@@ -283,6 +323,7 @@ export default function App() {
 
   useEffect(() => {
     const handle = (event: KeyboardEvent) => {
+      if (event.repeat) return;
       if (event.target instanceof HTMLElement && (event.target.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName))) return;
       if (modal || resultOpen || advancing || outcome) return;
       if (event.key === 'Escape') { setMode(null); setShowIslands(false); setFeedback(null); if (focusPanel) { const chip = document.querySelector<HTMLButtonElement>(`[data-panel="${focusPanel}"]`); setFocusPanel(null); requestAnimationFrame(() => chip?.focus()); } else if (seaFocus) toggleSeaFocus(); return; }
@@ -290,7 +331,7 @@ export default function App() {
       if (event.key.toLowerCase() === 'p' && !event.ctrlKey && !event.metaKey) { event.preventDefault(); setPreview(value => !value); }
       if (event.key.toLowerCase() === 'z' && (event.ctrlKey || event.metaKey)) { event.preventDefault(); undo(); }
       if (/^[1-9]$/.test(event.key)) { const island = game.islands[Number(event.key) - 1]; if (island) selectIsland(island.id); }
-      if (event.key === 'Enter' && !(event.target instanceof HTMLElement && ['BUTTON', 'A', 'SUMMARY'].includes(event.target.tagName))) { event.preventDefault(); advance(); }
+      if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) { event.preventDefault(); advance(); }
     };
     window.addEventListener('keydown', handle);
     return () => window.removeEventListener('keydown', handle);
@@ -311,11 +352,11 @@ export default function App() {
       <div><span>03</span><div><h3>Bring every bell home</h3><p>{moonwake ? 'Nourish every bell to growth 3. Ride or resist the outward surge on tide 5 and crosscurrent on tide 7. Every bell must finish tide 8 connected to the Heart, sheltered, and below 3 stress.' : 'Nourish the bell to reach all three growth stages. On the eighth tide, it must be mature and connected to the Heart through touching islands.'}</p></div></div>
     </div>
     <div className="guide-note"><Wind size={17} /><span>Anchors last one tide. The whale visits on tides 2, 5, and 7: one action buys a food-free tow in its direction, with currents still to come. The town eats 2 food each tide. At 3 stress, production pauses; shelter lets islands recover. Nourishment waits for a safe, fed tide.</span></div>
-    {modal === 'help' && <p className="keyboard-help">Keyboard: <kbd>1–9</kbd> select an island · <kbd>P</kbd> preview · <kbd>F</kbd> sea focus · <kbd>Ctrl Z</kbd> undo · <kbd>Enter</kbd> advance · <kbd>Esc</kbd> cancel or restore panels</p>}
+    {modal === 'help' && <p className="keyboard-help">Keyboard: <kbd>1–9</kbd> select an island · <kbd>P</kbd> preview · <kbd>F</kbd> sea focus · <kbd>Ctrl Z</kbd> undo · <kbd>Ctrl Enter</kbd> advance · <kbd>Esc</kbd> cancel or restore panels</p>}
     <button className="primary-button wide" onClick={modal === 'intro' ? finishIntro : () => setModal(null)}>{modal === 'intro' ? 'Let’s make a little landfall' : 'Back to the archipelago'}<ArrowRight size={18} /></button>
   </>;
 
-  return <main onPointerDownCapture={event => { unlockMusic(); inputOrigin.current = { x: event.clientX, y: event.clientY }; }} onKeyDownCapture={() => { unlockMusic(); inputOrigin.current = null; }} className={`game-app voyage-${game.status} ${modal === 'start' ? 'is-splash' : ''} ${session.settings.reducedMotion ? 'reduced-motion' : ''} ${advancing ? 'is-advancing' : ''} ${seaFocus ? 'sea-focus' : ''} ${focusPanel ? `reveal-${focusPanel}` : ''} ${mode === 'tow' ? 'is-towing' : mode === 'build' ? 'is-building' : ''}`}>
+  return <SavingContext.Provider value={savingFailed}><main onPointerDownCapture={event => { unlockMusic(); inputOrigin.current = { x: event.clientX, y: event.clientY }; }} onKeyDownCapture={event => { if (event.key === 'Enter' && event.repeat) { event.preventDefault(); return; } unlockMusic(); inputOrigin.current = null; }} className={`game-app voyage-${game.status} ${modal === 'start' ? 'is-splash' : ''} ${session.settings.reducedMotion ? 'reduced-motion' : ''} ${advancing ? 'is-advancing' : ''} ${seaFocus ? 'sea-focus' : ''} ${focusPanel ? `reveal-${focusPanel}` : ''} ${mode === 'tow' ? 'is-towing' : mode === 'build' ? 'is-building' : ''}`}>
     <div className="world-stage" inert={!!modal || !!outcome || resultOpen} aria-label="Interactive three-dimensional archipelago">
       <World layoutKey={`${seaFocus}:${focusPanel}:${mode}`} state={game} forecast={breakwaterPlan?.forecast ?? forecast} selectedId={selectedId} onSelectIsland={id => { if (!advancing && !modal && !resultOpen && !outcome) selectIsland(id); }} towTargets={towTargets} onSelectHex={hex => { if (selected && mode === 'tow') execute({ type: 'tow', id: selected.id, to: hex }); }} tideStage={advancing ? tideStage : 'plan'} breakwaterPreview={breakwaterPlan ? { state: breakwaterPlan.state, forecast: breakwaterPlan.forecast } : null} preview={(preview || !!breakwaterPlan) && !advancing} reducedMotion={session.settings.reducedMotion} quality={session.settings.quality} />
     </div>
@@ -325,7 +366,7 @@ export default function App() {
         <div className="brand"><div className="brand-mark"><Waves size={23} strokeWidth={1.35} /></div><div><p className="eyebrow">An exercise in staying afloat</p><h1>The Unreasonable<br /><em>Archipelago</em><span className="edition">{campaignMap ? `MAP ${campaignMap.id} / 8 · ${campaignMap.title}` : 'FREE VOYAGE'}</span></h1></div></div>
         <div className="tide-tracker"><div className="tide-label"><span>TIDE</span><strong>{String(game.tide).padStart(2, '0')}</strong><span>/ {String(game.maxTides).padStart(2, '0')}</span></div><div className="tide-dots" aria-label={`Tide ${game.tide} of ${game.maxTides}`}>{Array.from({ length: game.maxTides }, (_, index) => <span key={index} className={`${index + 1 < game.tide ? 'complete' : ''} ${index + 1 === game.tide ? 'current' : ''}`} />)}</div><p>{game.tide === game.maxTides ? 'The great tide is here' : `${game.maxTides - game.tide} tides until the great tide`}</p></div>
         <div className="top-right"><div className="resources" aria-label="Resources"><div className="resource"><Leaf size={20} /><span><strong>{game.food}</strong><small>FOOD</small></span></div><span className="resource-divider" /><div className="resource"><Trees size={20} /><span><strong>{game.timber}</strong><small>TIMBER</small></span></div><span className="resource-divider" /><div className={`resource heart-resource ${game.integrity < 3 ? 'danger' : ''}`}><Heart size={20} /><span><strong>{game.integrity}<small className="inline-small"> / 5</small></strong><small>HEART</small></span></div></div>
-          <nav className="utility-nav" aria-label="Game controls"><button disabled={advancing} className="icon-button" onClick={() => setModal('start')} aria-label="Open campaign chart" title="Campaign chart"><Compass size={18} /></button><button disabled={advancing} className="icon-button" onClick={() => setModal('help')} aria-label="How to play" title="How to play"><CircleHelp size={18} /></button><button className={`icon-button ${session.settings.sound ? 'is-on' : ''}`} onClick={toggleSound} aria-label={session.settings.sound ? 'Mute sound' : 'Enable sound'} title={session.settings.sound ? 'Mute sound' : 'Enable sound'}>{session.settings.sound ? <Volume2 size={18} /> : <VolumeX size={18} />}</button><button disabled={advancing} className="icon-button" onClick={() => { setSeedDraft(game.seed); setModal('settings'); }} aria-label="Settings and voyage seed" title="Settings"><Settings2 size={18} /></button></nav>
+          <nav className="utility-nav" aria-label="Game controls"><button disabled={advancing} className="icon-button" onClick={() => setModal('start')} aria-label="Open campaign chart" title="Campaign chart"><Compass size={18} /></button><button disabled={advancing} className="icon-button" onClick={() => setModal('help')} aria-label="How to play" title="How to play"><CircleHelp size={18} /></button><button className={`icon-button ${session.settings.sound ? 'is-on' : ''}`} onClick={toggleSound} aria-label={session.settings.sound ? 'Mute sound' : 'Enable sound'} title={session.settings.sound ? 'Mute sound' : 'Enable sound'}>{session.settings.sound ? <Volume2 size={18} /> : <VolumeX size={18} />}</button><button disabled={advancing} className="icon-button" onClick={() => { setRestartReturn('settings'); setSeedDraft(game.seed); setModal('settings'); }} aria-label="Settings and voyage seed" title="Settings"><Settings2 size={18} /></button></nav>
         </div>
       </header>
 
@@ -364,9 +405,9 @@ export default function App() {
       {preview && !weather.storm && !advancing && <div className="preview-banner"><Eye size={15} /><span>Tomorrow, for a moment.</span><span className="preview-banner-detail">Ghosts show the next tide. Nothing has moved yet.</span></div>}
       {mode === 'tow' && <div className="mode-banner"><Move size={16} /><span>{suggestedRescue?.type === 'tow' && selected ? `Suggested: ${directionName({ q: suggestedRescue.to.q - selected.q, r: suggestedRescue.to.r - selected.r })} (${suggestedRescue.to.q}, ${suggestedRescue.to.r}) · 1 food` : 'Choose a lit patch of water'}</span><button onClick={() => setMode(null)} aria-label="Cancel towing"><X size={15} /></button></div>}
       {toast && <div className="toast" role="status"><Sparkles size={15} /><span>{toast}</span><button onClick={() => setToast('')} aria-label="Dismiss notification"><X size={14} /></button></div>}
-      {feedback && !modal && !resultOpen && !outcome && <div key={feedback.key} className="resource-callout" role="status" style={{ left: feedback.x, top: feedback.y }}><button aria-label="Dismiss resource feedback" onClick={() => setFeedback(null)}><X size={13} /></button><strong>{feedback.title}</strong><span>{feedback.detail}</span><small>{feedback.balance}</small></div>}
+      {feedback && !modal && !resultOpen && !outcome && <div key={feedback.key} className="resource-callout" role="status" style={{ left: feedback.x }}><button aria-label="Dismiss resource feedback" onClick={() => setFeedback(null)}><X size={13} /></button><strong>{feedback.title}</strong><span>{feedback.detail}</span><small>{feedback.balance}</small></div>}
 
-      <div className="bottom-hud" inert={advancing}>
+      <div className="bottom-hud" ref={bottomHud} inert={advancing}>
         <section className="selected-panel panel" aria-label="Selected island">
           {selected && stats ? <><div className="selected-title"><div><p className="eyebrow">{islandLabel(selected)}</p><h2>{selected.name}</h2></div><div className={`selected-kind ${selected.kind}`}>{selected.kind === 'bell' ? <Bell size={23} strokeWidth={1.4} /> : selected.kind === 'heart' ? <Heart size={23} strokeWidth={1.4} /> : <Sprout size={23} strokeWidth={1.4} />}</div></div>
             <div className="selected-traits"><span className={stats.sheltered ? 'good' : ''}><Shield size={12} />{stats.sheltered ? 'Sheltered' : 'Exposed'}</span><span><Wind size={12} />{selected.kind === 'heart' ? 'Steadfast' : selected.anchored ? 'Anchored' : directionName(stats.current)}</span><span className={selected.stress >= 3 ? 'danger' : ''} title="Production pauses at 3 stress"><Waves size={12} />Stress {selected.stress}/5</span></div>
@@ -377,7 +418,7 @@ export default function App() {
           </> : <p className="empty-selection">Choose an island.<br /><em>They all have their reasons.</em></p>}
         </section>
 
-        <section className="action-area" aria-label="Island actions">
+        <section className="action-area" aria-label="Island actions" tabIndex={-1}>
           {mode === 'build' && selected && <div className="build-menu panel"><div className="panel-heading"><span className="eyebrow">A LITTLE ROOM FOR SOMETHING</span><button className="icon-button" onClick={() => setMode(null)} aria-label="Close building choices"><X size={15} /></button></div><button className="preview-breakwater-toggle" aria-pressed={showBreakwater} onClick={() => setShowBreakwater(value => !value)}><Shield size={14}/>{showBreakwater ? 'Hide breakwater preview' : 'Preview breakwater shelter'}</button>{breakwaterPlan && <div className="breakwater-preview"><strong>Preview · no timber spent</strong><span>Gold cells = shelter after drift.</span><p>After build + tide: {breakwaterPlan.forecast.state.food} food · {breakwaterPlan.forecast.state.timber} timber, including build cost.</p><p className="preview-protects">{weather.storm ? `Protects: ${breakwaterPlan.protectedIds.map(id => game.islands.find(island => island.id === id)?.name).join(', ') || 'no islands'} (+${breakwaterPlan.newlyProtectedIds.length} newly safe).` : 'Calm tide: everyone is safe. Storm direction changes protection.'}</p>{selected.building && <p>Replaces this {selected.building === 'garden' ? 'garden' : selected.building === 'grove' ? 'grove' : 'breakwater'}.</p>}</div>}{(showBreakwater ? [BUILDINGS[2], ...BUILDINGS.slice(0, 2)] : BUILDINGS).map(building => <button className={suggestedRescue?.type === 'build' && suggestedRescue.building === building.id ? 'suggested-rescue' : undefined} key={building.id} disabled={!canCommand({ type: 'build', id: selected.id, building: building.id })} onClick={() => execute({ type: 'build', id: selected.id, building: building.id })}><span className="build-icon"><building.icon size={22} strokeWidth={1.4} /></span><span><strong>{building.name}{suggestedRescue?.type === 'build' && suggestedRescue.building === building.id ? ' · suggested' : ''}</strong><small>{building.description}</small></span><span className="build-cost">3<Trees size={13} /></span></button>)}</div>}
           <div className="action-heading"><span className="eyebrow">ACTIONS THIS TIDE</span><div className="action-pips" aria-label={`${game.actions} of ${actionBudget} actions remaining`}>{Array.from({ length: actionBudget }, (_, index) => index + 1).map(value => <i key={value} className={game.actions >= value ? 'available' : ''} />)}<span>{game.actions} / {actionBudget}</span></div><button className="undo-button" onClick={undo} disabled={!active || session.undo.length === 0} title="Undo last action (Ctrl Z)" aria-label="Undo last action"><Undo2 size={15} /></button></div>
           <div className="action-dock with-whale">
@@ -385,24 +426,30 @@ export default function App() {
             <button className={`action-button whale-action ${canWhaleTow ? 'whale-available' : ''}`} aria-label="Whale Tow" aria-describedby={`whale-cost whale-purpose whale-drift${game.status === 'playing' ? ' whale-reason' : ''}`} disabled={!canWhaleTow} onClick={() => selected && execute({ type: 'whaleTow', id: selected.id })} title={whaleReason}><Waves size={22} strokeWidth={1.3} /><strong>Whale Tow</strong><span id="whale-cost">1 action · 0 food</span><small id="whale-purpose">{whalePurpose}</small></button>
             <button className={`action-button ${mode === 'build' ? 'active' : ''}`} aria-label="Build structure" aria-describedby="build-cost build-purpose" disabled={!canBuild} onClick={() => { setFocusPanel(null); setMode(value => value === 'build' ? null : 'build'); }} title={ACTION_COPY.build.detail}><Plus size={22} strokeWidth={1.3} /><strong>Build</strong><span id="build-cost">−3 timber now</span><small id="build-purpose">Produce or shelter</small></button>
             <button aria-label="Anchor island" aria-describedby="anchor-cost anchor-purpose" className="action-button" disabled={!canAnchor} onClick={() => selected && execute({ type: 'anchor', id: selected.id })} title={ACTION_COPY.anchor.detail}><Anchor size={22} strokeWidth={1.3} /><strong>Anchor</strong><span id="anchor-cost">−1 timber now</span><small id="anchor-purpose">Stop one tide's drift</small></button>
-            <button className={`action-button ${selected?.nourished ? 'is-nourished' : ''}`} aria-label="Nourish island" aria-describedby="nourish-cost nourish-purpose" disabled={!canNourish} onClick={() => selected && execute({ type: 'nourish', id: selected.id })} title={selected?.growth === 3 ? 'This island is fully grown' : selected?.nourished ? 'Already nourished; waiting for growth conditions' : ACTION_COPY.nourish.detail}><Sprout size={22} strokeWidth={1.3} /><strong>{selected?.nourished ? 'Nourished' : 'Nourish'}</strong><span id="nourish-cost">{selected?.nourished ? 'Growth queued' : '−2 food now'}</span><small id="nourish-purpose">Grow after a safe tide</small></button>
+            <button className={`action-button ${selected?.nourished ? 'is-nourished' : ''} ${suggestedRescue?.type === 'nourish' ? 'suggested-rescue' : ''}`} aria-label="Nourish island" aria-describedby="nourish-cost nourish-purpose" disabled={!canNourish} onClick={() => selected && execute({ type: 'nourish', id: selected.id })} title={selected?.growth === 3 ? 'This island is fully grown' : selected?.nourished ? 'Already nourished; waiting for growth conditions' : ACTION_COPY.nourish.detail}><Sprout size={22} strokeWidth={1.3} /><strong>{selected?.nourished ? 'Nourished' : 'Nourish'}{suggestedRescue?.type === 'nourish' ? ' · suggested' : ''}</strong><span id="nourish-cost">{selected?.nourished ? 'Growth queued' : '−2 food now'}</span><small id="nourish-purpose">{suggestedRescue?.type === 'nourish' ? 'Suggested rescue · then advance to win' : 'Grow after a safe tide'}</small></button>
           </div><p id="whale-drift" className="action-footnote">{encounter && !encounter.used ? 'One whale tow this visit. Moves now; the tide can move it again.' : game.actions === 0 ? 'A good day’s work. Let the tide come in.' : 'Every small decision makes a different shore.'}</p>
         </section>
 
-        <section className="advance-area" aria-label="Advance tide"><div className="forecast-resources"><span className="eyebrow">AFTER THE TIDE</span><span className={forecast.foodDelta < 0 ? 'negative' : ''}><Leaf size={13} />{forecast.state.food}<small>({signed(forecast.foodDelta)})</small></span><span className={forecast.timberDelta < 0 ? 'negative' : ''}><Trees size={13} />{forecast.state.timber}<small>({signed(forecast.timberDelta)})</small></span></div>
+        <section className="advance-area" aria-label="Advance tide"><div className="forecast-resources"><span className="eyebrow">AFTER THE TIDE</span><span className={forecast.foodDelta < 0 ? 'negative' : ''}><Leaf size={13} aria-hidden="true" />{forecast.state.food} food<small>({signed(forecast.foodDelta)})</small></span><span className={forecast.timberDelta < 0 ? 'negative' : ''}><Trees size={13} aria-hidden="true" />{forecast.state.timber} timber<small>({signed(forecast.timberDelta)})</small></span></div>
           {(atRisk || shortage) && <p className="forecast-warning"><Heart size={12} />{atRisk ? 'The heart will take damage' : 'Food reserves will run out'}</p>}
           {game.status === 'playing' && <div className="tide-economy" aria-label="Food after the tide"><span>{game.food} stored + {forecast.production.food} grown <strong>−2 rations</strong></span><span>= {forecast.state.food} food after tide</span></div>}
           {moonwake && game.status === 'playing' && game.tide >= 4 && <button onClick={() => setModal('finale')} className={`bell-outlook ${game.tide === 8 ? 'final-tide' : ''} ${game.tide === 8 ? finalConditions.ready ? 'ready' : 'needs-care' : !bells.every(island => forecast.connectedIds.includes(island.id)) ? 'needs-care' : ''}`}>{game.tide === 8 ? finalConditions.ready ? 'Final tide: every bell will ring' : `DEFEAT forecast · check ${finalNeeds}` : `After tide: ${bells.filter(island => forecast.connectedIds.includes(island.id)).length}/${bells.length} bells linked to the Heart`}</button>}
           {game.status === 'playing' ? <button className="advance-button" aria-describedby="rations-cost" onClick={advance} disabled={!active}><span><small>{advancing ? 'A MOMENT, PLEASE' : game.tide === game.maxTides ? 'HERE COMES THE GREAT TIDE' : 'WHEN YOU’RE READY'}</small><strong>{advancing ? 'The sea is thinking…' : 'Advance tide'}</strong></span><ArrowRight size={25} strokeWidth={1.3} /></button> : <button className="advance-button" disabled={!!outcome} onClick={() => setResultOpen(true)}><span><small>THE VOYAGE IS COMPLETE</small><strong>{game.status === 'won' ? 'Victory · view result' : 'Defeat · view result'}</strong></span><Flag size={22} /></button>}
-          <p id="rations-cost" className="advance-footnote">{game.status === 'playing' ? <>−2 food when the tide ends · town rations <kbd>↵</kbd></> : 'Every ending is another possible shore.'}</p>
+          <p id="rations-cost" className="advance-footnote">{game.status === 'playing' ? <>−2 food when the tide ends · town rations <kbd>Ctrl ↵</kbd></> : 'Every ending is another possible shore.'}</p>
         </section>
       </div>
-      <footer className="footer"><span><span className="live-dot" />{saveFailed ? 'Local saving unavailable · this voyage stays in this tab' : 'Voyage saved on this browser'}</span><div className="seed-and-medal"><button disabled={advancing} onClick={campaignMap ? () => setModal('start') : copySeed} title={campaignMap ? 'Open campaign chart' : 'Copy voyage seed'}><span>{campaignMap ? 'MAP' : 'SEED'}</span>{campaignMap ? `${campaignMap.id} / 8 · ${campaignMap.title}` : game.seed}{campaignMap ? <Compass size={11} /> : copied ? <Check size={11} /> : <Copy size={11} />}</button><button disabled={advancing} className="medal-chip" onClick={() => setModal('medals')} aria-label="View voyage medals"><Award size={13} />{currentMedal ? medalName(currentMedal.rank) : 'First medal awaits'}</button></div><span className="footer-poem">The sea is mostly water. Mostly.</span></footer>
+      <footer className="footer"><span><span className="live-dot" />{savingFailed ? 'Local saving unavailable · keep this tab open' : 'Voyage saved on this browser'}</span><div className="seed-and-medal"><button disabled={advancing} onClick={campaignMap ? () => setModal('start') : copySeed} title={campaignMap ? 'Open campaign chart' : 'Copy voyage seed'}><span>{campaignMap ? 'MAP' : 'SEED'}</span>{campaignMap ? `${campaignMap.id} / 8 · ${campaignMap.title}` : game.seed}{campaignMap ? <Compass size={11} /> : copied ? <Check size={11} /> : <Copy size={11} />}</button><button disabled={advancing} className="medal-chip" onClick={() => setModal('medals')} aria-label="View voyage medals"><Award size={13} />{medalLabel}</button></div><span className="footer-poem">The sea is mostly water. Mostly.</span></footer>
     </div>
 
+    <SaveStatus failed={savingFailed} visible={!modal && !resultOpen} />
     {advancing && pendingTide.current && <TideSequence state={game} forecast={pendingTide.current} reducedMotion={session.settings.reducedMotion} onStage={setTideStage} onComplete={finishTide} />}
     {outcome && <OutcomeEffect status={outcome} reducedMotion={session.settings.reducedMotion} onComplete={() => { setOutcome(null); setResultOpen(true); }} />}
-    {modal === 'start' && <Modal label="The Unreasonable Archipelago campaign" className="start-modal"><CampaignScreen state={game} completed={campaignCompleted} resumable={session.seenIntro} onResume={() => { setModal(null); if (game.status !== 'playing') setResultOpen(true); }} onMap={startCampaignMap} onFreeVoyage={() => { setSeedDraft('tide-' + crypto.randomUUID().slice(0, 8)); setModal('restart'); }} /></Modal>}
+    {modal === 'start' && <Modal label="The Unreasonable Archipelago campaign" className="start-modal"><CampaignScreen state={game} completed={campaignCompleted} resumable={session.seenIntro} achievements={achievements} onViewMedals={() => setModal('medals')} onResume={() => { setModal(null); if (game.status !== 'playing') setResultOpen(true); }} onMap={startCampaignMap} onFreeVoyage={() => { setRestartReturn('start'); setSeedDraft('tide-' + crypto.randomUUID().slice(0, 8)); setModal('restart'); }} />{recoveredSave && <p className="save-recovery-note">A previous unreadable save was preserved in this browser before starting fresh.</p>}</Modal>}
+    {modal === 'replace' && pendingMap && <Modal label="Replace active voyage" onClose={() => { setPendingMap(null); setModal('start'); }}>
+      <p className="eyebrow">A FRESH TOWN</p><h2>Start {CAMPAIGN_MAPS[pendingMap - 1].title}?</h2>
+      <p className="modal-lead">This replaces your current {campaignMap ? `map ${campaignMap.id}` : 'free voyage'} at tide {game.tide}, including its planning and undo history. Your campaign victories and best medals stay saved.</p>
+      <div className="dialog-buttons"><button className="secondary-button" onClick={() => { setPendingMap(null); setModal('start'); }}>Keep current voyage</button><button className="primary-button" onClick={() => startVoyage(createCampaignGame(pendingMap))}>Start {CAMPAIGN_MAPS[pendingMap - 1].title}<ArrowRight size={17} /></button></div>
+    </Modal>}
     {(modal === 'intro' || modal === 'help') && <Modal label={modal === 'intro' ? 'Welcome to the Unreasonable Archipelago' : 'How to play'} onClose={modal === 'intro' ? undefined : () => setModal(null)} className="guide-modal">{helpContent}</Modal>}
     {(modal === 'finale' || modal === 'finalWarning') && <Modal label={modal === 'finalWarning' ? 'Final tide warning' : 'Bell safety check'} onClose={() => setModal(null)} className="finale-check-modal">
       <FinaleCheck state={game} advice={finaleAdvice} warning={modal === 'finalWarning'} onPlan={planRescue} />
@@ -421,25 +468,25 @@ export default function App() {
       <div className="guide-note"><Wind size={17} /><span>The tow happens now. When you advance, the current may move the island again. Check the forecast afterward; Anchor stops that drift, and Undo restores the whale’s tow.</span></div>
       <button className="primary-button wide" onClick={() => setModal(null)}>Back to the sea<ArrowRight size={16} /></button>
     </Modal>}
-    {modal === 'medals' && <Modal label="Voyage medals" onClose={() => setModal(null)}><p className="eyebrow">A REASON TO SAIL AGAIN</p><h2>Your small<br /><em>great achievements.</em></h2><p className="modal-lead">Win the voyage to earn a medal. Nourish ordinary islands for a more flourishing home. Your best result for each campaign map or free-voyage seed stays with you.</p><div className="medal-levels">{[1, 2, 3].map(rank => <div key={rank}><Award size={23} /><strong>{medalName(rank)}</strong><span>{rank === 1 ? 'Win with 0–2 shore growth' : rank === 2 ? 'Win with 3–5 shore growth' : 'Win with 6 or more shore growth'}</span></div>)}</div><p className="medal-record">{campaignMap ? 'This map' : 'This seed'}: {currentMedal ? `${medalName(currentMedal.rank)} · ${currentMedal.growth} growth` : 'Not yet won'}<br />Best overall: {bestMedal ? `${medalName(bestMedal.rank)} · ${bestMedal.growth} growth` : 'A blank page, a wide sea'}</p><button className="primary-button wide" onClick={() => setModal(null)}>Back to the islands<ArrowRight size={17} /></button></Modal>}
-    {modal === 'settings' && <Modal label="Settings" onClose={() => setModal(null)}><p className="eyebrow">MAKE YOURSELF AT SEA</p><h2>A few small<br /><em>adjustments.</em></h2><div className="setting-row"><div><strong>Sound</strong><p>Master mute for piano and action chimes.</p></div><button className={`switch ${session.settings.sound ? 'on' : ''}`} role="switch" aria-checked={session.settings.sound} aria-label="Sound" onClick={toggleSound}><span /></button></div><div className="setting-row"><div><strong>A Little Landfall</strong><p>Original piano follows the sea and the bell.</p></div><button className={`switch ${musicEnabled ? 'on' : ''}`} role="switch" aria-checked={musicEnabled} aria-label="Piano music" onClick={toggleMusic}><span /></button></div><label className="volume-control">Music volume<output>{Math.round(musicVolume * 100)}%</output><input aria-label="Music volume" type="range" min="0" max="1" step="0.05" value={musicVolume} onChange={event => setting('musicVolume', Number(event.target.value))} /></label><label className="volume-control">Effects volume<output>{Math.round(effectsVolume * 100)}%</output><input aria-label="Effects volume" type="range" min="0" max="1" step="0.05" value={effectsVolume} onChange={event => setting('effectsVolume', Number(event.target.value))} /></label><div className="setting-row"><div><strong>Gentler motion</strong><p>Still water and shorter transitions.</p></div><button className={`switch ${session.settings.reducedMotion ? 'on' : ''}`} role="switch" aria-checked={session.settings.reducedMotion} aria-label="Reduced motion" onClick={() => setting('reducedMotion', !session.settings.reducedMotion)}><span /></button></div><div className="setting-row"><div><strong>Lighter rendering</strong><p>A little easier on older computers.</p></div><button className={`switch ${session.settings.quality === 'low' ? 'on' : ''}`} role="switch" aria-checked={session.settings.quality === 'low'} aria-label="Low graphics quality" onClick={() => setting('quality', session.settings.quality === 'low' ? 'high' : 'low')}><span /></button></div><div className="seed-setting"><label className="eyebrow" htmlFor="voyage-seed">{campaignMap ? 'CAMPAIGN OR FREE VOYAGE' : 'EVERY VOYAGE HAS A SEED'}</label><div><input id="voyage-seed" value={seedDraft} maxLength={100} onChange={event => setSeedDraft(event.target.value)} spellCheck={false} autoComplete="off" />{!campaignMap && <button className="icon-button" onClick={copySeed} aria-label="Copy current seed">{copied ? <Check size={16} /> : <Copy size={16} />}</button>}</div><p>{campaignMap ? `You are on campaign map ${campaignMap.id}. Keep this value to retry the map, or enter a different seed for a free voyage. Campaign victories stay saved.` : 'Use the same seed to return to the same starting world.'}</p><p className="opening-summary" role="status">{openingSummary}</p></div><div className="settings-buttons"><button className="secondary-button" onClick={() => { setSeedDraft(game.seed); setModal('restart'); }}><RotateCcw size={15} />Restart this voyage</button><button className="primary-button" disabled={!seedDraft.trim()} onClick={() => setModal('restart')}>Sail with this seed<ArrowRight size={16} /></button></div><button className="text-button" onClick={proposeNewVoyage}>Find an entirely new archipelago</button><button className="text-button" onClick={() => setModal('medals')}><Award size={14} /> View medals · {currentMedal ? medalName(currentMedal.rank) : 'First medal awaits'}</button></Modal>}
-    {modal === 'restart' && <Modal label="Start a new voyage" onClose={() => setModal('settings')}><div className="modal-emblem"><Compass size={30} strokeWidth={1.2} /></div><p className="eyebrow">ANOTHER POSSIBLE SHORE</p><h2>Set sail<br /><em>once more?</em></h2><p className="modal-lead">This replaces the current voyage and its saved progress. {seedDraft.trim() === game.seed ? 'You’ll return to the beginning of this same archipelago.' : seedDraft.trim() ? 'Your chosen seed will become a new voyage.' : 'A fresh, unexpected archipelago awaits.'}</p><p className="opening-summary">{openingSummary}</p><div className="dialog-buttons"><button className="secondary-button" onClick={() => setModal('settings')}>Stay a little longer</button><button className="primary-button" onClick={() => newVoyage(seedDraft)}>Set sail<ArrowRight size={17} /></button></div></Modal>}
+    {modal === 'medals' && <Modal label="Voyage medals" onClose={() => setModal(null)}><p className="eyebrow">A REASON TO SAIL AGAIN</p><h2>Your small<br /><em>great achievements.</em></h2><p className="modal-lead">Win the voyage to earn a medal. Nourish ordinary islands for a more flourishing home. Your best result for each campaign map or free-voyage seed stays with you.</p><div className="medal-levels">{[1, 2, 3].map(rank => <div key={rank}><Award size={23} /><strong>{medalName(rank)}</strong><span>{rank === 1 ? 'Win with 0–2 shore growth' : rank === 2 ? 'Win with 3–5 shore growth' : 'Win with 6 or more shore growth'}</span></div>)}</div><p className="medal-record">{campaignMap ? 'This map' : 'This seed'}: {currentMedal ? `${medalName(currentMedal.rank)} · ${currentMedal.growth} growth` : campaignMap && campaignMap.id <= campaignCompleted ? 'Victory recorded; no medal details are attributed to this map' : 'Not yet won'}<br />Best overall: {bestMedal ? `${medalName(bestMedal.rank)} · ${bestMedal.growth} growth` : 'A blank page, a wide sea'}</p>{oldMedals.length > 0 && <p className="save-recovery-note">Retained legacy records: {oldMedals.length}. Their original campaign or free-voyage source cannot be determined, so they count toward your overall best without being assigned to a map. New wins are recorded separately.</p>}<button className="primary-button wide" onClick={() => setModal(null)}>Back to the islands<ArrowRight size={17} /></button></Modal>}
+    {modal === 'settings' && <Modal label="Settings" onClose={() => setModal(null)}><p className="eyebrow">MAKE YOURSELF AT SEA</p><h2>A few small<br /><em>adjustments.</em></h2><div className="setting-row"><div><strong>Sound</strong><p>Master mute for piano and action chimes.</p></div><button className={`switch ${session.settings.sound ? 'on' : ''}`} role="switch" aria-checked={session.settings.sound} aria-label="Sound" onClick={toggleSound}><span /></button></div><div className="setting-row"><div><strong>A Little Landfall</strong><p>Original piano follows the sea and the bell.</p></div><button className={`switch ${musicEnabled ? 'on' : ''}`} role="switch" aria-checked={musicEnabled} aria-label="Piano music" onClick={toggleMusic}><span /></button></div><label className="volume-control">Music volume<output>{Math.round(musicVolume * 100)}%</output><input aria-label="Music volume" type="range" min="0" max="1" step="0.05" value={musicVolume} onChange={event => setting('musicVolume', Number(event.target.value))} /></label><label className="volume-control">Effects volume<output>{Math.round(effectsVolume * 100)}%</output><input aria-label="Effects volume" type="range" min="0" max="1" step="0.05" value={effectsVolume} onChange={event => setting('effectsVolume', Number(event.target.value))} /></label><div className="setting-row"><div><strong>Gentler motion</strong><p>Still water and shorter transitions.</p></div><button className={`switch ${session.settings.reducedMotion ? 'on' : ''}`} role="switch" aria-checked={session.settings.reducedMotion} aria-label="Reduced motion" onClick={() => setting('reducedMotion', !session.settings.reducedMotion)}><span /></button></div><div className="setting-row"><div><strong>Lighter rendering</strong><p>A little easier on older computers.</p></div><button className={`switch ${session.settings.quality === 'low' ? 'on' : ''}`} role="switch" aria-checked={session.settings.quality === 'low'} aria-label="Low graphics quality" onClick={() => setting('quality', session.settings.quality === 'low' ? 'high' : 'low')}><span /></button></div><div className="seed-setting"><label className="eyebrow" htmlFor="voyage-seed">{campaignMap ? 'CAMPAIGN OR FREE VOYAGE' : 'EVERY VOYAGE HAS A SEED'}</label><div><input id="voyage-seed" value={seedDraft} maxLength={100} onChange={event => setSeedDraft(event.target.value)} spellCheck={false} autoComplete="off" />{!campaignMap && <button className="icon-button" onClick={copySeed} aria-label="Copy current seed">{copied ? <Check size={16} /> : <Copy size={16} />}</button>}</div><p>{campaignMap ? `You are on campaign map ${campaignMap.id}. Keep this value to retry the map, or enter a different seed for a free voyage. Campaign victories stay saved.` : 'Use the same seed to return to the same starting world.'}</p><p className="opening-summary" role="status">{openingSummary}</p></div><div className="settings-buttons"><button className="secondary-button" onClick={() => { setSeedDraft(game.seed); setModal('restart'); }}><RotateCcw size={15} />Restart this voyage</button><button className="primary-button" disabled={!seedDraft.trim()} onClick={() => setModal('restart')}>Sail with this seed<ArrowRight size={16} /></button></div><button className="text-button" onClick={proposeNewVoyage}>Find an entirely new archipelago</button><button className="text-button" onClick={() => setModal('medals')}><Award size={14} /> View medals · {medalLabel}</button></Modal>}
+    {modal === 'restart' && <Modal label="Start a new voyage" onClose={() => setModal(restartReturn)}><div className="modal-emblem"><Compass size={30} strokeWidth={1.2} /></div><p className="eyebrow">ANOTHER POSSIBLE SHORE</p><h2>Set sail<br /><em>once more?</em></h2><p className="modal-lead">This replaces the current voyage and its saved progress. Your campaign victories and best medals stay saved. {seedDraft.trim() === game.seed ? 'You’ll return to the beginning of this same archipelago.' : seedDraft.trim() ? `Start free voyage “${seedDraft.trim()}”.` : 'A fresh, unexpected archipelago awaits.'}</p><p className="opening-summary">{openingSummary}</p><div className="dialog-buttons"><button className="secondary-button" onClick={() => setModal(restartReturn)}>Stay a little longer</button><button className="primary-button" onClick={() => newVoyage(seedDraft)}>Set sail<ArrowRight size={17} /></button></div></Modal>}
     {resultOpen && !modal && !outcome && <Modal label={game.status === 'won' ? 'Voyage complete: victory' : 'Voyage complete: defeat'} onClose={() => setResultOpen(false)} className={`result-modal result-${game.status}`}>
       <div className={`modal-emblem ${game.status === 'won' ? 'victory' : ''}`}>{game.status === 'won' ? <Bell size={34} strokeWidth={1.2} /> : <Waves size={34} strokeWidth={1.2} />}</div>
       <p className="eyebrow result-verdict">{game.status === 'won' ? 'VICTORY' : 'DEFEAT'}{campaignMap ? ` · MAP ${campaignMap.id} / 8` : ''}</p>
       <h2>{game.status === 'won' ? game.campaignMap === 8 ? <>The whole sea<br /><em>is listening.</em></> : <>The Moon grants<br /><em>another morning.</em></> : <>The bells<br /><em>fell silent.</em></>}</h2>
-      <p className="modal-lead">{game.status === 'won' ? game.campaignMap === 8 ? 'Campaign complete. All eight shores saved. Your four bells rang together, and the Moon forgot why it came.' : `You saved ${game.islands.length} islands. ${bells.length === 1 ? 'Your bell' : 'Every bell'} grew and reached ${moonwake ? 'sheltered water, ' : ''}connected to the Heart. This town gets to see another dawn.` : lossExplanation(game)}</p>
+      <p className="modal-lead">{game.status === 'won' ? game.campaignMap === 8 ? `Campaign complete. All eight shores saved. ${CAMPAIGN_COPY[8]?.victoryCoda}` : `You saved ${game.islands.length} islands. ${bells.length === 1 ? 'Your bell' : 'Every bell'} grew and reached ${moonwake ? 'sheltered water, ' : ''}connected to the Heart. ${game.campaignMap ? CAMPAIGN_COPY[game.campaignMap]?.victoryCoda ?? 'This town gets to see another dawn.' : 'This town gets to see another dawn.'}` : lossExplanation(game)}</p>
       <div className="result-conditions">{bells.map(island => {
         const islandStats = getIslandStats({ ...game, tide: game.maxTides }, island.id);
         const missing = [island.growth < 3 && `growth ${island.growth}/3`, !islandStats.connected && 'no Heart link', moonwake && !islandStats.sheltered && 'no final shelter', moonwake && island.stress >= 3 && `stress ${island.stress}/5`].filter(Boolean);
         return <div key={island.id}><span>{island.name}</span><strong className={missing.length ? 'needs-care' : ''}>{missing.length ? missing.join(' · ') : 'Grown · home · ready'}</strong></div>;
       })}</div>
       <p className="flourish-title"><Sprout size={14} />{game.status === 'won' ? flourishTitle : 'Your flourishing shores'}<span>{flourishing} shore growth · Heart {game.integrity}/5</span></p>
-      {game.status === 'won' && game.campaignMap && game.campaignMap < 8 && <p className="campaign-unlock">Map {game.campaignMap + 1} unlocked.{game.campaignMap % 2 === 0 ? ' The fleet grows: +1 bell, +2 islands, +1 action per tide.' : ' A different shore is waiting.'}</p>}
+      {game.status === 'won' && game.campaignMap && game.campaignMap < 8 && <p className="campaign-unlock">Next shore · map {game.campaignMap + 1}: {CAMPAIGN_MAPS[game.campaignMap].title}. {CAMPAIGN_COPY[game.campaignMap]?.nextShoreHook}{game.campaignMap % 2 === 0 && ' The fleet grows: +1 bell, +2 islands, +1 action per tide.'}</p>}
       {game.status === 'lost' && session.finaleCheckpoint && <div className="finale-retry"><p>First Light is a learning sea. Replan tide 8 with your original resources and actions.</p><button className="primary-button wide" onClick={retryFinalTide}><Undo2 size={16} />Replan the final tide</button></div>}
-      <div className="dialog-buttons"><button className="secondary-button" onClick={() => newVoyage(game.seed)}><RotateCcw size={15} />{game.campaignMap ? 'Retry this map' : 'Try this seed again'}</button><button className="primary-button" onClick={() => game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? startCampaignMap(game.campaignMap + 1) : setModal('start')}>{game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? `Sail to map ${game.campaignMap + 1}` : 'Campaign chart'}<ArrowRight size={16} /></button></div>
+      <div className="dialog-buttons"><button className="secondary-button" onClick={() => newVoyage(game.seed)}><RotateCcw size={15} />{game.campaignMap ? game.status === 'won' ? 'Replay this map' : 'Retry this map' : 'Try this seed again'}</button><button className="primary-button" onClick={() => game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? startCampaignMap(game.campaignMap + 1) : setModal('start')}>{game.status === 'won' && game.campaignMap && game.campaignMap < 8 ? `Sail to map ${game.campaignMap + 1}` : 'Campaign chart'}<ArrowRight size={16} /></button></div>
       <button className="text-button" onClick={() => setResultOpen(false)}>Linger over the islands</button>
     </Modal>}
     <div className="sr-only" aria-live="polite">Tide {game.tide} of {game.maxTides}. {game.actions} actions remaining. {game.food} food and {game.timber} timber. Heart integrity {game.integrity}. {game.status !== 'playing' ? `Voyage ${game.status}.` : ''}</div>
-  </main>;
+  </main></SavingContext.Provider>;
 }

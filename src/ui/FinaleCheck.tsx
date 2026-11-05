@@ -17,9 +17,9 @@ export function FinaleCheck({ state, advice, warning, onPlan }: {
         { ok: info.grown, label: 'Grown to 3/3' },
         { ok: info.connected, label: 'Linked to the Heart' },
         ...(moonwake ? [{ ok: info.sheltered, label: 'Sheltered from this wind' }, { ok: info.rested, label: `Stress ${info.stress} → ${info.forecastStress} · must stay below 3` }] : []),
-      ].map(check => <li className={check.ok ? 'ready' : 'not-ready'} key={check.label}>{check.ok ? <Check size={14} /> : <X size={14} />}<span>{check.label}</span></li>)}</ul>
+      ].map(check => <li className={check.ok ? 'ready' : 'not-ready'} key={check.label}>{check.ok ? <Check size={14} aria-hidden="true" /> : <X size={14} aria-hidden="true" />}<span><strong className="finale-check-state">{check.ok ? 'Met' : 'Not met'}: </strong>{check.label}</span></li>)}</ul>
       <p>{info.hint}</p>
-      {state.status === 'playing' && info.rescue && <button className="secondary-button" onClick={() => onPlan(info.rescue!)}>Show this move<ArrowRight size={14} /></button>}
+      {state.status === 'playing' && info.rescue && <button className="secondary-button" onClick={() => onPlan(info.rescue!)}>Show this action<ArrowRight size={14} /></button>}
     </section>)}</div>
     {moonwake && <p className="finale-rule">Shelter blocks the wind and removes 1 stress each tide. Exposure adds storm stress. Anchors stop movement; they provide no shelter.</p>}
     {state.actions === 0 && state.status === 'playing' && <p className="finale-rule">No actions left: Undo a planning action to make room for a rescue.</p>}

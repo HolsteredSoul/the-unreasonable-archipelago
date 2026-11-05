@@ -53,7 +53,7 @@ An ordinary island can be both a bridge and a windbreak. Anchors stop drift, not
 The optional **Tide chart** explains the later tides and this seed's final shelter direction.
 The objective tracks each bell's shelter and stress after the next tide. **After-tide bell
 checks** explains the four conditions and the windward shelter hex. On tide 8 it can
-suggest a legal tow or breakwater that the actual simulator verifies will win.
+suggest a legal tow, breakwater, or Nourish action that the actual simulator verifies will win.
 An unsafe final advance opens a warning before committing; you can keep planning
 or explicitly accept defeat.
 
@@ -67,8 +67,11 @@ completed saves have no checkpoint and still need a fresh attempt.
 Select islands directly in the world or use the island list. Tow targets are available as
 both clickable water cells and buttons. Drag to orbit, scroll to zoom. Help and settings
 explain keyboard controls and offer reduced motion and lower graphics quality.
-Press **F** for Sea focus, **P** for the forecast, and **Escape** to restore panels.
+Press **F** for Sea focus, **P** for the forecast, **Ctrl+Enter** to advance,
+and **Escape** to restore panels. Plain Enter activates the focused control.
 The water shows drift arrows, storm shelter wakes, and the Heart connection chain.
+Selecting a sheltered bell in Forecast highlights the islands that actually protect it
+after drift. Queued nourishment, recovery, exposure and growth use distinct visual marks.
 Storms now travel visibly across the sea, with a camera-aligned direction arrow,
 wave impacts on exposed shores, and exact green protected cells. Forecast shows
 those cells after drift. Selecting an exposed bell in Forecast also marks its
@@ -95,8 +98,15 @@ Reduced motion replaces the cinematic with a quick transition to the result.
 
 The game saves automatically in this browser. Localhost and the public site have separate
 browser saves. Seed links recreate procedural free voyages, not campaign progress.
+Choosing the currently active campaign map continues it. Starting another map or free
+voyage asks before replacing the active voyage; completed victories remain recorded.
+Saving failures stay visible in compact view and dialogs. An unreadable old save is
+preserved before a fresh save is written. Older medal keys whose voyage cannot be
+identified are retained as legacy records, separate from new campaign and seed medals.
 Settings include separate piano and effects volumes, a piano toggle, and master mute.
 The original score starts after your first interaction and pauses when the page is hidden.
+Effects mute immediately with a short fade; selection bursts are limited so warnings
+and voyage outcomes remain audible. Four subtle daylight palettes mark the campaign pairs.
 
 ## Scope
 The campaign contains eight authored, deterministic puzzles with verified winning routes.
@@ -112,13 +122,30 @@ Saves made before the late-current update keep the original final objective. Res
 or begin a new voyage to play the revised tides; previously earned medals remain saved.
 
 ## Development
-GitHub Actions runs the tests and builds the public site on each main-branch push.
+GitHub Actions runs source and UI checks on pull requests without deploying; main-branch
+pushes test, build and publish the public site.
 `VITE_BASE_PATH=/the-unreasonable-archipelago/` sets the production repository path;
 local development and ordinary builds use `/`. Models, favicon, and the audio worker
 resolve under the configured base. Pages uses the GitHub Actions publishing source.
 
 `npm test` verifies simulation and persistence.
+`npm run test:ui` verifies status and checklist semantics using Node's test runner.
 `npm run build` type-checks and creates the static site in dist.
+`npm run audit:gameplay` replays the reference, six-growth medal and alternative
+late-current routes for all eight maps without changing game rules.
+`npm run audit:gameplay -- --procedural` adds the fixed 32-seed option audit;
+its bounded search is evidence of available routes, not a difficulty rating.
+
+After a build, `npm run test:browser -- --all-maps` runs real controls in isolated
+Chrome contexts at 1366×768 and 1920×1080, including save failure, cancellation,
+reload/undo, defeat and final rescue. It requires an existing Playwright module and
+installed browser; it does not install dependencies or use your browser profile.
+The harness finds a local/npm-cached module, or accepts `--playwright=<module path>`.
+Use `--browser=msedge --quick` for a bounded Edge pass and `--scaling` for 125%/150%
+display-scaling emulation. `--dense` earns all eight victories in a fresh compact
+context for large-fleet captures. Evidence is written under `output/playwright/`.
+These automated checks do not replace human listening,
+assistive-technology reading or first-time playtesting.
 
 - src/game: pure deterministic simulation and tests.
 - src/world: Three.js diorama, picking and animation.

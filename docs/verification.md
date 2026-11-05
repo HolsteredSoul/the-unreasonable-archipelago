@@ -1,5 +1,144 @@
 # Gameplay verification
 
+## Four-pillar delivery — 5 November 2026
+
+The project lead integrated the Gameplay & Balance, Art & Audio, World & Progression,
+and UX & Engineering work in the shared checkout. The clean kickoff was `f14e9a2`.
+The verification below records the local release candidate before publication.
+On 5 November 2026 the user authorized committing, pushing and deploying this release.
+Publication uses the existing [Verify and deploy the archipelago workflow](https://github.com/HolsteredSoul/the-unreasonable-archipelago/actions/workflows/pages.yml)
+from `main`; its run records are the source of truth for remote build/deployment status.
+The [master plan](improvement-plan.md) records ticket outcomes and human evidence gates.
+
+### Automated and strategy evidence
+
+- `npm.cmd test -- --maxWorkers=1`: **207 tests pass across 22 files**. This includes
+  legacy/current persistence, campaign progression, isolated medal keys, raw-data
+  recovery, finale advice, all campaign routes, 400 generated winning witnesses,
+  1,000 seeded invariants, weather/renderer semantics, and effects lifecycle/priority.
+- `npm.cmd run test:ui`: **5 checks pass** for the persistent saving announcer,
+  non-announcing modal copies, explicit condition states and rescue wording.
+  Vitest includes only source test files; the Node UI runner is intentionally separate.
+- After the final notification/layout correction, the affected label, renderer and
+  campaign-component suites passed again: **25 tests across 3 files** (a subset of
+  the 207 above, not additional unique tests).
+- `npm.cmd run build` with `VITE_BASE_PATH=/the-unreasonable-archipelago/`:
+  **TypeScript and production build pass**. The corrected build contains
+  `index-CEPSb2ga.js` (~1,050.50 kB / 294.95 kB gzip) and `index-CGYxVsyU.css`.
+  The existing large-chunk advisory remains; this is not an FPS/performance benchmark.
+- The [campaign strategy audit](pillars/evidence/gameplay/strategy-audit.json) replays
+  24 complete reference/medal/late-current routes. Every map has a legal six-ordinary-
+  growth victory and a materially different late approach; the rules are unchanged.
+- The [procedural and optional-action audit](pillars/evidence/gameplay/procedural-options.md)
+  uses 32 predetermined seeds covering four building families, six rotations and bell
+  distances 2–4. All witnesses and all bounded six-growth candidates win. A useful
+  whale tow and a garden bridge/windbreak alternative have executable cost comparisons.
+  Two audit runs were byte-identical. This sample does not establish universal medal
+  feasibility, dominant strategies, difficulty, discovery or enjoyment.
+
+### Controlled production-browser campaign
+
+The first complete production pass used an isolated Chrome **156.0.8078.80** context
+for each scenario, an ephemeral local static server, the real Pages base path, and
+actual pointer/keyboard controls. Source/dist fingerprints and viewport/save guards
+detect unexpected changes. It used an already-installed Playwright module and did
+not install dependencies, attach to a personal profile, or modify personal saves.
+
+Evidence: `output/playwright/programme-2026-11-05T13-30-45.108Z-6652214a/summary.json`.
+All **6 scenarios passed** at **1366×768 and 1920×1080**: campaign, blocked saving,
+and final rescue at each size. This includes **16 campaign victories** (all eight
+maps at both sizes), **2 deliberate defeats followed by checkpoint reload/replanning
+and Nourish rescue victories**, exact simulator agreement, undo/reload, current-map
+resume, replacement cancellation, modal focus, and keyboard safety. No browser errors,
+console warnings or failed same-origin responses were recorded; browser/server cleanup
+completed and source/dist fingerprints remained unchanged throughout the run.
+
+This run identified two visual defects during manual image review, despite passing
+the interaction assertions: resource feedback could cover controls, and the tide toast
+could meet a raised bell-warning panel. Some modal/campaign text and focus outlines
+also had insufficient contrast on their opaque backgrounds. The lead corrected
+notice placement using the measured dock boundary, reserved notice rectangles for
+world labels, and darkened the scoped text/focus colours. These final presentation
+changes do not alter game rules or persistence. Their browser revalidation is recorded
+below when complete; the preceding campaign run remains evidence for its exact build.
+
+### Final presentation revalidation
+
+The corrected build has passed the following production runs. Each run has a JSON
+summary, scenario steps, PNG captures and accessibility snapshots under its directory:
+
+| Run | Result | Evidence directory under `output/playwright/` |
+| --- | --- | --- |
+| Chrome 156.0.8078.80, campaign/saving/rescue at both desktop sizes | 6/6 scenarios pass | `programme-2026-11-05T13-48-17.252Z-af520652` |
+| Edge 156.0.4314.58, controls/saving at both desktop sizes | 4/4 scenarios pass | `programme-2026-11-05T13-50-40.405Z-4bbbc928` |
+| Chrome 125%/150% scaling emulation for both desktop targets | 4/4 scenarios pass | `programme-2026-11-05T13-52-28.981Z-770ff434` |
+
+The scaling run uses device pixel ratio and corresponding CSS viewports of 1093×614,
+911×512, 1536×864 and 1280×720. It is not a physical Windows display-setting test.
+Controls/settings include mute, music volume, low graphics, reduced motion, reload,
+keyboard focus and a tide transition. The harness checks visible notification
+rectangles against the action dock, forecast resources, bell outlook and Advance
+control without first dismissing notices. No document overflow occurred in these
+captured states. The corrected source fingerprint is
+`523650da17bc2355db1af0b0d9df50d0143ff2b89b1e5c3fcff8409d36d13ea3` and dist fingerprint is
+`dfe6b9ed4ffcbbcdfa7a2800ca60a8b87cc34e58ab0b877b5a625fb28ec084e2` (browser harness method).
+
+Fresh image inspection confirms the Nourish callout clears controls at both sizes and
+the settled-tide toast clears the raised final-warning strip. An isolated production-
+CSS fixture confirms the actual winning declarations: modal helpers **5.40:1**,
+accept-defeat text **5.16:1**, rescue button hover **4.64:1**. Its scope is opaque
+backgrounds, not a whole-game accessibility certification or sea-pixel measurement.
+See [Art's computed-CSS evidence](pillars/evidence/art/postfix-computed-css-2026-11-05.json).
+
+One additional image-review defect appeared at 150%: a fading notice was initially
+excluded from the map-label reservations and could cover the selected bell label.
+The final correction reserves notices at opacity zero, uses an opacity-only fade,
+and refreshes the dock boundary before paint. The capture assertion now includes the
+selected island label. Final verification:
+
+| Final-build run | Result | Evidence directory under `output/playwright/` |
+| --- | --- | --- |
+| Chrome scaling with selected-label intersection checks | 4/4 pass | `programme-2026-11-05T14-14-06.945Z-60b64efc` |
+| Fresh compact dense-fleet replay through all eight maps | Pass; 8 victories earned through UI controls | `programme-2026-11-05T14-13-26.557Z-1a5bda90` |
+
+Both used final source fingerprint
+`5597756b96aa3b3c5c48839ebe8de6e932aac76c692f323d9dfb9610044b0153` and dist fingerprint
+`a54c1eb596009da333ca41ce4ac701ab98fb1622f055c6606c45b2d949249381`.
+The lead inspected the corrected 150% Nourish frame and final thirteen-island frame:
+the selected label, notice and action/forecast controls are separate. No new gameplay,
+save, colour or audio changes were introduced in this final reservation correction.
+The preceding Chrome/Edge/contrast evidence remains attributed to its earlier build.
+Art's independent final review accepted seven corrected scaled/dense frames. In the
+previously failing 150% case, the selected label clears the notice by **36.13 CSS px**,
+and the notice clears the forecast controls by **12 px**. All scoped visual findings
+are closed for the inspected states; see the [final Art review](pillars/art-audio.md).
+
+The initial lead-run attempt at final scaling was blocked by sandbox loopback access
+before gameplay began (`programme-2026-11-05T14-13-19.667Z-29798995`). It is a failed
+environmental launch, not an accepted test. The completed rerun above used approved
+local network access. The UX chat's temporary model-capacity interruption caused no
+source change; the lead and resumed UX session reconciled the final artifacts.
+
+### Evidence limits and release scope
+
+Local delivery was checked in a fresh Chrome context at
+`http://127.0.0.1:4179/the-unreasonable-archipelago/`: campaign screen, JavaScript,
+CSS, and both GLB assets loaded successfully. Evidence:
+`output/playwright/programme-preview-2026-11-05T14-18-32.160Z/summary.json`.
+The lead-owned preview remains running; all test-owned browsers and temporary servers
+were closed. An earlier sandboxed preview attempt timed out and is superseded by this
+successful check. This is local delivery, not a public deployment.
+
+The browser assertions and static contrast calculations do not establish actual NVDA
+speech, physical Windows scaling, real-device mix/clipping, musical fatigue, or player
+learning/enjoyment. The [human playtest protocol](playtest-plan.md) remains ready but
+unrun. The retained whale and subtle daylight treatments have image review; no new
+model or score was needed. Mobile expansion and FPS benchmarking remain deferred.
+No rule tuning, new hazard or extra objective was added without evidence of a player
+problem. No publishing, remote Git push or real user-data recovery was performed.
+
+The sections below are historical verification records for earlier versions.
+
 ## Visible weather, breakwater placement, and tide events
 
 20 September 2026. **133 tests pass across 18 files**. Weather presentation adds

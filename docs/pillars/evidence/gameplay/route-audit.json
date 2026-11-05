@@ -1,0 +1,7198 @@
+{
+  "purpose": "Bounded route diagnostics, not a solver, balance rating, human playtest, or full regression baseline.",
+  "date": "2026-11-05",
+  "node": "v24.13.1",
+  "sourceHashes": {
+    "src/game/index.ts": "36a17724fe83b9ba190ea4fe6590c01cb20fb9c6964b2b054249992980c628cf",
+    "src/game/generation.ts": "6df41a165d90c828d9a87c6ee9460d186cd68098811239edfb738dd222b30056",
+    "src/game/campaign.ts": "a6f3d63719e4d34af747376c63e374c4d42bbfcdbf1e9c561f1094c09ab253f8",
+    "src/game/finaleAdvice.ts": "9bf79702c2861c3f7f9ac91d478d02be2cd148fc5782da05f0fd84080b69dcaa"
+  },
+  "maps": [
+    {
+      "map": 1,
+      "title": "First Light",
+      "bells": 1,
+      "budgetPerTide": 3,
+      "commands": 8,
+      "counts": {
+        "nourish": 3,
+        "tow": 2,
+        "anchor": 3,
+        "build": 0,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        4,
+        6,
+        8
+      ],
+      "spareActions": 16,
+      "minFood": 5,
+      "minTimber": 8,
+      "finalFood": 12,
+      "finalTimber": 14,
+      "finalIntegrity": 4,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 9,
+            "actions": 3
+          },
+          "planned": {
+            "food": 7,
+            "timber": 8,
+            "spareActions": 0
+          },
+          "production": {
+            "food": 4,
+            "timber": 2
+          },
+          "end": {
+            "food": 9,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 2,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ],
+          "start": {
+            "food": 9,
+            "timber": 10,
+            "actions": 3
+          },
+          "planned": {
+            "food": 6,
+            "timber": 10,
+            "spareActions": 1
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 7,
+            "timber": 11,
+            "actions": 3
+          },
+          "planned": {
+            "food": 5,
+            "timber": 11,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [],
+          "start": {
+            "food": 6,
+            "timber": 12,
+            "actions": 3
+          },
+          "planned": {
+            "food": 6,
+            "timber": 12,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 7,
+            "timber": 13,
+            "actions": 3
+          },
+          "planned": {
+            "food": 7,
+            "timber": 12,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 9,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 9,
+            "timber": 13,
+            "actions": 3
+          },
+          "planned": {
+            "food": 9,
+            "timber": 13,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 14,
+            "actions": 3
+          },
+          "planned": {
+            "food": 10,
+            "timber": 13,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 12,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [],
+          "start": {
+            "food": 12,
+            "timber": 14,
+            "actions": 3
+          },
+          "planned": {
+            "food": 12,
+            "timber": 14,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 12,
+            "timber": 14,
+            "integrity": 4,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 2,
+              "r": -1
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 2,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 14,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 2,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 7,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 14,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 1,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 15,
+          "finalTimber": 17,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 14,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [
+        {
+          "tide": 2,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 1,
+              "r": -1
+            }
+          },
+          "replacement": {
+            "type": "whaleTow",
+            "id": "bell"
+          },
+          "status": "won",
+          "finalFood": 13
+        }
+      ],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": false,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 2,
+      "title": "The Long Way Home",
+      "bells": 1,
+      "budgetPerTide": 3,
+      "commands": 8,
+      "counts": {
+        "nourish": 3,
+        "tow": 3,
+        "anchor": 2,
+        "build": 0,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        4,
+        6,
+        8
+      ],
+      "spareActions": 16,
+      "minFood": 4,
+      "minTimber": 9,
+      "finalFood": 10,
+      "finalTimber": 14,
+      "finalIntegrity": 4,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 3
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 9,
+            "actions": 3
+          },
+          "planned": {
+            "food": 7,
+            "timber": 9,
+            "spareActions": 0
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 9,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 0,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 9,
+            "timber": 10,
+            "actions": 3
+          },
+          "planned": {
+            "food": 7,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 8,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 8,
+            "timber": 11,
+            "actions": 3
+          },
+          "planned": {
+            "food": 6,
+            "timber": 11,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 2,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 1,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [],
+          "start": {
+            "food": 6,
+            "timber": 12,
+            "actions": 3
+          },
+          "planned": {
+            "food": 6,
+            "timber": 12,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 2,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 6,
+            "timber": 13,
+            "actions": 3
+          },
+          "planned": {
+            "food": 4,
+            "timber": 12,
+            "spareActions": 1
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 6,
+            "timber": 13,
+            "actions": 3
+          },
+          "planned": {
+            "food": 6,
+            "timber": 13,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 8,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          "start": {
+            "food": 8,
+            "timber": 14,
+            "actions": 3
+          },
+          "planned": {
+            "food": 8,
+            "timber": 13,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [],
+          "start": {
+            "food": 10,
+            "timber": 14,
+            "actions": 3
+          },
+          "planned": {
+            "food": 10,
+            "timber": 14,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 10,
+            "timber": 14,
+            "integrity": 4,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 0,
+              "r": 3
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 1,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 10,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 0,
+              "r": 2
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 1,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 9,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": false,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 0,
+              "r": 1
+            }
+          },
+          "status": "won",
+          "finalFood": 11,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 10,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 10,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": false,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 3,
+      "title": "A Second Opinion",
+      "bells": 2,
+      "budgetPerTide": 4,
+      "commands": 11,
+      "counts": {
+        "nourish": 6,
+        "tow": 1,
+        "anchor": 4,
+        "build": 0,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        4,
+        6
+      ],
+      "spareActions": 21,
+      "minFood": 2,
+      "minTimber": 10,
+      "finalFood": 10,
+      "finalTimber": 15,
+      "finalIntegrity": 4,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 12,
+            "timber": 10,
+            "actions": 4
+          },
+          "planned": {
+            "food": 8,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 2
+          },
+          "end": {
+            "food": 10,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 12,
+            "actions": 4
+          },
+          "planned": {
+            "food": 6,
+            "timber": 12,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 2,
+            "timber": 2
+          },
+          "end": {
+            "food": 6,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 6,
+            "timber": 14,
+            "actions": 4
+          },
+          "planned": {
+            "food": 2,
+            "timber": 14,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 4,
+            "timber": 15,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [],
+          "start": {
+            "food": 4,
+            "timber": 15,
+            "actions": 4
+          },
+          "planned": {
+            "food": 4,
+            "timber": 15,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 16,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 6,
+            "timber": 16,
+            "actions": 4
+          },
+          "planned": {
+            "food": 6,
+            "timber": 14,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 8,
+            "timber": 15,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 8,
+            "timber": 15,
+            "actions": 4
+          },
+          "planned": {
+            "food": 8,
+            "timber": 15,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 16,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 16,
+            "actions": 4
+          },
+          "planned": {
+            "food": 10,
+            "timber": 14,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 11,
+            "timber": 15,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "shore-3",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            }
+          ],
+          "start": {
+            "food": 11,
+            "timber": 15,
+            "actions": 4
+          },
+          "planned": {
+            "food": 10,
+            "timber": 15,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 10,
+            "timber": 15,
+            "integrity": 4,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 16,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "won",
+          "finalFood": 11,
+          "finalTimber": 16,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 10,
+          "finalTimber": 16,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "won",
+          "finalFood": 11,
+          "finalTimber": 16,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-3",
+            "to": {
+              "q": 0,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": false,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 4,
+      "title": "Bread and Bells",
+      "bells": 2,
+      "budgetPerTide": 4,
+      "commands": 15,
+      "counts": {
+        "nourish": 6,
+        "tow": 4,
+        "anchor": 4,
+        "build": 1,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        4,
+        6
+      ],
+      "spareActions": 17,
+      "minFood": 2,
+      "minTimber": 7,
+      "finalFood": 7,
+      "finalTimber": 10,
+      "finalIntegrity": 5,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "build",
+              "id": "shore-4",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "tow",
+              "id": "bell-2",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            }
+          ],
+          "start": {
+            "food": 12,
+            "timber": 10,
+            "actions": 4
+          },
+          "planned": {
+            "food": 7,
+            "timber": 7,
+            "spareActions": 0
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 9,
+            "timber": 8,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 9,
+            "timber": 8,
+            "actions": 4
+          },
+          "planned": {
+            "food": 5,
+            "timber": 8,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 9,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 6,
+            "timber": 9,
+            "actions": 4
+          },
+          "planned": {
+            "food": 2,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 3,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [],
+          "start": {
+            "food": 3,
+            "timber": 10,
+            "actions": 4
+          },
+          "planned": {
+            "food": 3,
+            "timber": 10,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 4,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 4,
+            "timber": 11,
+            "actions": 4
+          },
+          "planned": {
+            "food": 4,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 6,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 6,
+            "timber": 10,
+            "actions": 4
+          },
+          "planned": {
+            "food": 6,
+            "timber": 10,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 8,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 8,
+            "timber": 11,
+            "actions": 4
+          },
+          "planned": {
+            "food": 8,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell-2",
+              "to": {
+                "q": -1,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-5",
+              "to": {
+                "q": -1,
+                "r": -1
+              }
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 10,
+            "actions": 4
+          },
+          "planned": {
+            "food": 7,
+            "timber": 10,
+            "spareActions": 1
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 7,
+            "timber": 10,
+            "integrity": 5,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "build",
+            "id": "shore-4",
+            "building": "garden"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 3,
+          "error": "Nourishment needs 2 food.",
+          "finalFood": 0,
+          "finalTimber": 12,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell-2",
+            "to": {
+              "q": 0,
+              "r": -1
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 10,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 9,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 7,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "won",
+          "finalFood": 7,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "won",
+          "finalFood": 7,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 9,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": -1,
+              "r": 1
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 10,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell-2",
+            "to": {
+              "q": -1,
+              "r": 0
+            }
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-5",
+            "to": {
+              "q": -1,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": true,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 5,
+      "title": "The Third Voice",
+      "bells": 3,
+      "budgetPerTide": 5,
+      "commands": 19,
+      "counts": {
+        "nourish": 9,
+        "tow": 3,
+        "anchor": 6,
+        "build": 1,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        4,
+        6
+      ],
+      "spareActions": 21,
+      "minFood": 4,
+      "minTimber": 8,
+      "finalFood": 21,
+      "finalTimber": 10,
+      "finalIntegrity": 5,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "build",
+              "id": "shore-5",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 14,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 8,
+            "timber": 8,
+            "spareActions": 1
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 12,
+            "timber": 9,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 12,
+            "timber": 9,
+            "actions": 5
+          },
+          "planned": {
+            "food": 6,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 10,
+            "actions": 5
+          },
+          "planned": {
+            "food": 4,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 5,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [],
+          "start": {
+            "food": 7,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 7,
+            "timber": 11,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 5,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 10,
+            "timber": 12,
+            "actions": 5
+          },
+          "planned": {
+            "food": 10,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 14,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 14,
+            "timber": 10,
+            "actions": 5
+          },
+          "planned": {
+            "food": 14,
+            "timber": 10,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 5,
+            "timber": 1
+          },
+          "end": {
+            "food": 17,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 17,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 17,
+            "timber": 8,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 5,
+            "timber": 1
+          },
+          "end": {
+            "food": 20,
+            "timber": 9,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "shore-6",
+              "to": {
+                "q": 2,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-6",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-1",
+              "to": {
+                "q": 1,
+                "r": -2
+              }
+            }
+          ],
+          "start": {
+            "food": 20,
+            "timber": 9,
+            "actions": 5
+          },
+          "planned": {
+            "food": 17,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 21,
+            "timber": 10,
+            "integrity": 5,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "build",
+            "id": "shore-5",
+            "building": "garden"
+          },
+          "status": "won",
+          "finalFood": 5,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 23,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 18,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 21,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 20,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "won",
+          "finalFood": 21,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 19,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "won",
+          "finalFood": 21,
+          "finalTimber": 11,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-6",
+            "to": {
+              "q": 2,
+              "r": -2
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 20,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-6",
+            "to": {
+              "q": 2,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 22,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-1",
+            "to": {
+              "q": 1,
+              "r": -2
+            }
+          },
+          "status": "lost",
+          "finalFood": 22,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": true,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 6,
+      "title": "Salt and Supper",
+      "bells": 3,
+      "budgetPerTide": 5,
+      "commands": 19,
+      "counts": {
+        "nourish": 9,
+        "tow": 3,
+        "anchor": 6,
+        "build": 1,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        6
+      ],
+      "spareActions": 21,
+      "minFood": 1,
+      "minTimber": 8,
+      "finalFood": 6,
+      "finalTimber": 9,
+      "finalIntegrity": 5,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "build",
+              "id": "shore-5",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            },
+            {
+              "type": "tow",
+              "id": "bell-3",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ],
+          "start": {
+            "food": 14,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 7,
+            "timber": 8,
+            "spareActions": 0
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 9,
+            "timber": 9,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 9,
+            "timber": 9,
+            "actions": 5
+          },
+          "planned": {
+            "food": 3,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 5,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 5,
+            "timber": 10,
+            "actions": 5
+          },
+          "planned": {
+            "food": 1,
+            "timber": 10,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 3,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 2,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 1,
+            "timber": 11,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 3,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 12,
+            "actions": 5
+          },
+          "planned": {
+            "food": 3,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 5,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 5,
+            "timber": 10,
+            "actions": 5
+          },
+          "planned": {
+            "food": 5,
+            "timber": 10,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 7,
+            "timber": 11,
+            "actions": 5
+          },
+          "planned": {
+            "food": 7,
+            "timber": 8,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 8,
+            "timber": 9,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "shore-3",
+              "to": {
+                "q": -1,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-1",
+              "to": {
+                "q": 1,
+                "r": 1
+              }
+            }
+          ],
+          "start": {
+            "food": 8,
+            "timber": 9,
+            "actions": 5
+          },
+          "planned": {
+            "food": 6,
+            "timber": 9,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 6,
+            "timber": 9,
+            "integrity": 5,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "build",
+            "id": "shore-5",
+            "building": "garden"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 3,
+          "error": "Nourishment needs 2 food.",
+          "finalFood": 1,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell-3",
+            "to": {
+              "q": -1,
+              "r": 1
+            }
+          },
+          "status": "won",
+          "finalFood": 7,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 4,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 8,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 7,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 8,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 6,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "won",
+          "finalFood": 6,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 6,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 6,
+          "finalTimber": 10,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-3",
+            "to": {
+              "q": -1,
+              "r": 2
+            }
+          },
+          "status": "lost",
+          "finalFood": 7,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-1",
+            "to": {
+              "q": 1,
+              "r": 1
+            }
+          },
+          "status": "lost",
+          "finalFood": 6,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": false,
+          "sheltered": false,
+          "rested": true,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 7,
+      "title": "A Choir of Four",
+      "bells": 4,
+      "budgetPerTide": 6,
+      "commands": 25,
+      "counts": {
+        "nourish": 12,
+        "tow": 4,
+        "anchor": 8,
+        "build": 1,
+        "whaleTow": 0
+      },
+      "idleTides": [
+        6
+      ],
+      "spareActions": 23,
+      "minFood": 1,
+      "minTimber": 7,
+      "finalFood": 11,
+      "finalTimber": 8,
+      "finalIntegrity": 5,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "build",
+              "id": "shore-8",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 16,
+            "timber": 12,
+            "actions": 6
+          },
+          "planned": {
+            "food": 8,
+            "timber": 9,
+            "spareActions": 1
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 12,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 0,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 12,
+            "timber": 10,
+            "actions": 6
+          },
+          "planned": {
+            "food": 4,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 5,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 7,
+            "timber": 11,
+            "actions": 6
+          },
+          "planned": {
+            "food": 1,
+            "timber": 11,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 3,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 12,
+            "actions": 6
+          },
+          "planned": {
+            "food": 1,
+            "timber": 12,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 4,
+            "timber": 1
+          },
+          "end": {
+            "food": 3,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 13,
+            "actions": 6
+          },
+          "planned": {
+            "food": 3,
+            "timber": 9,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [],
+          "start": {
+            "food": 7,
+            "timber": 10,
+            "actions": 6
+          },
+          "planned": {
+            "food": 7,
+            "timber": 10,
+            "spareActions": 6
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 11,
+            "timber": 11,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 11,
+            "timber": 11,
+            "actions": 6
+          },
+          "planned": {
+            "food": 11,
+            "timber": 7,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 15,
+            "timber": 8,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "bell-2",
+              "to": {
+                "q": 1,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-8",
+              "to": {
+                "q": 2,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "shore-8",
+              "to": {
+                "q": 1,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell-4",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            }
+          ],
+          "start": {
+            "food": 15,
+            "timber": 8,
+            "actions": 6
+          },
+          "planned": {
+            "food": 11,
+            "timber": 8,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 2,
+            "timber": 0
+          },
+          "end": {
+            "food": 11,
+            "timber": 8,
+            "integrity": 5,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 1,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "build",
+            "id": "shore-8",
+            "building": "garden"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 3,
+          "error": "Nourishment needs 2 food.",
+          "finalFood": 1,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 4,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 13,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 15,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-4"
+          },
+          "status": "won",
+          "finalFood": 11,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "won",
+          "finalFood": 11,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 15,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 12,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-4"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 11,
+          "finalTimber": 9,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell-2",
+            "to": {
+              "q": 1,
+              "r": 1
+            }
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-8",
+            "to": {
+              "q": 2,
+              "r": 1
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 14,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-8",
+            "to": {
+              "q": 1,
+              "r": 2
+            }
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell-4",
+            "to": {
+              "q": 0,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 8,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": false,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    },
+    {
+      "map": 8,
+      "title": "The Moon’s Encore",
+      "bells": 4,
+      "budgetPerTide": 6,
+      "commands": 25,
+      "counts": {
+        "nourish": 12,
+        "tow": 4,
+        "anchor": 8,
+        "build": 1,
+        "whaleTow": 0
+      },
+      "idleTides": [],
+      "spareActions": 23,
+      "minFood": 1,
+      "minTimber": 9,
+      "finalFood": 10,
+      "finalTimber": 13,
+      "finalIntegrity": 5,
+      "ordinaryGrowth": 0,
+      "rows": [
+        {
+          "tide": 1,
+          "commands": [
+            {
+              "type": "build",
+              "id": "shore-5",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            },
+            {
+              "type": "tow",
+              "id": "bell-4",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          "start": {
+            "food": 16,
+            "timber": 12,
+            "actions": 6
+          },
+          "planned": {
+            "food": 7,
+            "timber": 9,
+            "spareActions": 0
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 11,
+            "timber": 10,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": 1,
+              "growth": 1,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 2,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 11,
+            "timber": 10,
+            "actions": 6
+          },
+          "planned": {
+            "food": 3,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 4,
+            "timber": 2
+          },
+          "end": {
+            "food": 5,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": -1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": 0,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 3,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "nourish",
+              "id": "bell-2"
+            }
+          ],
+          "start": {
+            "food": 5,
+            "timber": 12,
+            "actions": 6
+          },
+          "planned": {
+            "food": 1,
+            "timber": 12,
+            "spareActions": 4
+          },
+          "production": {
+            "food": 4,
+            "timber": 2
+          },
+          "end": {
+            "food": 3,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": true,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 2,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 4,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell-3"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 14,
+            "actions": 6
+          },
+          "planned": {
+            "food": 1,
+            "timber": 14,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 4,
+            "timber": 2
+          },
+          "end": {
+            "food": 3,
+            "timber": 16,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 5,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 3,
+            "timber": 16,
+            "actions": 6
+          },
+          "planned": {
+            "food": 3,
+            "timber": 12,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 7,
+            "timber": 13,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": 0,
+              "r": -1,
+              "growth": 3,
+              "stress": 1,
+              "nourished": false,
+              "sheltered": false,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 2,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 6,
+          "commands": [
+            {
+              "type": "nourish",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 7,
+            "timber": 13,
+            "actions": 6
+          },
+          "planned": {
+            "food": 5,
+            "timber": 13,
+            "spareActions": 5
+          },
+          "production": {
+            "food": 6,
+            "timber": 1
+          },
+          "end": {
+            "food": 9,
+            "timber": 14,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 7,
+          "commands": [
+            {
+              "type": "anchor",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-2"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-3"
+            },
+            {
+              "type": "anchor",
+              "id": "bell-4"
+            }
+          ],
+          "start": {
+            "food": 9,
+            "timber": 14,
+            "actions": 6
+          },
+          "planned": {
+            "food": 9,
+            "timber": 10,
+            "spareActions": 2
+          },
+          "production": {
+            "food": 5,
+            "timber": 2
+          },
+          "end": {
+            "food": 12,
+            "timber": 12,
+            "integrity": 5,
+            "status": "playing"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        },
+        {
+          "tide": 8,
+          "commands": [
+            {
+              "type": "tow",
+              "id": "shore-3",
+              "to": {
+                "q": -1,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell-2",
+              "to": {
+                "q": -1,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          "start": {
+            "food": 12,
+            "timber": 12,
+            "actions": 6
+          },
+          "planned": {
+            "food": 9,
+            "timber": 12,
+            "spareActions": 3
+          },
+          "production": {
+            "food": 3,
+            "timber": 1
+          },
+          "end": {
+            "food": 10,
+            "timber": 13,
+            "integrity": 5,
+            "status": "won"
+          },
+          "bells": [
+            {
+              "id": "bell",
+              "q": 0,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-2",
+              "q": -1,
+              "r": 2,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-3",
+              "q": -1,
+              "r": 0,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            },
+            {
+              "id": "bell-4",
+              "q": -1,
+              "r": 1,
+              "growth": 3,
+              "stress": 0,
+              "nourished": false,
+              "sheltered": true,
+              "connected": true
+            }
+          ]
+        }
+      ],
+      "omissions": [
+        {
+          "tide": 1,
+          "command": {
+            "type": "build",
+            "id": "shore-5",
+            "building": "garden"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 3,
+          "error": "Nourishment needs 2 food.",
+          "finalFood": 1,
+          "finalTimber": 15,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 1,
+          "command": {
+            "type": "tow",
+            "id": "bell-4",
+            "to": {
+              "q": 0,
+              "r": 1
+            }
+          },
+          "status": "won",
+          "finalFood": 10,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 2,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 3,
+          "command": {
+            "type": "nourish",
+            "id": "bell-2"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 4,
+          "command": {
+            "type": "nourish",
+            "id": "bell-3"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 8,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 11,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 5,
+          "command": {
+            "type": "anchor",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 10,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": false,
+            "ready": false
+          }
+        },
+        {
+          "tide": 6,
+          "command": {
+            "type": "nourish",
+            "id": "bell-4"
+          },
+          "status": "lost",
+          "finalFood": 12,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": false,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 9,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": false,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-2"
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 11,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-3"
+          },
+          "status": "won",
+          "finalFood": 10,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 7,
+          "command": {
+            "type": "anchor",
+            "id": "bell-4"
+          },
+          "status": "won",
+          "finalFood": 10,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": true,
+            "rested": true,
+            "ready": true
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "shore-3",
+            "to": {
+              "q": -1,
+              "r": -1
+            }
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 14,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell-2",
+            "to": {
+              "q": -1,
+              "r": 2
+            }
+          },
+          "status": "invalid-continuation",
+          "stoppedAt": 8,
+          "error": "Choose an empty neighboring hex inside the reef.",
+          "finalFood": 11,
+          "finalTimber": 12,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        },
+        {
+          "tide": 8,
+          "command": {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 0,
+              "r": 1
+            }
+          },
+          "status": "lost",
+          "finalFood": 11,
+          "finalTimber": 13,
+          "conditions": {
+            "grown": true,
+            "connected": true,
+            "sheltered": false,
+            "rested": true,
+            "ready": false
+          }
+        }
+      ],
+      "whaleSubstitutions": [],
+      "omitTides7And8": {
+        "status": "lost",
+        "conditions": {
+          "grown": true,
+          "connected": true,
+          "sheltered": false,
+          "rested": false,
+          "ready": false
+        }
+      }
+    }
+  ],
+  "firstLightRideAlternative": {
+    "route": [
+      [
+        {
+          "type": "tow",
+          "id": "bell",
+          "to": {
+            "q": 2,
+            "r": -1
+          }
+        },
+        {
+          "type": "nourish",
+          "id": "bell"
+        },
+        {
+          "type": "anchor",
+          "id": "bell"
+        }
+      ],
+      [
+        {
+          "type": "nourish",
+          "id": "bell"
+        },
+        {
+          "type": "tow",
+          "id": "bell",
+          "to": {
+            "q": 1,
+            "r": -1
+          }
+        }
+      ],
+      [
+        {
+          "type": "nourish",
+          "id": "bell"
+        }
+      ],
+      [],
+      [],
+      [],
+      [],
+      [
+        {
+          "type": "tow",
+          "id": "garden-west",
+          "to": {
+            "q": -1,
+            "r": -1
+          }
+        },
+        {
+          "type": "tow",
+          "id": "garden-west",
+          "to": {
+            "q": 0,
+            "r": -1
+          }
+        }
+      ]
+    ],
+    "status": "won",
+    "finalFood": 11,
+    "finalTimber": 16,
+    "rows": [
+      {
+        "tide": 1,
+        "commands": [
+          {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 2,
+              "r": -1
+            }
+          },
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "anchor",
+            "id": "bell"
+          }
+        ],
+        "start": {
+          "food": 10,
+          "timber": 9,
+          "actions": 3
+        },
+        "planned": {
+          "food": 7,
+          "timber": 8,
+          "spareActions": 0
+        },
+        "production": {
+          "food": 4,
+          "timber": 2
+        },
+        "end": {
+          "food": 9,
+          "timber": 10,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 2,
+            "r": -1,
+            "growth": 1,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": true
+          }
+        ]
+      },
+      {
+        "tide": 2,
+        "commands": [
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 1,
+              "r": -1
+            }
+          }
+        ],
+        "start": {
+          "food": 9,
+          "timber": 10,
+          "actions": 3
+        },
+        "planned": {
+          "food": 6,
+          "timber": 10,
+          "spareActions": 1
+        },
+        "production": {
+          "food": 3,
+          "timber": 1
+        },
+        "end": {
+          "food": 7,
+          "timber": 11,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 0,
+            "r": -1,
+            "growth": 2,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": true
+          }
+        ]
+      },
+      {
+        "tide": 3,
+        "commands": [
+          {
+            "type": "nourish",
+            "id": "bell"
+          }
+        ],
+        "start": {
+          "food": 7,
+          "timber": 11,
+          "actions": 3
+        },
+        "planned": {
+          "food": 5,
+          "timber": 11,
+          "spareActions": 2
+        },
+        "production": {
+          "food": 3,
+          "timber": 1
+        },
+        "end": {
+          "food": 6,
+          "timber": 12,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 1,
+            "r": -1,
+            "growth": 3,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": true
+          }
+        ]
+      },
+      {
+        "tide": 4,
+        "commands": [],
+        "start": {
+          "food": 6,
+          "timber": 12,
+          "actions": 3
+        },
+        "planned": {
+          "food": 6,
+          "timber": 12,
+          "spareActions": 3
+        },
+        "production": {
+          "food": 3,
+          "timber": 1
+        },
+        "end": {
+          "food": 7,
+          "timber": 13,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 1,
+            "r": -1,
+            "growth": 3,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": true
+          }
+        ]
+      },
+      {
+        "tide": 5,
+        "commands": [],
+        "start": {
+          "food": 7,
+          "timber": 13,
+          "actions": 3
+        },
+        "planned": {
+          "food": 7,
+          "timber": 13,
+          "spareActions": 3
+        },
+        "production": {
+          "food": 4,
+          "timber": 1
+        },
+        "end": {
+          "food": 9,
+          "timber": 14,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 2,
+            "r": -2,
+            "growth": 3,
+            "stress": 1,
+            "nourished": false,
+            "sheltered": false,
+            "connected": false
+          }
+        ]
+      },
+      {
+        "tide": 6,
+        "commands": [],
+        "start": {
+          "food": 9,
+          "timber": 14,
+          "actions": 3
+        },
+        "planned": {
+          "food": 9,
+          "timber": 14,
+          "spareActions": 3
+        },
+        "production": {
+          "food": 3,
+          "timber": 1
+        },
+        "end": {
+          "food": 10,
+          "timber": 15,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 1,
+            "r": -2,
+            "growth": 3,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": false
+          }
+        ]
+      },
+      {
+        "tide": 7,
+        "commands": [],
+        "start": {
+          "food": 10,
+          "timber": 15,
+          "actions": 3
+        },
+        "planned": {
+          "food": 10,
+          "timber": 15,
+          "spareActions": 3
+        },
+        "production": {
+          "food": 3,
+          "timber": 1
+        },
+        "end": {
+          "food": 11,
+          "timber": 16,
+          "integrity": 5,
+          "status": "playing"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 0,
+            "r": -2,
+            "growth": 3,
+            "stress": 1,
+            "nourished": false,
+            "sheltered": false,
+            "connected": false
+          }
+        ]
+      },
+      {
+        "tide": 8,
+        "commands": [
+          {
+            "type": "tow",
+            "id": "garden-west",
+            "to": {
+              "q": -1,
+              "r": -1
+            }
+          },
+          {
+            "type": "tow",
+            "id": "garden-west",
+            "to": {
+              "q": 0,
+              "r": -1
+            }
+          }
+        ],
+        "start": {
+          "food": 11,
+          "timber": 16,
+          "actions": 3
+        },
+        "planned": {
+          "food": 9,
+          "timber": 16,
+          "spareActions": 1
+        },
+        "production": {
+          "food": 4,
+          "timber": 0
+        },
+        "end": {
+          "food": 11,
+          "timber": 16,
+          "integrity": 4,
+          "status": "won"
+        },
+        "bells": [
+          {
+            "id": "bell",
+            "q": 0,
+            "r": -2,
+            "growth": 3,
+            "stress": 0,
+            "nourished": false,
+            "sheltered": true,
+            "connected": true
+          }
+        ]
+      }
+    ]
+  },
+  "nourishRescueGap": {
+    "provenance": "Campaign map 1 witness with tide-3 Nourish omitted; ordinary commands through tides 1-7.",
+    "state": {
+      "version": 1,
+      "seed": "first-light",
+      "tide": 8,
+      "maxTides": 8,
+      "food": 14,
+      "timber": 14,
+      "integrity": 5,
+      "actions": 3,
+      "status": "playing",
+      "voyageRules": "moonwake",
+      "islands": [
+        {
+          "id": "heart",
+          "name": "The Heart",
+          "kind": "heart",
+          "q": 0,
+          "r": 0,
+          "building": null,
+          "growth": 0,
+          "stress": 1,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "bell",
+          "name": "The Sleeping Bell",
+          "kind": "bell",
+          "q": 0,
+          "r": -1,
+          "building": null,
+          "growth": 2,
+          "stress": 1,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "garden-west",
+          "name": "Little Tuesday",
+          "kind": "ordinary",
+          "q": -1,
+          "r": -2,
+          "building": "garden",
+          "growth": 0,
+          "stress": 1,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "garden-south",
+          "name": "Porridge",
+          "kind": "ordinary",
+          "q": -2,
+          "r": 2,
+          "building": "garden",
+          "growth": 0,
+          "stress": 0,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "grove",
+          "name": "The Committee",
+          "kind": "ordinary",
+          "q": -1,
+          "r": 2,
+          "building": "grove",
+          "growth": 0,
+          "stress": 1,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "north",
+          "name": "Salt Pocket",
+          "kind": "ordinary",
+          "q": -1,
+          "r": -3,
+          "building": null,
+          "growth": 0,
+          "stress": 1,
+          "nourished": false,
+          "anchored": false
+        },
+        {
+          "id": "west",
+          "name": "Quite Possibly",
+          "kind": "ordinary",
+          "q": -2,
+          "r": -2,
+          "building": null,
+          "growth": 0,
+          "stress": 0,
+          "nourished": false,
+          "anchored": false
+        }
+      ],
+      "log": [
+        "Gardens supplied 3 food; groves supplied 1 timber. The town ate 2.",
+        "The Sleeping Bell will sit this tide out.",
+        "Tide 5: The Moon Exhales.",
+        "5 islands followed the current.",
+        "Gardens supplied 4 food; groves supplied 1 timber. The town ate 2.",
+        "Tide 6: Luminous Ebb.",
+        "2 islands followed the current.",
+        "Gardens supplied 3 food; groves supplied 1 timber. The town ate 2.",
+        "The Sleeping Bell will sit this tide out.",
+        "Tide 7: The Sideways Sea.",
+        "5 islands followed the current.",
+        "Gardens supplied 4 food; groves supplied 1 timber. The town ate 2."
+      ],
+      "campaignMap": 1,
+      "currentRotation": 0,
+      "whaleTowedId": null
+    },
+    "advice": [
+      {
+        "bellId": "bell",
+        "name": "The Sleeping Bell",
+        "grown": false,
+        "connected": true,
+        "sheltered": true,
+        "rested": true,
+        "stress": 1,
+        "forecastStress": 0,
+        "upstream": {
+          "q": 0,
+          "r": 0
+        },
+        "upstreamDirection": "Southeast",
+        "hint": "The Sleeping Bell will not ring: growth 2/3. Shelter lowers stress 1 → 0/5."
+      }
+    ],
+    "verifiedWinningAction": {
+      "type": "nourish",
+      "id": "bell"
+    },
+    "result": "won"
+  }
+}

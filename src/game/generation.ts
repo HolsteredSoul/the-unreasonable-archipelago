@@ -236,9 +236,10 @@ export function describeOpening(state: GameState): string {
   const bell = state.islands.find(island => island.kind === 'bell');
   const gardens = state.islands.filter(island => island.building === 'garden').length;
   const groves = state.islands.filter(island => island.building === 'grove').length;
+  const breakwaters = state.islands.filter(island => island.building === 'breakwater').length;
   const bearings = ['eastward', 'northeastward', 'northwestward', 'westward', 'southwestward', 'southeastward'];
   const bearing = bearings[(state as CurrentState).currentRotation ?? 0];
-  return `Bell ${bell ? radius(bell) : '?'} hexes from the Heart · ${gardens} garden${gardens === 1 ? '' : 's'}, ${groves} grove${groves === 1 ? '' : 's'} · ${bearing} current pattern`;
+  return `Bell ${bell ? radius(bell) : '?'} hexes from the Heart · ${gardens} garden${gardens === 1 ? '' : 's'}, ${groves} grove${groves === 1 ? '' : 's'}, ${breakwaters} breakwater${breakwaters === 1 ? '' : 's'} · ${bearing} current pattern`;
 }
 
 /** Generate once per seed/template and return independent copies so restart and undo cannot poison it. */

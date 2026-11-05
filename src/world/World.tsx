@@ -11,6 +11,7 @@ import { worldAsset } from './assets';
 import { createWeatherVisual } from './WeatherVisual';
 import { getWeatherPresentation, previewBreakwater } from './weatherModel';
 import { placeMapLabel, type LabelRect } from './labelLayout';
+import { getArtDirection } from './artDirection';
 import './world.css';
 import './planning.css';
 import './whale.css';
@@ -158,21 +159,30 @@ function makeIsland(island:Island, seed:string, hero:THREE.Group|null) {
     for(let i=0;i<7;i++){const a=i/7*Math.PI*2;const bud=ball(group,0.055,0xf9bc9c,Math.cos(a)*0.6,LAND_HEIGHT+0.07,Math.sin(a)*0.6);bud.scale.y=1.5;}
     makeHouse(group,-0.59,0.37,0.6,0.2,0xdfab80);makeTree(group,0.57,-0.4,0.65,0.1);
   } else if(island.building==='garden') {
+    // Growth fills the crop beds, leaving the garden silhouette distinct from a grove.
+    const cropSize=0.055+island.growth*0.014;
     for(let row=0;row<3;row++) {
       box(group,[0.78,0.055,0.2],0x8f7851,-0.03,LAND_HEIGHT+0.028,-0.35+row*0.27);
       for(const x of [-0.42,0.36])box(group,[0.025,0.085,0.23],PALETTE.wood,x,LAND_HEIGHT+0.035,-0.35+row*0.27);
-      for(let c=0;c<5;c++) {const x=-0.32+c*0.145,z=-0.35+row*0.27;const leaf=ball(group,0.085,row===1?0xacc074:0x6e995e,x,LAND_HEIGHT+0.11,z);leaf.scale.y=0.9;if(row===2)ball(group,0.045,0xf3b067,x,LAND_HEIGHT+0.17,z);}
+      for(let c=0;c<5;c++) {
+        const x=-0.32+c*0.145,z=-0.35+row*0.27;
+        const leaf=ball(group,cropSize,row===1?0xacc074:0x6e995e,x,LAND_HEIGHT+0.06+cropSize*0.6,z);
+        leaf.scale.y=0.75+island.growth*0.22;
+        if(row<island.growth)ball(group,0.035+island.growth*0.004,0xf3b067,x,LAND_HEIGHT+0.08+cropSize,z);
+      }
     }
     makeHouse(group,0.61,-0.05,0.64,0.3,0xdd9879);makeTree(group,-0.65,-0.56,0.57,0.1);
     for(let i=0;i<4;i++)cylinder(group,0.018,0.018,0.24,PALETTE.wood,-0.6+i*0.29,LAND_HEIGHT+0.12,0.58,5);
     box(group,[0.9,0.026,0.027],PALETTE.wood,-0.16,LAND_HEIGHT+0.17,0.58);
   } else if(island.building==='grove') {
-    for(let i=0;i<7;i++){const a=i*2.399,r=i===0?0:0.3+random()*0.47;makeTree(group,Math.cos(a)*r,Math.sin(a)*r,0.72+random()*0.38,random());}
+    for(let i=0;i<7;i++){const a=i*2.399,r=i===0?0:0.3+random()*0.47;makeTree(group,Math.cos(a)*r,Math.sin(a)*r,(0.72+random()*0.38)*(0.72+island.growth*0.12),random());}
     makeHouse(group,0.48,0.53,0.58,-0.5,0xb48b65);
     for(let i=0;i<3;i++){const log=cylinder(group,0.065,0.065,0.4,PALETTE.wood,-0.4+i*0.11,LAND_HEIGHT+0.06,0.64,7);log.rotation.x=Math.PI/2;}
   } else if(island.building==='breakwater') {
-    for(let i=0;i<6;i++){const a=Math.PI*0.06+i/5*Math.PI*0.85;const rock=ball(group,0.25,PALETTE.stone,Math.cos(a)*0.67,LAND_HEIGHT+0.13,Math.sin(a)*0.67,0);rock.scale.set(0.9,0.82,0.72);}
+    // Reinforce the existing footprint; only the weather layer conveys legal shelter reach.
+    for(let i=0;i<6;i++){const a=Math.PI*0.06+i/5*Math.PI*0.85;const rock=ball(group,0.25,PALETTE.stone,Math.cos(a)*0.67,LAND_HEIGHT+0.13+island.growth*0.022,Math.sin(a)*0.67,0);rock.scale.set(0.9,0.82+island.growth*0.16,0.72);}
     const lighthouse=new THREE.Group();lighthouse.position.set(-0.11,LAND_HEIGHT,-0.12);group.add(lighthouse);
+    for(let tier=0;tier<island.growth;tier++)cylinder(lighthouse,0.28-tier*0.025,0.3-tier*0.025,0.055,tier%2?PALETTE.stone:PALETTE.cream,0,0.035+tier*0.065,0);
     cylinder(lighthouse,0.13,0.23,0.83,PALETTE.cream,0,0.415,0);cylinder(lighthouse,0.15,0.17,0.16,PALETTE.coral,0,0.46,0);cylinder(lighthouse,0.23,0.23,0.07,PALETTE.wood,0,0.85,0);
     cylinder(lighthouse,0.13,0.13,0.2,0xf6cb7b,0,0.99,0);mesh(new THREE.ConeGeometry(0.24,0.23,12),material(PALETTE.roof),lighthouse,0,1.18,0);
     makeHouse(group,-0.61,0.17,0.61,0.5);
@@ -180,7 +190,7 @@ function makeIsland(island:Island, seed:string, hero:THREE.Group|null) {
     makeTree(group,-0.3,-0.14,0.9,0.1);makeTree(group,0.42,-0.45,0.62,0.8);makeHouse(group,0.3,0.27,0.72,0.25,0xdbb780);
     for(let i=0;i<5;i++){const a=random()*6.28;ball(group,0.05,0xf3d3a3,Math.cos(a)*0.7,LAND_HEIGHT+0.07,Math.sin(a)*0.7);}
   }
-  if(island.growth>0&&island.kind!=='bell'){
+  if(island.growth>0&&island.kind!=='bell'&&!island.building){
     for(let i=0;i<island.growth;i++)makeTree(group,Math.cos(i*2+2)*0.8,Math.sin(i*2+2)*0.8,0.58,0.7);
   }
   if(island.anchored) {
@@ -189,7 +199,12 @@ function makeIsland(island:Island, seed:string, hero:THREE.Group|null) {
     const arc=mesh(new THREE.TorusGeometry(0.18,0.031,6,16,Math.PI),material(PALETTE.dark),anchor,0,-0.11,0);arc.rotation.z=Math.PI;
     ringLine([new THREE.Vector3(0,0.27,0),new THREE.Vector3(0.1,0.5,-0.4),new THREE.Vector3(0.5,0.41,-0.7)],PALETTE.wood,0.85,anchor);
   }
-  if(island.nourished) for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const sprout=ball(group,0.03,0xffe3a0,Math.cos(a)*1.05,LAND_HEIGHT+0.08,Math.sin(a)*1.05,0);sprout.name='sparkle';}
+  // A small, still cluster of closed buds means nourishment is queued, not resolved growth.
+  if(island.nourished) for(let i=0;i<3;i++){
+    const x=-0.18+i*0.18,z=0.84;
+    cylinder(group,0.012,0.018,0.17,PALETTE.leaf,x,LAND_HEIGHT+0.085,z,5);
+    const bud=ball(group,0.062,0xc7d99b,x,LAND_HEIGHT+0.20,z,0);bud.scale.set(0.7,1.3,0.7);
+  }
   group.traverse(child=>{child.userData.islandId=island.id;});
   group.userData.signature=`${island.kind}|${island.building}|${island.growth}|${island.anchored}|${island.nourished}`;
   batchIsland(group);
@@ -203,6 +218,7 @@ const waterVertex=`
 const waterFragment=`
   uniform float uTime;
   uniform float uStorm;
+  uniform vec3 uChapterTint;
   varying vec3 vWorld;
   float wave(vec2 p){return sin(p.x*1.9+p.y*1.3+uTime*.35)*sin(p.y*2.7-p.x*.8-uTime*.25);}
   void main(){
@@ -217,6 +233,7 @@ const waterFragment=`
     float swell=sin(p.x*3.6+p.y*.7+sin(p.y*1.2+uTime*.18)*.8-uTime*.24);
     float glint=smoothstep(.988,1.,swell)*smoothstep(.6,.95,sin(p.y*3.1-p.x*.7));
     col+=vec3(.10,.16,.14)*glint*.077;
+    col*=uChapterTint;
     col=mix(col, col*vec3(.67,.78,.89)+vec3(.004,.008,.017),uStorm);
     gl_FragColor=vec4(col,1.);
     #include <tonemapping_fragment>
@@ -243,10 +260,10 @@ export default function World(props:WorldProps) {
     renderer.domElement.setAttribute('aria-label','Interactive ocean map. Select an island to manage it. Drag to look around; scroll to zoom.');renderer.domElement.setAttribute('role','img');container.prepend(renderer.domElement);
     const camera=new THREE.OrthographicCamera(-15,15,10,-10,0.1,180);camera.position.set(13,21,26);camera.lookAt(0,0,0);
     const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=0.085;controls.enablePan=true;controls.minZoom=0.64;controls.maxZoom=2.2;controls.minPolarAngle=0.35;controls.maxPolarAngle=1.02;controls.minAzimuthAngle=-0.52;controls.maxAzimuthAngle=0.78;controls.mouseButtons={LEFT:THREE.MOUSE.ROTATE,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.PAN};controls.target.set(0,0,-0.25);
-    scene.add(new THREE.HemisphereLight(0xfff2ce,0x7baca1,1.85));
+    const hemisphere=new THREE.HemisphereLight(0xfff2ce,0x7baca1,1.85);scene.add(hemisphere);
     const sun=new THREE.DirectionalLight(0xffe4b6,2.5);sun.position.set(-12,23,9);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-18;sun.shadow.camera.right=18;sun.shadow.camera.top=18;sun.shadow.camera.bottom=-18;sun.shadow.camera.near=1;sun.shadow.camera.far=70;sun.shadow.normalBias=0.045;sun.shadow.bias=-0.0003;scene.add(sun);
     const fill=new THREE.DirectionalLight(0xb9e7dc,0.65);fill.position.set(5,6,-12);scene.add(fill);
-    const waterMat=new THREE.ShaderMaterial({uniforms:{uTime:{value:0},uStorm:{value:0}},vertexShader:waterVertex,fragmentShader:waterFragment});
+    const waterMat=new THREE.ShaderMaterial({uniforms:{uTime:{value:0},uStorm:{value:0},uChapterTint:{value:new THREE.Vector3(1,1,1)}},vertexShader:waterVertex,fragmentShader:waterFragment});
     const water=new THREE.Mesh(new THREE.PlaneGeometry(250,250),waterMat);water.rotation.x=-Math.PI/2;water.position.y=-0.07;scene.add(water);
     const shadowFloor=new THREE.Mesh(new THREE.PlaneGeometry(48,48),new THREE.ShadowMaterial({color:0x244f48,opacity:0.15}));shadowFloor.rotation.x=-Math.PI/2;shadowFloor.position.y=-0.055;shadowFloor.receiveShadow=true;scene.add(shadowFloor);
     const weatherVisual=createWeatherVisual(hexPosition);scene.add(weatherVisual.group);
@@ -255,7 +272,7 @@ export default function World(props:WorldProps) {
     let reservedLabels: LabelRect[] = [];
     const leaderLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     leaderLayer.classList.add('island-label-leaders'); leaderLayer.setAttribute('aria-hidden', 'true'); labelContainer.append(leaderLayer);
-    const selectionRing=ringLine(circlePoints(1.55,0.08),0xffe6a7,0.96,selection);ringLine(circlePoints(1.64,0.07),0xffedc4,0.32,selection);selection.visible=false;
+    const selectionRing=seaStroke(circlePoints(1.58,0.145),0xffe6a7,0.065,0.96,selection);selection.visible=false;
     const targetsGroup=new THREE.Group(),previewGroup=new THREE.Group(),currentGroup=new THREE.Group(),boundaryGroup=new THREE.Group();scene.add(targetsGroup,previewGroup,currentGroup,boundaryGroup);
     const targetMeshes:THREE.Object3D[]=[];
     const driftParticles: { object: THREE.Mesh; from: THREE.Vector3; to: THREE.Vector3; phase: number }[] = [];
@@ -395,14 +412,20 @@ export default function World(props:WorldProps) {
     const pointerMove=(event:PointerEvent)=>{renderer.domElement.style.cursor=getHits(event).length?'pointer':'grab';};
     renderer.domElement.addEventListener('pointerdown',pointerDown);renderer.domElement.addEventListener('pointerup',pointerUp);renderer.domElement.addEventListener('pointermove',pointerMove);
     function measureReservedLabels(): LabelRect[] {
-      return [...container!.closest('main')!.querySelectorAll<HTMLElement>('.tide-sequence, .weather-ribbon, .topbar, .sea-toolbar, .sea-chips, .bottom-hud, .objective-stack, .weather-stack, .build-menu, .selected-panel')]
-        .filter(element => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden' && getComputedStyle(element).opacity !== '0')
+      return [...container!.closest('main')!.querySelectorAll<HTMLElement>('.tide-sequence, .weather-ribbon, .topbar, .sea-toolbar, .sea-chips, .bottom-hud, .objective-stack, .weather-stack, .build-menu, .selected-panel, .resource-callout, .toast')]
+        .filter(element => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden' && (element.matches('.resource-callout, .toast') || getComputedStyle(element).opacity !== '0'))
         .map(element => { const rect = element.getBoundingClientRect(); return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom }; });
     }
     function resize(){if(disposed)return;reservedLabels=measureReservedLabels();const w=container!.clientWidth,h=container!.clientHeight;renderer.setSize(w,h);const aspect=w/Math.max(h,1),halfHeight=Math.max(10.7,projectedWidth/(2*aspect));camera.left=-halfHeight*aspect;camera.right=halfHeight*aspect;camera.top=halfHeight;camera.bottom=-halfHeight;camera.updateProjectionMatrix();islands.forEach(view=>{view.width=view.label.offsetWidth;view.height=view.label.offsetHeight;});}
     const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(container);
     function update(next:WorldProps){
       if(disposed)return;
+      const art=getArtDirection(next.state.campaignMap);
+      (scene.background as THREE.Color).setHex(art.background);(scene.fog as THREE.Fog).color.setHex(art.background);
+      hemisphere.color.setHex(art.sky);hemisphere.groundColor.setHex(art.ground);
+      sun.color.setHex(art.sun);fill.color.setHex(art.fill);
+      waterMat.uniforms.uChapterTint.value.set(...art.waterTint);
+      container!.dataset.artDirection=art.id;
       const stage=next.tideStage ?? 'plan', resolving=stage!=='plan';
       reservedLabels=measureReservedLabels();
       const presentation=getWeatherPresentation(next.state,next.forecast);
@@ -438,6 +461,7 @@ export default function World(props:WorldProps) {
         else if (island.anchored) changes.push('Anchored this tide');
         if (growthDelta > 0) changes.push(`Growth +${growthDelta}`);
         else if (island.nourished) changes.push('Growth waits');
+        if (island.nourished) changes.push('Nourishment queued');
         if (stressDelta) changes.push(`Stress ${stressDelta > 0 ? '+' : '−'}${Math.abs(stressDelta)}`);
         if (next.forecast.weather.storm) changes.push(next.forecast.shelteredIds.includes(island.id) ? 'Sheltered after drift' : 'Exposed after drift');
         const yields: string[] = [];
@@ -467,8 +491,16 @@ export default function World(props:WorldProps) {
           const line = document.createElement('span');
           line.textContent = `${sheltered ? 'Sheltered' : 'Exposed'}${next.preview ? ' after drift' : ''} · stress ${next.preview ? `${beforeIsland.stress} → ${after.stress}` : island.stress}/5`;
           summary.append(line);
-          if (next.preview && (growthDelta > 0 || (island.kind === 'bell' && !next.forecast.connectedIds.includes(island.id)))) {
-            const change = document.createElement('span'); change.textContent = [growthDelta > 0 && `Growth +${growthDelta}`, island.kind === 'bell' && !next.forecast.connectedIds.includes(island.id) && 'Heart link missing'].filter(Boolean).join(' · '); summary.append(change);
+          if (next.preview && sheltered && next.forecast.weather.storm && !next.breakwaterPreview) {
+            const sources=presentation.islands.find(item=>item.id===island.id)?.blockerIds ?? [];
+            const sourceNames=sources.map(id=>next.state.islands.find(item=>item.id===id)?.name).filter(Boolean);
+            const sourceLine=document.createElement('span');sourceLine.className='island-shelter-source';
+            sourceLine.textContent=sources.includes(island.id)?'Own breakwater blocks the storm':`Shelter from ${sourceNames.join(', ')}`;
+            changes.push(sourceLine.textContent);
+            summary.append(sourceLine);
+          }
+          if (island.nourished || (next.preview && (growthDelta > 0 || (island.kind === 'bell' && !next.forecast.connectedIds.includes(island.id))))) {
+            const change = document.createElement('span'); change.textContent = [island.nourished && (next.preview && growthDelta>0 ? `Nourished · growth +${growthDelta} after tide` : 'Nourished · growth queued'), !island.nourished && next.preview && growthDelta>0 && `Growth +${growthDelta}`, next.preview && island.kind === 'bell' && !next.forecast.connectedIds.includes(island.id) && 'Heart link missing'].filter(Boolean).join(' · '); summary.append(change);
           }
           if (finalReadiness) {
             const readiness = document.createElement('span'); readiness.className = `island-final-readiness${finalBellUnsafe ? ' is-unsafe' : finalBellForecast ? ' is-safe' : ''}`;
@@ -518,7 +550,7 @@ export default function World(props:WorldProps) {
       if(next.preview && !resolving)for(const move of next.forecast.moves){
         if(move.blocked)continue;
         const from=hexPosition(move.from),to=hexPosition(move.to);if(from.distanceTo(to)<0.1)continue;
-        const p=new THREE.Group();p.position.copy(to);previewGroup.add(p);ringLine(circlePoints(1.2,0.06),0xfbf0c6,0.75,p,true);
+        const p=new THREE.Group();p.position.copy(to);previewGroup.add(p);ringLine(circlePoints(1.28,0.06,6),0xfbf0c6,0.75,p,true);
         const ghost=mesh(new THREE.CylinderGeometry(1.04,1.13,0.45,24),new THREE.MeshBasicMaterial({color:0xfff0bf,transparent:true,opacity:0.13,depthWrite:false}),p,0,0.25,0);ghost.castShadow=false;
         if (move.id === next.selectedId) chartLabel('Tide end', to.clone().add(new THREE.Vector3(0, 0.12, 0)), 'is-destination');
         from.y=0.11;to.y=0.11;ringLine([from,to],0xffe5a8,0.72,previewGroup,true);

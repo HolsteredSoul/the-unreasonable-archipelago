@@ -1,0 +1,408 @@
+{
+  "method": "sRGB linearization, weighted relative luminance, (Lmax + .05)/(Lmin + .05)",
+  "scope": "Explicit opaque CSS pairs only; no disabled opacity, gradients, sea, alpha panels, or screenshot sampling.",
+  "current": [
+    {
+      "selector": ".save-status",
+      "foreground": "#66391f",
+      "background": "#fff1da",
+      "ratio": 8.6851,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".save-recovery-note",
+      "foreground": "#315b54",
+      "background": "#e6eadc",
+      "ratio": 6.2312,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".finale-checks .ready",
+      "foreground": "#38694e",
+      "background": "#e8eddf",
+      "ratio": 5.3384,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".finale-checks .not-ready",
+      "foreground": "#9a5134",
+      "background": "#e8eddf",
+      "ratio": 4.891,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".finale-checks section > p",
+      "foreground": "#4d6555",
+      "background": "#e8eddf",
+      "ratio": 5.3232,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".finale-check-modal .finale-rule, .finale-retry p",
+      "foreground": "#6f7866",
+      "background": "#f5f1e5",
+      "ratio": 4.0831,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".finale-check-modal .final-accept",
+      "foreground": "#956446",
+      "background": "#f5f1e5",
+      "ratio": 4.439,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-pair > p span",
+      "foreground": "#7c8170",
+      "background": "#f5f0e2",
+      "ratio": 3.526,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-progression",
+      "foreground": "#69786e",
+      "background": "#f5f0e2",
+      "ratio": 4.0876,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-chart-heading > strong",
+      "foreground": "#526d61",
+      "background": "#f5f0e2",
+      "ratio": 4.9598,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-map small [current/hover enabled]",
+      "foreground": "#52675a",
+      "background": "#edf2df",
+      "ratio": 5.3293,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-map small [default enabled]",
+      "foreground": "#52675a",
+      "background": "#fffbee",
+      "ratio": 5.8858,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-map-action [current/hover enabled]",
+      "foreground": "#365c4c",
+      "background": "#edf2df",
+      "ratio": 6.5784,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-map-number [current enabled; redundant ordinal]",
+      "foreground": "#69927e",
+      "background": "#edf2df",
+      "ratio": 3.0544,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-replay-note",
+      "foreground": "#486452",
+      "background": "#f5f0e2",
+      "ratio": 5.7277,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-medal-help",
+      "foreground": "#385d49",
+      "background": "#f5f0e2",
+      "ratio": 6.5173,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-save-note",
+      "foreground": "#59695e",
+      "background": "#f5f0e2",
+      "ratio": 5.1136,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-bell small",
+      "foreground": "#6c7b65",
+      "background": "#e6ecdd",
+      "ratio": 3.7364,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-bell.needs-shelter small",
+      "foreground": "#975a36",
+      "background": "#f0e4ce",
+      "ratio": 4.3568,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-bell .queued-growth",
+      "foreground": "#477254",
+      "background": "#e6ecdd",
+      "ratio": 4.5773,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".campaign-bell.needs-shelter small.queued-growth [winning small rule]",
+      "foreground": "#975a36",
+      "background": "#f0e4ce",
+      "ratio": 4.3568,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".result-modal .result-verdict",
+      "foreground": "#42755d",
+      "background": "#f5f1e5",
+      "ratio": 4.7267,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".result-modal.result-lost .result-verdict",
+      "foreground": "#aa604e",
+      "background": "#f5f1e5",
+      "ratio": 4.1395,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".result-conditions strong",
+      "foreground": "#345f4f",
+      "background": "#e9ecdf",
+      "ratio": 6.0531,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".result-conditions .needs-care",
+      "foreground": "#a75f4d",
+      "background": "#e9ecdf",
+      "ratio": 3.9954,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".campaign-unlock",
+      "foreground": "#567b56",
+      "background": "#f5f1e5",
+      "ratio": 4.262,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".modal-lead [ordinary modal]",
+      "foreground": "#7e8671",
+      "background": "#f5f1e5",
+      "ratio": 3.3593,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".modal h2 em [large ordinary modal heading]",
+      "foreground": "#87906e",
+      "background": "#f5f1e5",
+      "ratio": 2.9779,
+      "target": 3.0,
+      "meets_target": false
+    },
+    {
+      "selector": ".primary-button [ordinary modal]",
+      "foreground": "#f5f1df",
+      "background": "#315846",
+      "ratio": 7.0863,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": ".secondary-button [default]",
+      "foreground": "#738163",
+      "background": "#eaeadd",
+      "ratio": 3.4286,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".secondary-button [hover]",
+      "foreground": "#738163",
+      "background": "#dee3d0",
+      "ratio": 3.1697,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": ".text-button [ordinary modal]",
+      "foreground": "#879472",
+      "background": "#f5f1e5",
+      "ratio": 2.8569,
+      "target": 4.5,
+      "meets_target": false
+    },
+    {
+      "selector": "button/input:focus-visible [ordinary modal surrounding surface]",
+      "foreground": "#bf8d3f",
+      "background": "#f5f1e5",
+      "ratio": 2.6203,
+      "target": 3.0,
+      "meets_target": false
+    },
+    {
+      "selector": "button:focus-visible [campaign chart surrounding surface]",
+      "foreground": "#bf8d3f",
+      "background": "#f5f0e2",
+      "ratio": 2.5989,
+      "target": 3.0,
+      "meets_target": false
+    },
+    {
+      "selector": "button:focus-visible [finale check section surrounding surface]",
+      "foreground": "#bf8d3f",
+      "background": "#e8eddf",
+      "ratio": 2.4814,
+      "target": 3.0,
+      "meets_target": false
+    }
+  ],
+  "proposed_not_applied": [
+    {
+      "selector": "modal-lead / finale rule / retry helper -> #52675a",
+      "foreground": "#52675a",
+      "background": "#f5f1e5",
+      "ratio": 5.3956,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "campaign metadata / progression -> #59695e",
+      "foreground": "#59695e",
+      "background": "#f5f0e2",
+      "ratio": 5.1136,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "secondary-button -> #52675a default",
+      "foreground": "#52675a",
+      "background": "#eaeadd",
+      "ratio": 5.023,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "secondary-button -> #52675a hover",
+      "foreground": "#52675a",
+      "background": "#dee3d0",
+      "ratio": 4.6437,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "modal text-button -> #52675a",
+      "foreground": "#52675a",
+      "background": "#f5f1e5",
+      "ratio": 5.3956,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "modal large emphasis -> #6f7866",
+      "foreground": "#6f7866",
+      "background": "#f5f1e5",
+      "ratio": 4.0831,
+      "target": 3.0,
+      "meets_target": true
+    },
+    {
+      "selector": "campaign-bell small -> #52675a",
+      "foreground": "#52675a",
+      "background": "#e6ecdd",
+      "ratio": 5.0506,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "needs-shelter small / queued -> #9a5134",
+      "foreground": "#9a5134",
+      "background": "#f0e4ce",
+      "ratio": 4.6364,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "final-accept -> #9a5134",
+      "foreground": "#9a5134",
+      "background": "#f5f1e5",
+      "ratio": 5.1648,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "result needs-care -> #9a5134",
+      "foreground": "#9a5134",
+      "background": "#e9ecdf",
+      "ratio": 4.8683,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "lost verdict -> #9a5134",
+      "foreground": "#9a5134",
+      "background": "#f5f1e5",
+      "ratio": 5.1648,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "campaign unlock -> #486452",
+      "foreground": "#486452",
+      "background": "#f5f1e5",
+      "ratio": 5.7747,
+      "target": 4.5,
+      "meets_target": true
+    },
+    {
+      "selector": "focus on ordinary modal -> #264d45",
+      "foreground": "#264d45",
+      "background": "#f5f1e5",
+      "ratio": 8.3394,
+      "target": 3.0,
+      "meets_target": true
+    },
+    {
+      "selector": "focus on campaign chart -> #264d45",
+      "foreground": "#264d45",
+      "background": "#f5f0e2",
+      "ratio": 8.2716,
+      "target": 3.0,
+      "meets_target": true
+    },
+    {
+      "selector": "focus on finale check section -> #264d45",
+      "foreground": "#264d45",
+      "background": "#e8eddf",
+      "ratio": 7.8974,
+      "target": 3.0,
+      "meets_target": true
+    }
+  ]
+}

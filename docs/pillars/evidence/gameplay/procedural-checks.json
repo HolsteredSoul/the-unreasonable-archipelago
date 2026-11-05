@@ -1,0 +1,24 @@
+{
+  "command": "node scripts/audit-gameplay.cjs --procedural",
+  "repeatedRuns": 2,
+  "byteIdentical": true,
+  "auditSha256": "5c7fa69481e27804ae0a0c9f7958e81f6b137caf7ccad0e4c53968edee981396",
+  "sourceHashesVerified": true,
+  "frozenInputs": {
+    "src": {
+      "present": true,
+      "files": 66,
+      "sha256": "eb134a55394f29b54bbcb7ebe17199528439c925598aa055befa012dbe848d80"
+    },
+    "dist": {
+      "present": true,
+      "files": 7,
+      "sha256": "97c5306c3dc076f57173b320975c33d54fb3eb45b959822e8e68227cc7241da0"
+    }
+  },
+  "proceduralWitnessWins": 32,
+  "proceduralSixGrowthWins": 32,
+  "campaignFixtureWins": 24,
+  "optionComparisons": 2,
+  "opportunityTrials": 10736
+}

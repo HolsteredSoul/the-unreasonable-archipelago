@@ -1,5 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
+  "verifiedOn": "2026-11-05",
+  "rightsNote": "Project-created provenance is recorded here; no project-wide distribution licence is declared in the repository. This manifest does not assign one.",
   "assets": [
     {
       "id": "bell-flower",
@@ -11,9 +13,57 @@
       "coordinateConvention": "Blender Z-up, glTF Y-up on export",
       "nominalHeight": 3,
       "bytes": 265108,
+      "sha256": "f7b078d53f68fb8c620c83c71382df1c6a455df7d277761f6c50cf89b70a18e3",
+      "triangles": 10736,
+      "restSizeXYZ": [2.9402, 3.0424, 1.9568],
+      "textures": 0,
+      "defaultScene": 0,
+      "sceneNote": "One default root and one additional empty scene; runtime uses the default scene.",
       "morphTargets": [
         "Closed"
       ]
+    },
+    {
+      "id": "courteous-whale",
+      "source": "assets/source/whale.blend",
+      "runtime": "public/assets/whale.glb",
+      "generator": "scripts/create_whale.py",
+      "author": "Original procedural model and animation created for this project",
+      "materials": "Blue-grey faceted back, deep teal fins, warm ivory underside",
+      "coordinateConvention": "glTF +Y up, nose +Z",
+      "bytes": 207548,
+      "sha256": "d8162f640acaddae639585667d37c499e232e9b07a27eb8a3aea95adef4ea05d",
+      "triangles": 3290,
+      "restSizeXYZ": [4.4512, 1.6716, 6.1839],
+      "textures": 0,
+      "animations": [{ "name": "GentleSwim", "seconds": 4, "nodes": ["TailPivot", "FlipperLeft", "FlipperRight"] }],
+      "fallback": "src/world/Whale.ts"
+    },
+    {
+      "id": "a-little-landfall",
+      "sources": ["src/ui/music.ts", "src/ui/music.worker.ts"],
+      "previewGenerator": "scripts/compose-piano.mjs",
+      "author": "Original composition and synthetic instrument created for this project with Codex assistance, September 2026",
+      "runtimeFormat": "Web Audio buffers generated at runtime; no shipped recording or external samples",
+      "bpm": 68,
+      "themeBars": 16,
+      "arrangements": 4,
+      "moods": ["calm", "storm", "disconnected", "finale"]
+    },
+    {
+      "id": "action-and-outcome-chimes",
+      "source": "src/ui/audio.ts",
+      "author": "Project-authored Web Audio synthesis",
+      "runtimeFormat": "Generated oscillators; no external recordings or samples"
+    },
+    {
+      "id": "botanical-favicon",
+      "source": "public/favicon.svg",
+      "runtime": "public/favicon.svg",
+      "author": "Repository-authored SVG; no external source attribution recorded",
+      "bytes": 385,
+      "sha256": "d447d1ef5619165af89cdce1a8a02baf721179ea20cdd6c4b5b7529cdeb2d05c",
+      "viewBox": [0, 0, 64, 64]
     }
   ],
   "procedural": [
@@ -21,6 +71,24 @@
     "Settlements and buildings",
     "Vegetation and crops",
     "Sea surface and foam",
-    "Decorative boats, gulls and whale"
+    "Decorative boats and gulls",
+    "Bell fallback in src/world/World.tsx",
+    "Whale fallback in src/world/Whale.ts",
+    "Weather and planning marks in src/world/WeatherVisual.ts and src/world/World.tsx"
+  ],
+  "thirdParty": [
+    { "id": "lucide-react", "installedVersion": "0.468.0", "role": "UI icons", "licence": "ISC, with Feather-derived portions noted as MIT", "notice": "node_modules/lucide-react/LICENSE" },
+    { "id": "three", "installedVersion": "0.180.0", "role": "Renderer, loaders and geometry utilities", "licence": "MIT", "notice": "node_modules/three/LICENSE" },
+    { "id": "react", "installedVersion": "19.3.0", "role": "UI runtime", "licence": "MIT", "notice": "node_modules/react/LICENSE" },
+    { "id": "react-dom", "installedVersion": "19.3.0", "role": "UI renderer", "licence": "MIT", "notice": "node_modules/react-dom/LICENSE" }
+  ],
+  "fonts": {
+    "source": "src/styles.css",
+    "families": ["Segoe UI", "Arial", "Palatino Linotype", "Georgia", "Times New Roman", "sans-serif", "serif"],
+    "delivery": "System font stacks; no bundled font binary or external font service"
+  },
+  "referenceOnly": [
+    { "path": "docs/concept.png", "provenance": "Generated concept art according to README; provider, prompt and rights terms not recorded", "shippedAtRuntime": false },
+    { "path": "docs", "provenance": "Historical gameplay captures documented in docs/verification.md; not source artwork", "shippedAtRuntime": false }
   ]
 }

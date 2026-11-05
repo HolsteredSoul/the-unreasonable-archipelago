@@ -1,0 +1,29 @@
+### Result
+{
+  "tide": 3,
+  "food": 10,
+  "actions": 3,
+  "undo": 0,
+  "bell": {
+    "id": "bell",
+    "name": "The Sleeping Bell",
+    "kind": "bell",
+    "q": 2,
+    "r": 0,
+    "building": null,
+    "growth": 0,
+    "stress": 0,
+    "nourished": false,
+    "anchored": false
+  },
+  "overflow": [
+    1366,
+    768,
+    1366,
+    768
+  ]
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => {const s=JSON.parse(localStorage.getItem(\'unreasonable-archipelago.session.v1\'));return {tide:s.state.tide,food:s.state.food,actions:s.state.actions,undo:s.undo.length,bell:s.state.islands.find(i=>i.id===\'bell\'),overflow:[innerWidth,innerHeight,document.documentElement.scrollWidth,document.documentElement.scrollHeight]};}');
+```

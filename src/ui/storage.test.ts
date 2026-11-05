@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { applyCommand, createGame, FIRST_LIGHT_SOLUTION, resolveTide } from '../game';
 import type { GameState } from '../game/types';
-import { initialSession, persistSession, validateGameState, validateSession } from './storage';
+import { createCampaignGame } from '../game/campaign';
+import { initialSession, persistSession, validateGameState, validateSession, hasRecoveredSave } from './storage';
 import type { SavedSession } from './storage';
 
 const session = (state = createGame()): SavedSession => ({
@@ -155,6 +156,17 @@ describe('local persistence recovery', () => {
     expect(loaded.undo).toEqual([]);
     expect(loaded.settings.sound).toBe(true);
   });
+  it('opens a shared seed as a free voyage even when its text matches a saved campaign', () => {
+    const campaign = createCampaignGame(3);
+    browserStorage(`?seed=${campaign.seed}`);
+    const saved: SavedSession = { ...session(campaign), campaignCompleted: 2 };
+    expect(persistSession(saved)).toBe(true);
+    const loaded = initialSession();
+    expect(loaded.state).toEqual(createGame(campaign.seed));
+    expect(loaded.state.campaignMap).toBeUndefined();
+    expect(loaded.campaignCompleted).toBe(2);
+    expect(loaded.settings).toEqual(saved.settings);
+  });
 
   it('continues safely when browser storage is unavailable', () => {
     browserStorage();
@@ -164,5 +176,38 @@ describe('local persistence recovery', () => {
     });
     expect(persistSession(session())).toBe(false);
     expect(initialSession().state).toEqual(createGame());
+  });
+  it('preserves the exact damaged original before a fresh game is saved', () => {
+    const entries = browserStorage();
+    const key = 'unreasonable-archipelago.session.v1';
+    entries.set(key, '{not readable');
+    const fresh = initialSession();
+    expect(entries.get(key)).toBe('{not readable');
+    expect(persistSession(fresh)).toBe(true);
+    expect(entries.get(`${key}.recovery.1`)).toBe('{not readable');
+    expect(hasRecoveredSave()).toBe(true);
+    expect(initialSession()).toEqual(fresh);
+  });
+  it('does not replace damaged data if its backup write is blocked', () => {
+    browserStorage();
+    const writes: string[] = [];
+    vi.stubGlobal('localStorage', { getItem: (key: string) => key.endsWith('.v1') ? '{damaged' : null, setItem: (key: string) => { writes.push(key); throw Error('full'); } });
+    expect(persistSession(session())).toBe(false);
+    expect(writes).toEqual(['unreasonable-archipelago.session.v1.recovery.1']);
+  });
+  it('bounds quarantine storage and retains all older damaged saves', () => {
+    const entries = browserStorage();
+    const key = 'unreasonable-archipelago.session.v1';
+    for (let index = 1; index <= 3; index++) {
+      entries.set(key, `{damage ${index}`);
+      expect(persistSession(session())).toBe(true);
+      expect(entries.get(`${key}.recovery.${index}`)).toBe(`{damage ${index}`);
+    }
+    entries.set(key, '{fourth');
+    expect(persistSession(session())).toBe(false);
+    expect(entries.get(key)).toBe('{fourth');
+    entries.set(key, '{damage 2');
+    expect(persistSession(session())).toBe(true);
+    expect(entries.size).toBe(4);
   });
 });

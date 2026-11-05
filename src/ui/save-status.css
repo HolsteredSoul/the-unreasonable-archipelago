@@ -1,0 +1,43 @@
+.save-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid #b97c48;
+  border-radius: 8px;
+  background: #fff1da;
+  color: #66391f;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+  pointer-events: none;
+}
+.save-status[hidden] { display: none !important; }
+.save-status > svg { flex: 0 0 auto; margin-top: 2px; }
+.save-status p { margin: 0; }
+.save-status strong, .save-status span { display: block; }
+.save-status strong { font-weight: 650; }
+.save-status--floating {
+  position: fixed;
+  z-index: 30;
+  top: 164px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(410px, calc(100vw - 32px));
+  box-shadow: 0 4px 18px #153d3526;
+}
+.save-status--inline { position: relative; width: 100%; margin: 0 0 18px; }
+.save-status-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (forced-colors: active) {
+  .save-status { border: 2px solid CanvasText; color: CanvasText; background: Canvas; }
+}

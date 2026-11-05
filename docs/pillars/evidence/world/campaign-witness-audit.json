@@ -1,0 +1,1073 @@
+{
+  "auditDateLocal": "2026-11-05",
+  "timezone": "Australia/Perth",
+  "sourceCommit": "f14e9a2",
+  "scope": "Eight authored witnesses only. Not the full test/build baseline or a browser/human playtest.",
+  "limitations": "One conservative route per map; unused capacity is not proven usable for medals. No optimality or enjoyment claim.",
+  "medalNamespaceCollision": {
+    "campaignMap": 3,
+    "freeVoyageSeed": "campaign-map-3",
+    "campaignKey": "campaign-map-3",
+    "freeKey": "campaign-map-3"
+  },
+  "rows": [
+    {
+      "map": 1,
+      "title": "First Light",
+      "bells": 1,
+      "islands": 7,
+      "actionsPerTide": 3,
+      "openingFood": 10,
+      "openingTimber": 9,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 0,
+      "finalWindFrom": "SE",
+      "witness": {
+        "actions": {
+          "tow": 2,
+          "nourish": 3,
+          "anchor": 3
+        },
+        "totalCommands": 8,
+        "unusedActionCapacity": 16,
+        "noCommandTides": [
+          4,
+          6,
+          8
+        ],
+        "minimumFood": 5,
+        "minimumTimber": 8,
+        "finalFood": 12,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 3,
+            "food": 9,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 2,
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 1,
+            "food": 6,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 0,
+            "food": 7,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 1,
+            "food": 9,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 10,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 1,
+            "food": 12,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 0,
+            "food": 12,
+            "timber": 14,
+            "integrity": 4,
+            "bellGrowth": [
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 2,
+      "title": "The Long Way Home",
+      "bells": 1,
+      "islands": 7,
+      "actionsPerTide": 3,
+      "openingFood": 10,
+      "openingTimber": 9,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 1
+      },
+      "currentRotation": 5,
+      "finalWindFrom": "NE",
+      "witness": {
+        "actions": {
+          "tow": 3,
+          "nourish": 3,
+          "anchor": 2
+        },
+        "totalCommands": 8,
+        "unusedActionCapacity": 16,
+        "noCommandTides": [
+          4,
+          6,
+          8
+        ],
+        "minimumFood": 4,
+        "minimumTimber": 9,
+        "finalFood": 10,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 3,
+            "food": 9,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              0
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 1,
+            "food": 8,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              1
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 1,
+            "food": 6,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              1
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 0,
+            "food": 6,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              2
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 2,
+            "food": 6,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              2
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 8,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 1,
+            "food": 10,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 0,
+            "food": 10,
+            "timber": 14,
+            "integrity": 4,
+            "bellGrowth": [
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 3,
+      "title": "A Second Opinion",
+      "bells": 2,
+      "islands": 9,
+      "actionsPerTide": 4,
+      "openingFood": 12,
+      "openingTimber": 10,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 5,
+      "finalWindFrom": "W",
+      "witness": {
+        "actions": {
+          "nourish": 6,
+          "anchor": 4,
+          "tow": 1
+        },
+        "totalCommands": 11,
+        "unusedActionCapacity": 21,
+        "noCommandTides": [
+          4,
+          6
+        ],
+        "minimumFood": 2,
+        "minimumTimber": 10,
+        "finalFood": 10,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 2,
+            "food": 10,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 2,
+            "food": 6,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 2,
+            "food": 4,
+            "timber": 15,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 0,
+            "food": 6,
+            "timber": 16,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 2,
+            "food": 8,
+            "timber": 15,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 10,
+            "timber": 16,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 2,
+            "food": 11,
+            "timber": 15,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 1,
+            "food": 10,
+            "timber": 15,
+            "integrity": 4,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 4,
+      "title": "Bread and Bells",
+      "bells": 2,
+      "islands": 9,
+      "actionsPerTide": 4,
+      "openingFood": 12,
+      "openingTimber": 10,
+      "openingBuildings": {
+        "garden": 1,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 1,
+      "finalWindFrom": "NW",
+      "witness": {
+        "actions": {
+          "build": 1,
+          "nourish": 6,
+          "tow": 4,
+          "anchor": 4
+        },
+        "totalCommands": 15,
+        "unusedActionCapacity": 17,
+        "noCommandTides": [
+          4,
+          6
+        ],
+        "minimumFood": 2,
+        "minimumTimber": 7,
+        "finalFood": 7,
+        "finalIntegrity": 5,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 4,
+            "food": 9,
+            "timber": 8,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 2,
+            "food": 6,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 2,
+            "food": 3,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              2
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 0,
+            "food": 4,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 2,
+            "food": 6,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 8,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 2,
+            "food": 10,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 3,
+            "food": 7,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 5,
+      "title": "The Third Voice",
+      "bells": 3,
+      "islands": 11,
+      "actionsPerTide": 5,
+      "openingFood": 14,
+      "openingTimber": 11,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 3,
+      "finalWindFrom": "NE",
+      "witness": {
+        "actions": {
+          "build": 1,
+          "nourish": 9,
+          "anchor": 6,
+          "tow": 3
+        },
+        "totalCommands": 19,
+        "unusedActionCapacity": 21,
+        "noCommandTides": [
+          4,
+          6
+        ],
+        "minimumFood": 4,
+        "minimumTimber": 8,
+        "finalFood": 21,
+        "finalIntegrity": 5,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 4,
+            "food": 12,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 3,
+            "food": 10,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 3,
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 0,
+            "food": 10,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 3,
+            "food": 14,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 17,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 3,
+            "food": 20,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 3,
+            "food": 21,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 6,
+      "title": "Salt and Supper",
+      "bells": 3,
+      "islands": 11,
+      "actionsPerTide": 5,
+      "openingFood": 14,
+      "openingTimber": 11,
+      "openingBuildings": {
+        "garden": 1,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 1,
+      "finalWindFrom": "SE",
+      "witness": {
+        "actions": {
+          "build": 1,
+          "nourish": 9,
+          "tow": 3,
+          "anchor": 6
+        },
+        "totalCommands": 19,
+        "unusedActionCapacity": 21,
+        "noCommandTides": [
+          6
+        ],
+        "minimumFood": 1,
+        "minimumTimber": 8,
+        "finalFood": 6,
+        "finalIntegrity": 5,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 5,
+            "food": 9,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 3,
+            "food": 5,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 2,
+            "food": 3,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 1,
+            "food": 3,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 3,
+            "food": 5,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 3,
+            "food": 8,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 2,
+            "food": 6,
+            "timber": 9,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 7,
+      "title": "A Choir of Four",
+      "bells": 4,
+      "islands": 13,
+      "actionsPerTide": 6,
+      "openingFood": 16,
+      "openingTimber": 12,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 4,
+      "finalWindFrom": "SE",
+      "witness": {
+        "actions": {
+          "build": 1,
+          "nourish": 12,
+          "anchor": 8,
+          "tow": 4
+        },
+        "totalCommands": 25,
+        "unusedActionCapacity": 23,
+        "noCommandTides": [
+          6
+        ],
+        "minimumFood": 1,
+        "minimumTimber": 7,
+        "finalFood": 11,
+        "finalIntegrity": 5,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 5,
+            "food": 12,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 4,
+            "food": 7,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 3,
+            "food": 3,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              2
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 1,
+            "food": 3,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 4,
+            "food": 7,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 0,
+            "food": 11,
+            "timber": 11,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 4,
+            "food": 15,
+            "timber": 8,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 4,
+            "food": 11,
+            "timber": 8,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "map": 8,
+      "title": "The Moon’s Encore",
+      "bells": 4,
+      "islands": 13,
+      "actionsPerTide": 6,
+      "openingFood": 16,
+      "openingTimber": 12,
+      "openingBuildings": {
+        "garden": 2,
+        "grove": 1,
+        "breakwater": 0
+      },
+      "currentRotation": 4,
+      "finalWindFrom": "NW",
+      "witness": {
+        "actions": {
+          "build": 1,
+          "nourish": 12,
+          "tow": 4,
+          "anchor": 8
+        },
+        "totalCommands": 25,
+        "unusedActionCapacity": 23,
+        "noCommandTides": [],
+        "minimumFood": 1,
+        "minimumTimber": 9,
+        "finalFood": 10,
+        "finalIntegrity": 5,
+        "ordinaryGrowth": 0,
+        "medal": {
+          "rank": 1,
+          "growth": 0
+        },
+        "tides": [
+          {
+            "tide": 1,
+            "commands": 6,
+            "food": 11,
+            "timber": 10,
+            "integrity": 5,
+            "bellGrowth": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "tide": 2,
+            "commands": 4,
+            "food": 5,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 3,
+            "commands": 2,
+            "food": 3,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "tide": 4,
+            "commands": 1,
+            "food": 3,
+            "timber": 16,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              2
+            ]
+          },
+          {
+            "tide": 5,
+            "commands": 4,
+            "food": 7,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              2
+            ]
+          },
+          {
+            "tide": 6,
+            "commands": 1,
+            "food": 9,
+            "timber": 14,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 7,
+            "commands": 4,
+            "food": 12,
+            "timber": 12,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "tide": 8,
+            "commands": 3,
+            "food": 10,
+            "timber": 13,
+            "integrity": 5,
+            "bellGrowth": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,2086 @@
+{
+  "scope": "Deterministic route evidence; not exhaustive, human validation, or a difficulty rating.",
+  "sourceHashes": {
+    "src/game/strategyRoutes.ts": "9f37fd9c4dafa54fe863c02b3f9073df9b5fd618371a49da54c612b550b54e61",
+    "src/game/index.ts": "36a17724fe83b9ba190ea4fe6590c01cb20fb9c6964b2b054249992980c628cf",
+    "src/game/generation.ts": "eb4afc7a96bcfae3dee3729392239a132bd847b51cb805188837ab00a2fff2ab",
+    "src/game/campaign.ts": "a6f3d63719e4d34af747376c63e374c4d42bbfcdbf1e9c561f1094c09ab253f8"
+  },
+  "maps": [
+    {
+      "map": 1,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 1072,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 1,
+            "id": "map-1-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 2,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "garden-south"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                },
+                {
+                  "type": "nourish",
+                  "id": "north"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "garden-south"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                }
+              ],
+              []
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 5,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 1,
+            "id": "map-1-ride-5-7-bell",
+            "description": "Let bell ride tides 5 and 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 2,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 1,
+                    "r": -1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                }
+              ],
+              [],
+              [],
+              [],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 2,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 1180,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 2,
+            "id": "map-2-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 3
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                },
+                {
+                  "type": "nourish",
+                  "id": "grove"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "grove"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "garden-west"
+                },
+                {
+                  "type": "nourish",
+                  "id": "grove"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                }
+              ],
+              []
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 37,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 2,
+            "id": "map-2-ride-5-7-bell",
+            "description": "Let bell ride tides 5 and 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 3
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                }
+              ],
+              [],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": -1,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 3,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 1170,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 3,
+            "id": "map-3-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-3",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 2968,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 64,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 3,
+            "id": "map-3-ride-7-bell-bell-2",
+            "description": "Let bell, bell-2 ride tide 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                }
+              ],
+              [],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-3",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 4,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 1143,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 4,
+            "id": "map-4-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-4",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-4"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-5"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": -1,
+                    "r": 0
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-5",
+                  "to": {
+                    "q": -1,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 1548,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 4,
+            "id": "map-4-ride-5-7-bell-bell-2",
+            "description": "Let bell, bell-2 ride tides 5 and 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-4",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [],
+              [],
+              [],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": -1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 0,
+                    "r": -2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 5,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 2129,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 5,
+            "id": "map-5-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-5"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-6",
+                  "to": {
+                    "q": 2,
+                    "r": -2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-6",
+                  "to": {
+                    "q": 2,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": -2
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 3906,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 3918,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 2840,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 5,
+            "id": "map-5-ride-5-7-bell",
+            "description": "Let bell ride tides 5 and 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": 1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-6",
+                  "to": {
+                    "q": 2,
+                    "r": -2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": -2
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 6,
+      "medalAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained witness extensions did not reach six growth; other strategies were not searched.",
+          "expansions": 597,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          }
+        },
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 2038,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 6,
+            "id": "map-6-flourishing",
+            "description": "Build a garden on shore-3 at tide 2, then nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-3",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "build",
+                  "id": "shore-3",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-3"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-7"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-3"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-3",
+                  "to": {
+                    "q": -1,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": 1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 4529,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 1243,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 6,
+            "id": "map-6-ride-7-bell-bell-2-bell-3",
+            "description": "Let bell, bell-2, bell-3 ride tide 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-3",
+                  "to": {
+                    "q": -1,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                }
+              ],
+              [],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-2",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-2",
+                  "to": {
+                    "q": -1,
+                    "r": 0
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": 1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 7,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 1873,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 7,
+            "id": "map-7-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-8",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-8"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-7"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": 1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-8",
+                  "to": {
+                    "q": 2,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-8",
+                  "to": {
+                    "q": 1,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-4",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 6574,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 6606,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 5441,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 7,
+            "id": "map-7-ride-5-7-bell",
+            "description": "Let bell ride tides 5 and 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-8",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-4",
+                  "to": {
+                    "q": 0,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": -2,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": -1,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 0,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": 2
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "map": 8,
+      "medalAttempts": [
+        {
+          "status": "found",
+          "reason": "A legal six-growth winning extension of the authored witness.",
+          "expansions": 2519,
+          "limits": {
+            "maxExpansions": 12000,
+            "beamWidth": 48
+          },
+          "route": {
+            "map": 8,
+            "id": "map-8-flourishing",
+            "description": "Nourish ordinary shores while completing every bell.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-4",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-1"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-5"
+                }
+              ],
+              [
+                {
+                  "type": "tow",
+                  "id": "shore-3",
+                  "to": {
+                    "q": -1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": -1,
+                    "r": 2
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-5"
+                },
+                {
+                  "type": "nourish",
+                  "id": "shore-6"
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "lateAttempts": [
+        {
+          "status": "unresolved",
+          "reason": "The retained final-tide beam found no material alternative; this is not an impossibility proof.",
+          "expansions": 6060,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          }
+        },
+        {
+          "status": "found",
+          "reason": "Changed late bell trajectories and a new spatial finish, replayable from the opening.",
+          "expansions": 4579,
+          "limits": {
+            "maxExpansions": 8000,
+            "beamWidth": 24
+          },
+          "route": {
+            "map": 8,
+            "id": "map-8-ride-7-bell-bell-2-bell-3-bell-4",
+            "description": "Let bell, bell-2, bell-3, bell-4 ride tide 7; rebuild a safe final connection.",
+            "commands": [
+              [
+                {
+                  "type": "build",
+                  "id": "shore-5",
+                  "building": "garden"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                },
+                {
+                  "type": "tow",
+                  "id": "bell-4",
+                  "to": {
+                    "q": 0,
+                    "r": 1
+                  }
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell"
+                },
+                {
+                  "type": "nourish",
+                  "id": "bell-2"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-3"
+                }
+              ],
+              [
+                {
+                  "type": "anchor",
+                  "id": "bell"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-2"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-3"
+                },
+                {
+                  "type": "anchor",
+                  "id": "bell-4"
+                }
+              ],
+              [
+                {
+                  "type": "nourish",
+                  "id": "bell-4"
+                }
+              ],
+              [],
+              [
+                {
+                  "type": "tow",
+                  "id": "bell-2",
+                  "to": {
+                    "q": 1,
+                    "r": 0
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "bell",
+                  "to": {
+                    "q": 1,
+                    "r": 1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-3",
+                  "to": {
+                    "q": -1,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 3,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 2,
+                    "r": -1
+                  }
+                },
+                {
+                  "type": "tow",
+                  "id": "shore-1",
+                  "to": {
+                    "q": 1,
+                    "r": -1
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

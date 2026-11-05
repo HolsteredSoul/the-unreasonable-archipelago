@@ -2,6 +2,63 @@
 
 Priorities reflect their effect on comprehension, spatial play, and the value of a second voyage.
 
+## Four-pillar improvement programme — November 2026
+
+The [improvement plan](improvement-plan.md) coordinates four dedicated project
+sessions: Gameplay & Balance, Art & Audio, World & Progression, and UX & Engineering.
+Project Lead owns integration and acceptance. This roadmap remains the priority
+source; completed features below are not reopened merely to fit the new structure.
+
+- [x] Receive and reconcile four evidence-based pillar reports and a fresh engineering baseline.
+- [x] Deliver and browser-verify the first-voyage readability/recovery improvement slice.
+- [x] Audit all eight maps, verify alternative/medal routes and improve campaign identity.
+- [x] Apply cohesive visual/audio polish and strengthen the invitation to continue or replay.
+- [x] Complete scoped desktop/contrast checks and document the local release candidate.
+- [ ] Run human learning, enjoyment, listening and assistive-technology acceptance studies.
+
+Implementation follows the plan's ownership and acceptance gates. Mobile expansion
+and FPS benchmarking remain deferred. Human enjoyment and listening evaluations
+remain open until actual playtests occur.
+
+The kickoff produced 29 pillar tickets and one lead-owned medal compatibility ticket.
+Integrated implementation now passes 207 source tests across 22 files, five separate
+UI checks, TypeScript and the Pages-base production build. All eight maps passed in
+production Chrome at both desktop sizes. Final corrections passed Chrome, Edge and
+125%/150% scaling checks, followed by a new compact eight-map replay and image review.
+See [verification](verification.md) for each build/run's exact scope and evidence.
+
+### Delivered and verified implementation
+
+1. **Reliable play:** visible save failures, recoverable damaged data, safe voyage
+   replacement, current-map resume, stable keyboard focus and explicit bell checks.
+2. **Readable choices:** verified Nourish rescue, actual post-drift shelter sources,
+   different marks for exposure/recovery/growth and visible queued nourishment.
+3. **A richer journey:** eight map codas/invitations, four daylight treatments,
+   chart medals, optional shore-growth targets and clear free-voyage scope.
+4. **Compatibility:** separate campaign/free medal keys, retained ambiguous legacy
+   records, unchanged game rules and preserved old-save/undo/checkpoint handling.
+5. **Evidence:** all eight maps have reference, top-medal and different late-current
+   routes. Effects lifecycle/priority is tested; source asset provenance is recorded.
+
+The [master plan](improvement-plan.md) assigns file ownership, dependencies and
+acceptance gates; the four linked pillar reports hold the full implementation briefs.
+Implementation follows the user's instruction to proceed to completion.
+Gameplay owns rescue advice and strategy fixtures; Art owns renderer,
+audio and asset provenance; World owns campaign content/chart; UX owns status/check
+components and browser verification. Project Lead owns shared App, persistence,
+integration and acceptance. Human observation remains a separate evidence gate.
+The local release candidate is complete. Following acceptance, the user authorized
+commit, push and GitHub Pages publication on 5 November 2026; the existing `main`
+workflow runs the release checks and deploys the resulting build.
+
+### Next decisions requiring people
+
+Run the [player evaluation](playtest-plan.md) before changing numerical difficulty,
+adding hazards or commissioning another replay objective. Actual first-time learning,
+later-map enjoyment, replay motivation, extended listening and assistive-technology
+speech are unverified. Keep these open rather than translating passing automation
+into human findings. The master plan records the scope decision for every ticket.
+
 ## Gameplay depth follow-up — implemented
 
 Whale Tow clarity follow-up: the action now stays beside ordinary Tow in the main dock with **1 action · 0 food** visible even before a visit. The encounter card explains unavailability, names the next visit, and lets players select an eligible island without spending anything. The map shows only that selected island's tow destination. An optional guide explains when the tow helps and why the following current can move the island again. Action feedback shows the action count falling while food remains unchanged.

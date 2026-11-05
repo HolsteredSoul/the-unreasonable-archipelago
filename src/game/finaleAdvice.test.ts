@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { applyCommand, createGame, forecastTide, resolveTide } from './index';
 import { getFinaleAdvice } from './finaleAdvice';
+import { campaignSolution, createCampaignGame } from './campaign';
 import type { GameState, Island } from './types';
 
 const at = (id: string, q: number, r: number, kind: Island['kind'] = 'ordinary'): Island => ({ id, name: id, q, r, kind, building: null, growth: kind === 'bell' ? 3 : 0, stress: 0, nourished: false, anchored: false });
@@ -72,6 +73,94 @@ describe('final-tide advice', () => {
     const [advice] = getFinaleAdvice(finale({ ...at('bell', 0, -1, 'bell'), growth: 2, nourished: true }));
     expect(advice.grown).toBe(true);
     expect(advice.hint).toContain('is ready to ring');
+  });
+
+  it('rescues a reachable First Light missed nourishment without changing the planning state', () => {
+    let state = createCampaignGame(1);
+    const route = campaignSolution(1);
+    route[2] = [];
+    for (const commands of route.slice(0, 7)) {
+      for (const command of commands) {
+        const result = applyCommand(state, command);
+        expect(result.error).toBeUndefined();
+        state = result.state;
+      }
+      state = resolveTide(state).state;
+    }
+    expect(state).toMatchObject({ tide: 8, food: 14, actions: 3, status: 'playing' });
+    expect(forecastTide(state).state.status).toBe('lost');
+    const before = structuredClone(state);
+    const [advice] = getFinaleAdvice(state);
+    expect(advice.rescue).toEqual({ type: 'nourish', id: 'bell' });
+    expect(advice.hint).toContain('1 action + 2 food now');
+    expect(advice.hint).toContain('Growth completes after the safe, fed tide');
+    expect(state).toEqual(before);
+    expect(getFinaleAdvice(state)).toEqual([advice]);
+    const applied = applyCommand(state, advice.rescue!);
+    expect(applied.error).toBeUndefined();
+    expect(applied.state).toMatchObject({ food: 12, actions: 2 });
+    expect(applied.state.islands.find(island => island.id === 'bell')).toMatchObject({ growth: 2, nourished: true });
+    expect(forecastTide(applied.state).state.status).toBe('won');
+    expect(state).toEqual(before);
+    expect(getFinaleAdvice(applied.state).every(info => !info.rescue)).toBe(true);
+  });
+
+  it('offers nourishment only when it completes the whole multi-bell voyage', () => {
+    const ready = at('bell', 0, -1, 'bell');
+    const hungry = { ...at('bell-2', 0, -2, 'bell'), growth: 2 };
+    const state = finale(ready, hungry);
+    const advice = getFinaleAdvice(state);
+    expect(advice[0].rescue).toBeUndefined();
+    expect(advice[1].rescue).toEqual({ type: 'nourish', id: 'bell-2' });
+    expect(forecastTide(applyCommand(state, advice[1].rescue!).state).state.status).toBe('won');
+    const bothHungry = finale({ ...ready, growth: 2 }, hungry);
+    expect(getFinaleAdvice(bothHungry).every(info => !info.rescue)).toBe(true);
+  });
+
+  it.each([
+    ['no actions', { actions: 0 }, {}],
+    ['insufficient food', { food: 1 }, {}],
+    ['two growth stages missing', {}, { growth: 1 }],
+    ['exposure', {}, { q: 1, r: -1 }],
+    ['stress cannot recover in time', {}, { stress: 4 }],
+    ['disconnected', {}, { q: 0, r: -3 }],
+    ['rations prevent growth', { food: 2 }, {}],
+    ['rations destroy the Heart', { food: 2, integrity: 1 }, {}],
+  ] as [string, Partial<GameState>, Partial<Island>][])(
+    'does not suggest a non-winning nourishment: %s', (_reason, stateChanges, islandChanges) => {
+      const state = { ...finale({ ...at('bell', 0, -1, 'bell'), growth: 2, ...islandChanges }), ...stateChanges };
+      expect(forecastTide(state).state.status).toBe('lost');
+      expect(getFinaleAdvice(state).every(info => !info.rescue)).toBe(true);
+    },
+  );
+
+  it('does not suggest nourishing queued or mature bells, or an earlier or completed tide', () => {
+    const hungry = { ...at('bell', 0, -1, 'bell'), growth: 2 };
+    for (const island of [{ ...hungry, nourished: true }, { ...hungry, growth: 3 }]) {
+      expect(getFinaleAdvice(finale(island)).every(info => !info.rescue)).toBe(true);
+    }
+    const state = finale(hungry);
+    expect(getFinaleAdvice({ ...state, tide: 7 }).every(info => !info.rescue)).toBe(true);
+    expect(getFinaleAdvice(resolveTide(state).state).every(info => !info.rescue)).toBe(true);
+  });
+
+  it('does not promise growth will save a Heart that the final storm destroys', () => {
+    const state = { ...finale({ ...at('bell', 0, -1, 'bell'), growth: 2 }), integrity: 1 };
+    state.islands[0].stress = 2;
+    const nourished = applyCommand(state, { type: 'nourish', id: 'bell' });
+    expect(nourished.error).toBeUndefined();
+    expect(forecastTide(nourished.state).state).toMatchObject({ status: 'lost', integrity: 0 });
+    expect(getFinaleAdvice(state).every(info => !info.rescue)).toBe(true);
+  });
+
+  it('can suggest final growth under the original saved-voyage rules without rewriting them', () => {
+    const state = finale({ ...at('bell', 0, -1, 'bell'), growth: 2 });
+    delete state.voyageRules;
+    const [advice] = getFinaleAdvice(state);
+    expect(advice.rescue).toEqual({ type: 'nourish', id: 'bell' });
+    const outcome = forecastTide(applyCommand(state, advice.rescue!).state).state;
+    expect(outcome.status).toBe('won');
+    expect(outcome.voyageRules).toBeUndefined();
   });
 
   it('does not apply the final storm twice to a completed loss', () => {

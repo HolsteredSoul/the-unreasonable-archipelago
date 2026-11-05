@@ -4,6 +4,7 @@ import type { GameState, Island } from '../game/types';
 export type Settings = { sound: boolean; reducedMotion: boolean; quality: 'high' | 'low'; seaFocus?: boolean; musicVolume?: number; effectsVolume?: number; musicEnabled?: boolean };
 export type SavedSession = { version: 1; state: GameState; undo: GameState[]; settings: Settings; seenIntro: boolean; campaignCompleted?: number; finaleCheckpoint?: GameState };
 const SAVE_KEY = 'unreasonable-archipelago.session.v1';
+const RECOVERY_KEYS = [1, 2, 3].map(index => `${SAVE_KEY}.recovery.${index}`);
 const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 const integer = (value: unknown, min: number, max: number): value is number => typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
 const text = (value: unknown, max: number): value is string => typeof value === 'string' && value.length > 0 && value.length <= max;
@@ -77,7 +78,7 @@ export function initialSession(): SavedSession {
     if (raw && raw.length < 250000) {
       const parsed: unknown = JSON.parse(raw);
       if (validateSession(parsed)) {
-        if (!urlSeed || parsed.state.seed === urlSeed) return parsed;
+        if (!urlSeed || (!parsed.state.campaignMap && parsed.state.seed === urlSeed)) return parsed;
         return { ...parsed, state: createGame(urlSeed), undo: [], seenIntro: true, finaleCheckpoint: undefined };
       }
     }
@@ -89,7 +90,28 @@ export function initialSession(): SavedSession {
 }
 
 export function persistSession(session: SavedSession): boolean {
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify(session)); return true; } catch { return false; }
+  try {
+    const previous = localStorage.getItem(SAVE_KEY);
+    if (previous !== null) {
+      let valid = false;
+      try { valid = previous.length < 250000 && validateSession(JSON.parse(previous)); } catch { /* Preserve unreadable data below. */ }
+      if (!valid) {
+        const backups = RECOVERY_KEYS.map(key => localStorage.getItem(key));
+        if (!backups.includes(previous)) {
+          const slot = backups.indexOf(null);
+          // Never overwrite the damaged original if a safe backup cannot be retained.
+          if (slot < 0) return false;
+          localStorage.setItem(RECOVERY_KEYS[slot], previous);
+        }
+      }
+    }
+    localStorage.setItem(SAVE_KEY, JSON.stringify(session));
+    return true;
+  } catch { return false; }
+}
+
+export function hasRecoveredSave(): boolean {
+  try { return RECOVERY_KEYS.some(key => localStorage.getItem(key) !== null); } catch { return false; }
 }
 
 export function updateSeedUrl(seed: string): void {

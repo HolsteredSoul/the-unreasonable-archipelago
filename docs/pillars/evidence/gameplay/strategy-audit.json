@@ -1,0 +1,634 @@
+{
+  "scope": "Deterministic route evidence; not exhaustive, human validation, or a difficulty rating.",
+  "sourceHashes": {
+    "src/game/strategyRoutes.ts": "9f37fd9c4dafa54fe863c02b3f9073df9b5fd618371a49da54c612b550b54e61",
+    "src/game/index.ts": "36a17724fe83b9ba190ea4fe6590c01cb20fb9c6964b2b054249992980c628cf",
+    "src/game/generation.ts": "eb4afc7a96bcfae3dee3729392239a132bd847b51cb805188837ab00a2fff2ab",
+    "src/game/campaign.ts": "a6f3d63719e4d34af747376c63e374c4d42bbfcdbf1e9c561f1094c09ab253f8"
+  },
+  "maps": [
+    {
+      "map": 1,
+      "title": "First Light",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 3,
+          "nourish": 3
+        },
+        "minFood": 5,
+        "finalFood": 12,
+        "minTimber": 8,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          8
+        ]
+      },
+      "medal": {
+        "id": "map-1-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 3,
+          "nourish": 9
+        },
+        "minFood": 0,
+        "finalFood": 16,
+        "minTimber": 8,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 10,
+        "idleTides": [
+          8
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-1-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 1,
+          "nourish": 3
+        },
+        "minFood": 5,
+        "finalFood": 12,
+        "minTimber": 8,
+        "finalTimber": 16,
+        "integrity": 4,
+        "unusedActions": 17,
+        "idleTides": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 1,
+        "material": true
+      }
+    },
+    {
+      "map": 2,
+      "title": "The Long Way Home",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 3
+        },
+        "minFood": 4,
+        "finalFood": 10,
+        "minTimber": 9,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          8
+        ]
+      },
+      "medal": {
+        "id": "map-2-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 9
+        },
+        "minFood": 0,
+        "finalFood": 20,
+        "minTimber": 9,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 10,
+        "idleTides": [
+          8
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-2-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 0,
+          "nourish": 3
+        },
+        "minFood": 4,
+        "finalFood": 8,
+        "minTimber": 9,
+        "finalTimber": 16,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 2,
+        "material": true
+      }
+    },
+    {
+      "map": 3,
+      "title": "A Second Opinion",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 1,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 4,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 10,
+        "minTimber": 10,
+        "finalTimber": 15,
+        "integrity": 4,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-3-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 1,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 0,
+        "finalFood": 21,
+        "minTimber": 10,
+        "finalTimber": 15,
+        "integrity": 4,
+        "unusedActions": 15,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-3-ride",
+        "description": "Release bell, bell-2 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 10,
+        "minTimber": 10,
+        "finalTimber": 17,
+        "integrity": 4,
+        "unusedActions": 22,
+        "idleTides": [
+          4,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 1,
+        "material": true
+      }
+    },
+    {
+      "map": 4,
+      "title": "Bread and Bells",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 7,
+        "minTimber": 7,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-4-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 0,
+        "finalFood": 9,
+        "minTimber": 7,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 11,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-4-ride",
+        "description": "Release bell, bell-2 on tide 5; bell, bell-2 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 0,
+          "nourish": 6
+        },
+        "minFood": 1,
+        "finalFood": 1,
+        "minTimber": 7,
+        "finalTimber": 14,
+        "integrity": 5,
+        "unusedActions": 20,
+        "idleTides": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 3,
+        "material": true
+      }
+    },
+    {
+      "map": 5,
+      "title": "The Third Voice",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 9
+        },
+        "minFood": 4,
+        "finalFood": 21,
+        "minTimber": 8,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-5-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 15
+        },
+        "minFood": 0,
+        "finalFood": 36,
+        "minTimber": 8,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 15,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-5-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 9
+        },
+        "minFood": 4,
+        "finalFood": 15,
+        "minTimber": 8,
+        "finalTimber": 12,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 3,
+        "material": true
+      }
+    },
+    {
+      "map": 6,
+      "title": "Salt and Supper",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 9
+        },
+        "minFood": 1,
+        "finalFood": 6,
+        "minTimber": 8,
+        "finalTimber": 9,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-6-flourishing",
+        "description": "Build an extra tide-2 garden, then nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 2,
+          "anchor": 6,
+          "nourish": 15
+        },
+        "minFood": 0,
+        "finalFood": 22,
+        "minTimber": 5,
+        "finalTimber": 6,
+        "integrity": 5,
+        "unusedActions": 14,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-6-ride",
+        "description": "Release bell, bell-2, bell-3 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 3,
+          "nourish": 9
+        },
+        "minFood": 1,
+        "finalFood": 5,
+        "minTimber": 8,
+        "finalTimber": 12,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell-2",
+          "bell-3"
+        ],
+        "newSpatialCommands": 2,
+        "material": true
+      }
+    },
+    {
+      "map": 7,
+      "title": "A Choir of Four",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 11,
+        "minTimber": 7,
+        "finalTimber": 8,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-7-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 18
+        },
+        "minFood": 0,
+        "finalFood": 11,
+        "minTimber": 7,
+        "finalTimber": 8,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-7-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 6,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 7,
+        "minTimber": 9,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 5,
+        "material": true
+      }
+    },
+    {
+      "map": 8,
+      "title": "The Moon’s Encore",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 10,
+        "minTimber": 9,
+        "finalTimber": 13,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": []
+      },
+      "medal": {
+        "id": "map-8-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 18
+        },
+        "minFood": 0,
+        "finalFood": 3,
+        "minTimber": 9,
+        "finalTimber": 13,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-8-ride",
+        "description": "Release bell, bell-2, bell-3, bell-4 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 7,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 8,
+        "minTimber": 9,
+        "finalTimber": 17,
+        "integrity": 5,
+        "unusedActions": 24,
+        "idleTides": [
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2",
+          "bell-4"
+        ],
+        "newSpatialCommands": 5,
+        "material": true
+      }
+    }
+  ]
+}

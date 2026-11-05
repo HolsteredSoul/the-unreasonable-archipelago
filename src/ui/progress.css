@@ -1,0 +1,33 @@
+.save-recovery-note {
+  padding: 12px 15px;
+  border-left: 3px solid #a58a53;
+  background: #e6eadc;
+  color: #315b54;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.action-area:focus-visible {
+  outline: 2px solid #264d45;
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+.forecast-resources { flex-wrap: wrap; row-gap: 4px; }
+.forecast-resources > span:not(.eyebrow) { white-space: nowrap; }
+
+/* Notice height grows upward from the live dock boundary, including bell warnings. */
+.hud .toast, .hud .resource-callout {
+  position: fixed;
+  top: auto;
+  bottom: calc(100dvh - var(--dock-top, 70vh) + 12px);
+  animation: notice-appear .18s ease both;
+}
+/* Reserve the final rectangle even during the fade, without a translating start pose. */
+@keyframes notice-appear { from { opacity: 0; } to { opacity: 1; } }
+.reduced-motion .hud .toast, .reduced-motion .hud .resource-callout { animation: none; }
+.modal-lead, .modal .secondary-button,
+.modal:not(.start-modal) .text-button { color: #52675a; }
+.modal:not(.start-modal) h2 em { color: #6f7866; }
+.guide-note { color: #52675a; }
+.modal button:focus-visible, .modal input:focus-visible,
+.modal select:focus-visible { outline-color: #264d45; }
+.campaign-intro button:focus-visible { outline-color: #f1d89e; }

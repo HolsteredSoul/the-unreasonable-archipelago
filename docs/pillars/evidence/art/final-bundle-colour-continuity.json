@@ -1,0 +1,102 @@
+{
+  "css": "index-CGYxVsyU.css",
+  "sha256": "d42bffbc315694575f91ebd3625e1f4fd0446b586bbab03299cbf96d1dd18292",
+  "method": "Static final-bundle declaration presence against the previous computed-cascade fixture; not a new browser run.",
+  "checks": [
+    {
+      "selector": ".modal-lead",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".modal .secondary-button",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".modal:not(.start-modal) .text-button",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".modal:not(.start-modal) h2 em",
+      "expected": "color:#6f7866",
+      "present": true
+    },
+    {
+      "selector": ".modal.finale-check-modal .text-button.final-accept",
+      "expected": "color:#9a5134",
+      "present": true
+    },
+    {
+      "selector": ".finale-check-modal .finale-rule",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".finale-retry p",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".guide-note",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".campaign-progression",
+      "expected": "color:#59695e",
+      "present": true
+    },
+    {
+      "selector": ".campaign-pair>p span",
+      "expected": "color:#59695e",
+      "present": true
+    },
+    {
+      "selector": ".campaign-map-number",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".campaign-bell small",
+      "expected": "color:#52675a",
+      "present": true
+    },
+    {
+      "selector": ".campaign-bell.needs-shelter small",
+      "expected": "color:#9a5134",
+      "present": true
+    },
+    {
+      "selector": ".result-modal.result-lost .result-verdict",
+      "expected": "color:#9a5134",
+      "present": true
+    },
+    {
+      "selector": ".result-conditions .needs-care",
+      "expected": "color:#9a5134",
+      "present": true
+    },
+    {
+      "selector": ".campaign-unlock",
+      "expected": "color:#486452",
+      "present": true
+    },
+    {
+      "selector": ".modal button:focus-visible",
+      "expected": "outline-color:#264d45",
+      "present": true
+    },
+    {
+      "selector": ".modal input:focus-visible",
+      "expected": "outline-color:#264d45",
+      "present": true
+    },
+    {
+      "selector": ".campaign-intro button:focus-visible",
+      "expected": "outline-color:#f1d89e",
+      "present": true
+    }
+  ]
+}

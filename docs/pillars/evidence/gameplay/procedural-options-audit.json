@@ -1,0 +1,7922 @@
+{
+  "scope": "Deterministic route evidence; not exhaustive, human validation, or a difficulty rating.",
+  "auditScriptSha256": "dbe8b6d549fd7c857443121ff01bf384a414724b7bb32d3d9096ed4f57a4a00e",
+  "sourceHashes": {
+    "src/game/strategyRoutes.ts": "9f37fd9c4dafa54fe863c02b3f9073df9b5fd618371a49da54c612b550b54e61",
+    "src/game/index.ts": "36a17724fe83b9ba190ea4fe6590c01cb20fb9c6964b2b054249992980c628cf",
+    "src/game/generation.ts": "eb4afc7a96bcfae3dee3729392239a132bd847b51cb805188837ab00a2fff2ab",
+    "src/game/campaign.ts": "a6f3d63719e4d34af747376c63e374c4d42bbfcdbf1e9c561f1094c09ab253f8"
+  },
+  "frozenInputs": {
+    "src": {
+      "present": true,
+      "files": 66,
+      "sha256": "eb134a55394f29b54bbcb7ebe17199528439c925598aa055befa012dbe848d80"
+    },
+    "dist": {
+      "present": true,
+      "files": 7,
+      "sha256": "97c5306c3dc076f57173b320975c33d54fb3eb45b959822e8e68227cc7241da0"
+    }
+  },
+  "maps": [
+    {
+      "map": 1,
+      "title": "First Light",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 3,
+          "nourish": 3
+        },
+        "minFood": 5,
+        "finalFood": 12,
+        "minTimber": 8,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          8
+        ]
+      },
+      "medal": {
+        "id": "map-1-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 3,
+          "nourish": 9
+        },
+        "minFood": 0,
+        "finalFood": 16,
+        "minTimber": 8,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 10,
+        "idleTides": [
+          8
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-1-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 1,
+          "nourish": 3
+        },
+        "minFood": 5,
+        "finalFood": 12,
+        "minTimber": 8,
+        "finalTimber": 16,
+        "integrity": 4,
+        "unusedActions": 17,
+        "idleTides": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 1,
+        "material": true
+      }
+    },
+    {
+      "map": 2,
+      "title": "The Long Way Home",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 3
+        },
+        "minFood": 4,
+        "finalFood": 10,
+        "minTimber": 9,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          8
+        ]
+      },
+      "medal": {
+        "id": "map-2-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 9
+        },
+        "minFood": 0,
+        "finalFood": 20,
+        "minTimber": 9,
+        "finalTimber": 14,
+        "integrity": 4,
+        "unusedActions": 10,
+        "idleTides": [
+          8
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-2-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 0,
+          "nourish": 3
+        },
+        "minFood": 4,
+        "finalFood": 8,
+        "minTimber": 9,
+        "finalTimber": 16,
+        "integrity": 4,
+        "unusedActions": 16,
+        "idleTides": [
+          4,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 2,
+        "material": true
+      }
+    },
+    {
+      "map": 3,
+      "title": "A Second Opinion",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 1,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 4,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 10,
+        "minTimber": 10,
+        "finalTimber": 15,
+        "integrity": 4,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-3-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 1,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 0,
+        "finalFood": 21,
+        "minTimber": 10,
+        "finalTimber": 15,
+        "integrity": 4,
+        "unusedActions": 15,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-3-ride",
+        "description": "Release bell, bell-2 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 2,
+          "whaleTow": 0,
+          "build": 0,
+          "anchor": 2,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 10,
+        "minTimber": 10,
+        "finalTimber": 17,
+        "integrity": 4,
+        "unusedActions": 22,
+        "idleTides": [
+          4,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 1,
+        "material": true
+      }
+    },
+    {
+      "map": 4,
+      "title": "Bread and Bells",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 6
+        },
+        "minFood": 2,
+        "finalFood": 7,
+        "minTimber": 7,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-4-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 0,
+        "finalFood": 9,
+        "minTimber": 7,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 11,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-4-ride",
+        "description": "Release bell, bell-2 on tide 5; bell, bell-2 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 0,
+          "nourish": 6
+        },
+        "minFood": 1,
+        "finalFood": 1,
+        "minTimber": 7,
+        "finalTimber": 14,
+        "integrity": 5,
+        "unusedActions": 20,
+        "idleTides": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 3,
+        "material": true
+      }
+    },
+    {
+      "map": 5,
+      "title": "The Third Voice",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 9
+        },
+        "minFood": 4,
+        "finalFood": 21,
+        "minTimber": 8,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-5-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 15
+        },
+        "minFood": 0,
+        "finalFood": 36,
+        "minTimber": 8,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 15,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateAlternative": {
+        "id": "map-5-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 5,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 9
+        },
+        "minFood": 4,
+        "finalFood": 15,
+        "minTimber": 8,
+        "finalTimber": 12,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          4,
+          6
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell"
+        ],
+        "newSpatialCommands": 3,
+        "material": true
+      }
+    },
+    {
+      "map": 6,
+      "title": "Salt and Supper",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 9
+        },
+        "minFood": 1,
+        "finalFood": 6,
+        "minTimber": 8,
+        "finalTimber": 9,
+        "integrity": 5,
+        "unusedActions": 21,
+        "idleTides": [
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-6-flourishing",
+        "description": "Build an extra tide-2 garden, then nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 3,
+          "whaleTow": 0,
+          "build": 2,
+          "anchor": 6,
+          "nourish": 15
+        },
+        "minFood": 0,
+        "finalFood": 22,
+        "minTimber": 5,
+        "finalTimber": 6,
+        "integrity": 5,
+        "unusedActions": 14,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-6-ride",
+        "description": "Release bell, bell-2, bell-3 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 3,
+          "nourish": 9
+        },
+        "minFood": 1,
+        "finalFood": 5,
+        "minTimber": 8,
+        "finalTimber": 12,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6,
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell-2",
+          "bell-3"
+        ],
+        "newSpatialCommands": 2,
+        "material": true
+      }
+    },
+    {
+      "map": 7,
+      "title": "A Choir of Four",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 11,
+        "minTimber": 7,
+        "finalTimber": 8,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6
+        ]
+      },
+      "medal": {
+        "id": "map-7-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 18
+        },
+        "minFood": 0,
+        "finalFood": 11,
+        "minTimber": 7,
+        "finalTimber": 8,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-7-ride",
+        "description": "Release bell on tide 5; bell on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 6,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 6,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 7,
+        "minTimber": 9,
+        "finalTimber": 10,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": [
+          6
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2"
+        ],
+        "newSpatialCommands": 5,
+        "material": true
+      }
+    },
+    {
+      "map": 8,
+      "title": "The Moon’s Encore",
+      "reference": {
+        "id": "reference",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 10,
+        "minTimber": 9,
+        "finalTimber": 13,
+        "integrity": 5,
+        "unusedActions": 23,
+        "idleTides": []
+      },
+      "medal": {
+        "id": "map-8-flourishing",
+        "description": "Nourish ordinary shores while completing every bell.",
+        "status": "won",
+        "ordinaryGrowth": 6,
+        "counts": {
+          "tow": 4,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 8,
+          "nourish": 18
+        },
+        "minFood": 0,
+        "finalFood": 3,
+        "minTimber": 9,
+        "finalTimber": 13,
+        "integrity": 5,
+        "unusedActions": 17,
+        "idleTides": []
+      },
+      "lateAlternative": {
+        "id": "map-8-ride",
+        "description": "Release bell, bell-2, bell-3, bell-4 on tide 7; rebuild a safe final connection.",
+        "status": "won",
+        "ordinaryGrowth": 0,
+        "counts": {
+          "tow": 7,
+          "whaleTow": 0,
+          "build": 1,
+          "anchor": 4,
+          "nourish": 12
+        },
+        "minFood": 1,
+        "finalFood": 8,
+        "minTimber": 9,
+        "finalTimber": 17,
+        "integrity": 5,
+        "unusedActions": 24,
+        "idleTides": [
+          7
+        ]
+      },
+      "lateDifference": {
+        "changedBells": [
+          "bell",
+          "bell-2",
+          "bell-4"
+        ],
+        "newSpatialCommands": 5,
+        "material": true
+      }
+    }
+  ],
+  "procedural": {
+    "panel": "gameplay-panel-00 through gameplay-panel-31; fixed 32 seeds, no adaptive replacement",
+    "coverage": {
+      "families": [
+        "Garden chain",
+        "Scattered orchards",
+        "Sheltered inlet",
+        "Timber flotilla"
+      ],
+      "rotations": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "bellDistances": [
+        2,
+        3,
+        4
+      ],
+      "missingFamilies": [],
+      "missingRotations": [],
+      "missingBellDistances": []
+    },
+    "metadata": {
+      "attempts": "Direct GeneratedOpening.attempts values, not inferred from runtime duration.",
+      "fallback": "True only for the exposed Familiar shores family; no inference about rejected candidates being unsolvable.",
+      "recipe": "Replay witness from createGame(seed). To reproduce its growth route, clone witness and splice each ordinaryOpportunity.additions command at [tide-1], index, in listed order.",
+      "policyLimit": "The production generator constructs an early-home/garden/late-anchor witness. Acceptance and this greedy insertion audit do not characterize the whole strategy space."
+    },
+    "totals": {
+      "seeds": 32,
+      "fallbacks": 0,
+      "attempts": {
+        "min": 1,
+        "max": 2
+      },
+      "baselineMinFood": {
+        "min": 3,
+        "max": 8
+      },
+      "baselineFinalFood": {
+        "min": 7,
+        "max": 17
+      },
+      "baselineOrdinaryGrowth": {
+        "min": 0,
+        "max": 0
+      },
+      "ordinaryGrowthFound": {
+        "min": 6,
+        "max": 6
+      },
+      "sixGrowthWitnesses": 32,
+      "opportunityReplays": 10736
+    },
+    "rows": [
+      {
+        "seed": "gameplay-panel-00",
+        "family": "Scattered orchards",
+        "currentRotation": 1,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "77f476838862bf047c81b2b0b45581f6527d6f6e055e200da88e34982d892029",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 14,
+          "finalTimber": 14,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 361,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 28,
+            "finalTimber": 14,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-01",
+        "family": "Garden chain",
+        "currentRotation": 0,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "9cdc8a2f402b68773a0da7e5ab1c83d41b0cd49d90e5de1e49209155a4ca86c7",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 14,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 19,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 301,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 25,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 13,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-02",
+        "family": "Garden chain",
+        "currentRotation": 2,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 2,
+        "fallback": false,
+        "openingHash": "b2140c0a4a94f5aea7bd7729dfcc23d4fd1de0d62fc7987bb03ffc063ac12f06",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 3
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 5,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 3,
+          "minTimber": 9,
+          "finalFood": 7,
+          "finalTimber": 15,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 378,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 5,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 13,
+            "finalTimber": 15,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              7
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-03",
+        "family": "Garden chain",
+        "currentRotation": 5,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "238bfcec0e9f194e5fd7a03a0f8c822fb8f9139bbbd4b911ac92f27cf65c7156",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 3,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 13,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 318,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 19,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-04",
+        "family": "Garden chain",
+        "currentRotation": 4,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "61b4510b4dd664eefe49c9e75d49667ff088497d916dc06b69374c6110a10e58",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 14,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 288,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 20,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-05",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 2,
+        "fallback": false,
+        "openingHash": "9d0620be949a183da8b7b095b5c2da3e598126152800207496fac0b7ab4674a1",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -3,
+                "r": 3
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "build",
+              "id": "garden-west",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 8,
+          "finalFood": 13,
+          "finalTimber": 19,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 16,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 287,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 8,
+            "finalFood": 18,
+            "finalTimber": 20,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 10,
+            "rationShortages": 0,
+            "emptyTides": [
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-06",
+        "family": "Garden chain",
+        "currentRotation": 3,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "03a237ec2e90770221aaf4d9f7fb1a613f1f8693b0ff99b680e16d81567828f5",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 0
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 4,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 10,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 378,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 4,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 17,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-07",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "0e34857c07f0aba5b7627a4c6fbc2de1e99f9880a8e0a1088cfbb2588ed7ade1",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 4,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 9,
+          "finalFood": 10,
+          "finalTimber": 20,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 14,
+          "rationShortages": 0,
+          "emptyTides": [
+            6
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 385,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 4,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 11,
+            "finalTimber": 21,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 8,
+            "rationShortages": 0,
+            "emptyTides": [],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-08",
+        "family": "Garden chain",
+        "currentRotation": 1,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "30d85995a00471ffe61763a98b422503ef78b0ff45cb13777b8833d68c4561cc",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 3,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 0
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 5,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 11,
+          "finalTimber": 16,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 378,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 5,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 17,
+            "finalTimber": 17,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-09",
+        "family": "Timber flotilla",
+        "currentRotation": 0,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "b91019329ac35e03a91085e44096c0e019e58b7dc0e5cf8c97ec1ba34a18558b",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            },
+            {
+              "type": "build",
+              "id": "grove",
+              "building": "garden"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 8,
+          "minTimber": 6,
+          "finalFood": 13,
+          "finalTimber": 23,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 342,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 6,
+            "finalFood": 22,
+            "finalTimber": 23,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-10",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "6cdf0dc9b9e82bb6c5531621f97e0d8df1b57740f3663ade1ddbf1e0110f06ab",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-west",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 6,
+          "finalFood": 10,
+          "finalTimber": 18,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 378,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 6,
+            "finalFood": 16,
+            "finalTimber": 18,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-11",
+        "family": "Garden chain",
+        "currentRotation": 0,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "45240c335b34dbb3982b93ddd7106b4ce3dc99bf1c4dbd35fe489bbaaebf2270",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 3,
+                "r": -3
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 13,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 299,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 19,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-12",
+        "family": "Sheltered inlet",
+        "currentRotation": 1,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 1,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "8cf0cda56f1139e758eeffcb047a0f7b75136929464a88da805aeed53f7a7349",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "build",
+              "id": "grove",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 3,
+          "minTimber": 7,
+          "finalFood": 9,
+          "finalTimber": 11,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 355,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 7,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 8,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 7,
+            "finalFood": 10,
+            "finalTimber": 11,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6,
+              7,
+              8
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-13",
+        "family": "Sheltered inlet",
+        "currentRotation": 4,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "7cb0efd52f42d0237d1ee5d36c8be2e059eccb1cbcc102016e31d2e3699b8112",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 6,
+          "finalFood": 13,
+          "finalTimber": 12,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 16,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 348,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 6,
+            "finalFood": 22,
+            "finalTimber": 12,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 10,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-14",
+        "family": "Timber flotilla",
+        "currentRotation": 1,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 2,
+        "fallback": false,
+        "openingHash": "aa21d0a125f3397c9474b9240315264461569bcec198107223dbf708f1b171df",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-west",
+              "building": "garden"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 8,
+          "minTimber": 6,
+          "finalFood": 14,
+          "finalTimber": 20,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            2,
+            4,
+            5
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 300,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 6,
+            "finalFood": 26,
+            "finalTimber": 20,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-15",
+        "family": "Timber flotilla",
+        "currentRotation": 2,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "04355c7b0b5e3a8f5f07f31397c96f1e1ea48823f93a54c9d7d9d91df8f74de1",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -3,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "build",
+              "id": "garden-west",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 5,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 8,
+          "finalFood": 10,
+          "finalTimber": 23,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 14,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 347,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 5,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 8,
+            "finalFood": 14,
+            "finalTimber": 25,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 8,
+            "rationShortages": 0,
+            "emptyTides": [
+              7
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-16",
+        "family": "Scattered orchards",
+        "currentRotation": 1,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "c708215a31decb3d632352c50dc6164b0adf94e79abc52a3aaa00a67920ea84e",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 16,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 331,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 30,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-17",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "fbcd01add84996e9bac77b092cb727d39394cee9ec007ab5e12a3f3c32c97df0",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-west",
+              "building": "garden"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 4,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 6,
+          "finalFood": 11,
+          "finalTimber": 20,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 359,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 4,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 6,
+            "finalFood": 17,
+            "finalTimber": 20,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              7
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-18",
+        "family": "Scattered orchards",
+        "currentRotation": 2,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "2350f7997b7bac25468d58b4b2145a2f176cfc795e988ca181e1be8ae6b080ec",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 5,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 10,
+          "finalTimber": 15,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 378,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 5,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 16,
+            "finalTimber": 15,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-19",
+        "family": "Garden chain",
+        "currentRotation": 2,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "85aafcc8a1d11a2986727eab8182c157535e86f9f4c47958f346d3432d64b1e4",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 3,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 13,
+          "finalTimber": 19,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 299,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 19,
+            "finalTimber": 19,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-20",
+        "family": "Garden chain",
+        "currentRotation": 0,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "cf6bc838c63b2fad870c316aadcae5ac6f77dbee3525641412d6b67927a0f93e",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 3,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 9,
+          "finalFood": 10,
+          "finalTimber": 15,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 300,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 13,
+            "finalTimber": 15,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-21",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "587f1c92a5922b57afeef9bb628ae67030494f316b363c1ac86b23b0d1f67ea1",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 6,
+          "finalFood": 15,
+          "finalTimber": 19,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 288,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 6,
+            "finalFood": 24,
+            "finalTimber": 19,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-22",
+        "family": "Scattered orchards",
+        "currentRotation": 3,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "24412ff6e55d13f6dea665858d77eeb2cf690bb2b45ae9b7593ed9555a683f46",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 3,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 4,
+          "minTimber": 9,
+          "finalFood": 11,
+          "finalTimber": 14,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 16,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 348,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 3,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 17,
+            "finalTimber": 14,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 10,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-23",
+        "family": "Sheltered inlet",
+        "currentRotation": 0,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "e754d19d75fc8559895d278d0e91e384566206a2f86fa8d16afc96cfbfd5d388",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 6,
+          "finalFood": 15,
+          "finalTimber": 12,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 288,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 6,
+            "finalFood": 21,
+            "finalTimber": 12,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-24",
+        "family": "Scattered orchards",
+        "currentRotation": 1,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 2,
+        "fallback": false,
+        "openingHash": "1305af9f59d832ced9dd26369b7d807fdd78d6559e996a24430404de802c6b69",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 3
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 4,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 14,
+          "finalTimber": 18,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 15,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 359,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 4,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 23,
+            "finalTimber": 18,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 9,
+            "rationShortages": 0,
+            "emptyTides": [],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-25",
+        "family": "Scattered orchards",
+        "currentRotation": 5,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "d052d4f963e86734d407e386274f7efc3378a831c35f8e5c03b19a098b0ff80b",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 1,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 15,
+          "finalTimber": 15,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 19,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            7,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 301,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 1,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 29,
+            "finalTimber": 15,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 13,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              7,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-26",
+        "family": "Scattered orchards",
+        "currentRotation": 1,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "967f6ce64ccc3c1f9f78ce165770d4c6e563146edff8ab9b5b4c329b432ffd48",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 9,
+          "finalFood": 17,
+          "finalTimber": 15,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 331,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 31,
+            "finalTimber": 15,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-27",
+        "family": "Sheltered inlet",
+        "currentRotation": 0,
+        "bellDistance": 4,
+        "buildings": {
+          "garden": 1,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "61bd8ebfdee714123f60d435c32a5bf5a2179ebf94bd844627eabc18130ec710",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": -1
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": -1
+              }
+            }
+          ],
+          [
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 0
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 5,
+            "anchor": 1,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 5,
+          "minTimber": 7,
+          "finalFood": 11,
+          "finalTimber": 12,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 14,
+          "rationShortages": 0,
+          "emptyTides": [
+            6,
+            7
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            2,
+            3,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 385,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "grove"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 5,
+              "anchor": 1,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 7,
+            "finalFood": 15,
+            "finalTimber": 13,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 8,
+            "rationShortages": 0,
+            "emptyTides": [
+              7
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-28",
+        "family": "Scattered orchards",
+        "currentRotation": 3,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "16dff1888ded47d55687d3c6300ccc48730754871099979e79f2abfe382b7c46",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 0,
+                "r": 1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 1,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 14,
+          "finalTimber": 14,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 18,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [],
+          "growthTides": [
+            1,
+            2,
+            3
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 331,
+          "additions": [
+            {
+              "tide": 1,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 1,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 9,
+            "finalFood": 25,
+            "finalTimber": 14,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 12,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-29",
+        "family": "Scattered orchards",
+        "currentRotation": 4,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 2,
+          "grove": 1,
+          "breakwater": 1,
+          "empty": 1
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "d365b035f8f6fbeac80ffde9fcc432d27efab87b94a169916f5d165f46a289e5",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 2,
+                "r": -2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": -1
+              }
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 2,
+            "build": 0,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 0,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 9,
+          "finalFood": 16,
+          "finalTimber": 14,
+          "finalIntegrity": 4,
+          "ordinaryGrowth": 0,
+          "spareActions": 17,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 318,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 2,
+              "build": 0,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 0,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 9,
+            "finalFood": 25,
+            "finalTimber": 14,
+            "finalIntegrity": 4,
+            "ordinaryGrowth": 6,
+            "spareActions": 11,
+            "rationShortages": 0,
+            "emptyTides": [
+              6,
+              8
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-30",
+        "family": "Timber flotilla",
+        "currentRotation": 3,
+        "bellDistance": 2,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "5faa68e43308bf8a5e906e6bd0007ea180076236b2e31949d712a8e85bb67172",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": 1,
+                "r": 0
+              }
+            },
+            {
+              "type": "build",
+              "id": "west",
+              "building": "garden"
+            },
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            }
+          ]
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 6,
+          "minTimber": 6,
+          "finalFood": 11,
+          "finalTimber": 18,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 16,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6
+          ],
+          "growthOnEmptyTides": [
+            4
+          ],
+          "growthTides": [
+            1,
+            2,
+            4
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 348,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-west"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "west"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 0,
+            "minTimber": 6,
+            "finalFood": 17,
+            "finalTimber": 18,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 10,
+            "rationShortages": 0,
+            "emptyTides": [
+              6
+            ],
+            "growthOnEmptyTides": [
+              6
+            ],
+            "growthTides": [
+              1,
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "seed": "gameplay-panel-31",
+        "family": "Timber flotilla",
+        "currentRotation": 1,
+        "bellDistance": 3,
+        "buildings": {
+          "garden": 1,
+          "grove": 2,
+          "breakwater": 0,
+          "empty": 2
+        },
+        "attempts": 1,
+        "fallback": false,
+        "openingHash": "c9251aa9532368672d76024e48b54d66ffa01b03e876cb0f4bccffa4ff928b8b",
+        "witness": [
+          [
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -2,
+                "r": 2
+              }
+            },
+            {
+              "type": "tow",
+              "id": "bell",
+              "to": {
+                "q": -1,
+                "r": 1
+              }
+            },
+            {
+              "type": "build",
+              "id": "garden-south",
+              "building": "garden"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "nourish",
+              "id": "bell"
+            },
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          [],
+          [
+            {
+              "type": "anchor",
+              "id": "bell"
+            }
+          ],
+          []
+        ],
+        "baseline": {
+          "counts": {
+            "nourish": 3,
+            "tow": 2,
+            "anchor": 2,
+            "build": 1,
+            "whaleTow": 0
+          },
+          "builds": {
+            "garden": 1,
+            "grove": 0,
+            "breakwater": 0
+          },
+          "minFood": 7,
+          "minTimber": 6,
+          "finalFood": 15,
+          "finalTimber": 20,
+          "finalIntegrity": 5,
+          "ordinaryGrowth": 0,
+          "spareActions": 16,
+          "rationShortages": 0,
+          "emptyTides": [
+            4,
+            6,
+            8
+          ],
+          "growthOnEmptyTides": [
+            4,
+            6
+          ],
+          "growthTides": [
+            2,
+            4,
+            6
+          ],
+          "anchors": [
+            {
+              "tide": 5,
+              "id": "bell"
+            },
+            {
+              "tide": 7,
+              "id": "bell"
+            }
+          ]
+        },
+        "ordinaryOpportunity": {
+          "outcome": "six-growth-witness",
+          "reason": "Six ordinary growth stages with legal extra nourishment; no other plans claimed inferior.",
+          "limits": {
+            "maxAdditions": 6,
+            "maxRouteReplays": 600
+          },
+          "trials": 329,
+          "additions": [
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 2,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 3,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 4,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            },
+            {
+              "tide": 5,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "north"
+              }
+            },
+            {
+              "tide": 6,
+              "index": 0,
+              "command": {
+                "type": "nourish",
+                "id": "garden-south"
+              }
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "nourish": 9,
+              "tow": 2,
+              "anchor": 2,
+              "build": 1,
+              "whaleTow": 0
+            },
+            "builds": {
+              "garden": 1,
+              "grove": 0,
+              "breakwater": 0
+            },
+            "minFood": 1,
+            "minTimber": 6,
+            "finalFood": 24,
+            "finalTimber": 20,
+            "finalIntegrity": 5,
+            "ordinaryGrowth": 6,
+            "spareActions": 10,
+            "rationShortages": 0,
+            "emptyTides": [
+              8
+            ],
+            "growthOnEmptyTides": [],
+            "growthTides": [
+              2,
+              4,
+              6
+            ],
+            "anchors": [
+              {
+                "tide": 5,
+                "id": "bell"
+              },
+              {
+                "tide": 7,
+                "id": "bell"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "options": {
+    "scope": "Executable First Light comparisons using existing commands; no runtime changes or claims of player preference.",
+    "whale": {
+      "reference": {
+        "counts": {
+          "nourish": 3,
+          "tow": 2,
+          "anchor": 3,
+          "build": 0,
+          "whaleTow": 0
+        },
+        "builds": {
+          "garden": 0,
+          "grove": 0,
+          "breakwater": 0
+        },
+        "minFood": 5,
+        "minTimber": 8,
+        "finalFood": 12,
+        "finalTimber": 14,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "spareActions": 16,
+        "rationShortages": 0,
+        "emptyTides": [
+          4,
+          6,
+          8
+        ],
+        "growthOnEmptyTides": [],
+        "growthTides": [
+          1,
+          2,
+          3
+        ],
+        "anchors": [
+          {
+            "tide": 1,
+            "id": "bell"
+          },
+          {
+            "tide": 5,
+            "id": "bell"
+          },
+          {
+            "tide": 7,
+            "id": "bell"
+          }
+        ]
+      },
+      "alternative": {
+        "counts": {
+          "nourish": 3,
+          "tow": 1,
+          "anchor": 3,
+          "build": 0,
+          "whaleTow": 1
+        },
+        "builds": {
+          "garden": 0,
+          "grove": 0,
+          "breakwater": 0
+        },
+        "minFood": 6,
+        "minTimber": 8,
+        "finalFood": 13,
+        "finalTimber": 14,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "spareActions": 16,
+        "rationShortages": 0,
+        "emptyTides": [
+          4,
+          6,
+          8
+        ],
+        "growthOnEmptyTides": [],
+        "growthTides": [
+          1,
+          2,
+          3
+        ],
+        "anchors": [
+          {
+            "tide": 1,
+            "id": "bell"
+          },
+          {
+            "tide": 5,
+            "id": "bell"
+          },
+          {
+            "tide": 7,
+            "id": "bell"
+          }
+        ]
+      },
+      "commands": [
+        [
+          {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 2,
+              "r": -1
+            }
+          },
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "anchor",
+            "id": "bell"
+          }
+        ],
+        [
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "whaleTow",
+            "id": "bell"
+          }
+        ],
+        [
+          {
+            "type": "nourish",
+            "id": "bell"
+          }
+        ],
+        [],
+        [
+          {
+            "type": "anchor",
+            "id": "bell"
+          }
+        ],
+        [],
+        [
+          {
+            "type": "anchor",
+            "id": "bell"
+          }
+        ],
+        []
+      ],
+      "immediateCost": {
+        "actions": 1,
+        "food": 0,
+        "timber": 0
+      },
+      "nextDrift": {
+        "id": "bell",
+        "from": {
+          "q": 1,
+          "r": -1
+        },
+        "to": {
+          "q": 0,
+          "r": -1
+        },
+        "blocked": false
+      },
+      "tradeoff": "Saves one food for the same immediate relocation and action cost, but uses the only whale favour on tide 2. Direction is fixed; the normal tow leaves that favour available. Normal drift still resolves."
+    },
+    "support": {
+      "bellReturn": {
+        "counts": {
+          "nourish": 3,
+          "tow": 3,
+          "anchor": 1,
+          "build": 0,
+          "whaleTow": 0
+        },
+        "builds": {
+          "garden": 0,
+          "grove": 0,
+          "breakwater": 0
+        },
+        "minFood": 5,
+        "minTimber": 8,
+        "finalFood": 12,
+        "finalTimber": 16,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "spareActions": 17,
+        "rationShortages": 0,
+        "emptyTides": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "growthOnEmptyTides": [],
+        "growthTides": [
+          1,
+          2,
+          3
+        ],
+        "anchors": [
+          {
+            "tide": 1,
+            "id": "bell"
+          }
+        ]
+      },
+      "bridgeWindbreak": {
+        "counts": {
+          "nourish": 3,
+          "tow": 4,
+          "anchor": 1,
+          "build": 0,
+          "whaleTow": 0
+        },
+        "builds": {
+          "garden": 0,
+          "grove": 0,
+          "breakwater": 0
+        },
+        "minFood": 5,
+        "minTimber": 8,
+        "finalFood": 11,
+        "finalTimber": 16,
+        "finalIntegrity": 4,
+        "ordinaryGrowth": 0,
+        "spareActions": 16,
+        "rationShortages": 0,
+        "emptyTides": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "growthOnEmptyTides": [],
+        "growthTides": [
+          1,
+          2,
+          3
+        ],
+        "anchors": [
+          {
+            "tide": 1,
+            "id": "bell"
+          }
+        ]
+      },
+      "commands": [
+        [
+          {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 2,
+              "r": -1
+            }
+          },
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "anchor",
+            "id": "bell"
+          }
+        ],
+        [
+          {
+            "type": "nourish",
+            "id": "bell"
+          },
+          {
+            "type": "tow",
+            "id": "bell",
+            "to": {
+              "q": 1,
+              "r": -1
+            }
+          }
+        ],
+        [
+          {
+            "type": "nourish",
+            "id": "bell"
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "type": "tow",
+            "id": "garden-west",
+            "to": {
+              "q": -1,
+              "r": -1
+            }
+          },
+          {
+            "type": "tow",
+            "id": "garden-west",
+            "to": {
+              "q": 0,
+              "r": -1
+            }
+          }
+        ]
+      ],
+      "finalBell": {
+        "q": 0,
+        "r": -2
+      },
+      "finalGarden": {
+        "q": 0,
+        "r": -1,
+        "building": "garden"
+      },
+      "tradeoff": "Moving the garden twice costs two actions/two food instead of a one-action/one-food final bell tow. It keeps the bell offshore, with the garden providing the Heart link and windbreak while retaining its building; no extra reward or superiority is claimed."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+### Result
+{
+  "text": "Local saving unavailable · this voyage stays in this tab",
+  "display": "none",
+  "rect": {
+    "x": 0,
+    "y": 0,
+    "width": 0,
+    "height": 0,
+    "top": 0,
+    "right": 0,
+    "bottom": 0,
+    "left": 0
+  },
+  "statusRegions": []
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => {const n=document.querySelector(\'.footer > span:first-child\');return {text:n.textContent,display:getComputedStyle(n).display,rect:n.getBoundingClientRect().toJSON(),statusRegions:[...document.querySelectorAll(\'[role=status],[role=alert]\')].map(n=>n.textContent)};}');
+```

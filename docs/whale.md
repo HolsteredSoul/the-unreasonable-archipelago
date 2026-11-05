@@ -18,4 +18,10 @@ Regenerate with Blender 5.2:
 & 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --factory-startup -t 2 --python scripts/create_whale.py
 ```
 
-This also renders isometric and overhead previews to the ignored `output/playwright/` folder. Both views were visually inspected. The exported asset was loaded with the project's actual Three.js `GLTFLoader`; its bounds, sole scene, four-second animation and movement of all three animated nodes were verified. Blender MCP was unavailable during this pass, so verification used Blender renders rather than a live viewport screenshot.
+This also renders isometric and overhead previews to the ignored `output/playwright/` folder. Historical September 2026 verification: both views were visually inspected, and the exported asset was loaded with the project's actual Three.js `GLTFLoader`; its bounds, sole scene, four-second animation and movement of all three animated nodes were verified. Blender MCP was unavailable during that pass, so verification used Blender renders rather than a live viewport screenshot.
+
+On 5 November 2026 the unchanged runtime GLB was parsed again with the installed
+`GLTFLoader`: 3,290 triangles, size 4.4512 × 1.6716 × 6.1839, and the four-second
+`GentleSwim` clip were confirmed. This was a static metadata check, not a new
+animation audition or rendered signoff. SHA-256 and source/dependency provenance
+are recorded in the [asset inventory](assets.md) and [manifest](../assets/manifest.json).

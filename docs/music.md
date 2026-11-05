@@ -58,3 +58,35 @@ frame rate; that requires the integrated browser playthrough.
 Authorship record: original composition and synthesis created for this project
 with Codex assistance, September 2026. No outside musical work was provided as
 a composition or style reference.
+
+The [asset inventory](assets.md) and [manifest](../assets/manifest.json) record the
+composition, synthesizer and action/outcome chimes separately from third-party
+runtime libraries. This is a provenance record, not an assignment of a project
+distribution licence. The November 2026 inventory pass checked source paths; it
+did not render or audition the score. Earlier measurements in `verification.md`
+remain historical; human listening and fatigue evaluation remain pending.
+
+## Effects lifecycle integration (November 2026)
+
+`src/ui/audio.ts` retains the existing `playChime(kind, enabled, volume)` entry point
+and the original notes. `updateEffects({ enabled, volume })` controls a retained
+effects output bus without creating or resuming an AudioContext. Call it from the
+settings effect and synchronously when master mute changes; include `stopEffects()`
+with the app's final audio cleanup. The first allowed `playChime` unlocks audio.
+
+Configured volume is applied once through the bus; the legacy per-call volume can
+limit a newly triggered cue, and matching settings/per-call volume is not squared.
+Master mute or zero effects volume ramps the bus to zero in 60 ms and cancels
+queued/future notes. Page hiding cancels effects and suspends after cleanup;
+showing the page does not replay old cues. The next accepted chime resumes audio.
+
+Selection bursts within 140 ms are coalesced. At most four current cues and 24
+connected voices (including short retiring fades) are retained. Results take
+priority over errors, which take priority over normal actions and selection.
+Repeated result/error requests do not stack while a cue of that priority plays.
+The lead's App integration should exclude `select` from music ducking while
+retaining the existing duck for meaningful actions and result/error feedback.
+
+Mock Web Audio tests cover lifecycle, mute/resume races, priority, bounds and
+cleanup. They establish scheduling behaviour; they do not establish perceived
+loudness, clipping on real devices, listening quality or musical fatigue.

@@ -1,0 +1,18 @@
+### Result
+{
+  "dialog": false,
+  "food": 10,
+  "actions": 3,
+  "nourished": false,
+  "undo": 0,
+  "overflow": [
+    1689,
+    1277,
+    1689,
+    1277
+  ]
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => {const s=JSON.parse(localStorage.getItem(\'unreasonable-archipelago.session.v1\'));return {dialog:!!document.querySelector(\'[role=dialog]\'),food:s.state.food,actions:s.state.actions,nourished:s.state.islands.find(i=>i.id===\'bell\').nourished,undo:s.undo.length,overflow:[innerWidth,innerHeight,document.documentElement.scrollWidth,document.documentElement.scrollHeight]};}');
+```

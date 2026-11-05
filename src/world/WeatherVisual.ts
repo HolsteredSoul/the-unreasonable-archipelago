@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { DIRECTIONS, getIslandStats } from '../game';
 import type { Forecast, GameState, Hex, Island } from '../game/types';
 import { shelterCells } from './planning';
+import { getWeatherPresentation } from './weatherModel';
 
 export type WeatherVisualConfig = {
   state: GameState;
@@ -40,6 +41,20 @@ function arcGeometry(radius: number, width: number, start: number, end: number, 
     const angle = start + (end - start) * i / segments;
     return new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
   }), width);
+}
+
+/** Gaps distinguish stress from a complete growth halo even without colour or motion. */
+function segmentedArcGeometry(radius: number, width: number, start: number, end: number, pieces: number) {
+  const vertices: number[] = [];
+  const step = (end - start) / pieces;
+  for (let piece = 0; piece < pieces; piece++) {
+    const geometry = arcGeometry(radius, width, start + piece * step, start + (piece + 0.68) * step, 12);
+    vertices.push(...Array.from(geometry.getAttribute('position').array));
+    geometry.dispose();
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  return geometry;
 }
 
 function hexOutline(dashed: boolean) {
@@ -124,10 +139,10 @@ export function createWeatherVisual(hexPosition: (hex: Hex) => THREE.Vector3) {
   const windHeads = batch('storm-direction-heads', ribbonGeometry([
     new THREE.Vector3(1.52, 0, -0.13), new THREE.Vector3(1.80, 0, 0), new THREE.Vector3(1.52, 0, 0.13),
   ], 0.038), 0xe9eee0, 0.48);
-  const riskRing = batch('exposure-rings', arcGeometry(1.43, 0.042, 0, TAU), 0xffffff, 0.50);
+  const riskRing = batch('exposure-rings', segmentedArcGeometry(1.46, 0.065, Math.PI - 1.1, Math.PI + 1.1, 3), 0xffffff, 0.50);
   const surf = batch('windward-surf', arcGeometry(1.33, 0.072, Math.PI - 0.84, Math.PI + 0.84, 26), 0xf8f5de, 0.76);
   const surfEcho = batch('windward-surf-echo', arcGeometry(1.33, 0.028, Math.PI - 0.67, Math.PI + 0.67, 24), 0xe2ede5, 0.42);
-  const recoveryRing = batch('stress-recovery-rings', arcGeometry(1.41, 0.041, 0, TAU), 0xc3edbf, 0.60);
+  const recoveryRing = batch('stress-recovery-rings', segmentedArcGeometry(1.41, 0.05, 0, TAU, 6), 0xc3edbf, 0.60);
   const interceptionSurf = batch('breakwater-interception', arcGeometry(1.34, 0.085, Math.PI - 0.90, Math.PI + 0.90, 28), 0xf1f3d4, 0.85);
   const growthRing = batch('harvest-growth-rings', arcGeometry(1.40, 0.065, 0, TAU), 0xffd48c, 0.86);
 
@@ -174,9 +189,18 @@ export function createWeatherVisual(hexPosition: (hex: Hex) => THREE.Vector3) {
 
     const ordinaryCells = new Map<string, Hex>();
     const focusCells = new Map<string, Hex>();
+    // In Forecast/resolution, selection asks "what protects this island?".
+    // Preserve the overview in present/drift and the distinct proposed-build layer.
+    const selectedWeather = afterDrift && !next.breakwaterPreview
+      ? getWeatherPresentation(next.state, next.forecast).islands.find(item => item.id === next.selectedId)
+      : undefined;
+    const focusSources = selectedWeather
+      ? new Set(selectedWeather.sheltered ? selectedWeather.blockerIds : [])
+      : null;
     if (weather.storm) {
       for (const item of located) {
-        const special = item.island.building === 'breakwater' || item.island.id === next.selectedId;
+        const special = focusSources ? focusSources.has(item.island.id)
+          : item.island.building === 'breakwater' || item.island.id === next.selectedId;
         const target = special ? focusCells : ordinaryCells;
         for (const cell of shelterCells(item.island, weather.direction)) target.set(hexKey(cell), cell);
         if (item.island.building === 'breakwater') target.set(hexKey(item.island), item.island);
@@ -204,7 +228,7 @@ export function createWeatherVisual(hexPosition: (hex: Hex) => THREE.Vector3) {
     cells(candidateFill, proposedPositions, 0.092); cells(candidateEdges, proposedPositions, 0.098);
     riskRing.count = exposed.length;
     exposed.forEach((item, index) => {
-      place(riskRing, index, item.position, 0.102);
+      place(riskRing, index, item.position, 0.102, 1, angle);
       color.set(item.stressAfter >= 3 ? 0xe77c5e : 0xf2b780);
       riskRing.setColorAt(index, color);
     });
@@ -273,7 +297,7 @@ export function createWeatherVisual(hexPosition: (hex: Hex) => THREE.Vector3) {
     recoveryRing.count = activeRecovery ? recovering.length : 0;
     recovering.forEach((item, index) => {
       const phase = fraction(time * 0.75 + index * 0.18);
-      place(recoveryRing, index, item.position, 0.112, 1 + phase * 0.16);
+      place(recoveryRing, index, item.position, 0.112, 1 + (1 - phase) * 0.16);
     });
     recoveryRing.instanceMatrix.needsUpdate = true;
     (recoveryRing.material as THREE.MeshBasicMaterial).opacity = reducedMotion ? 0.78 : 0.56 + Math.sin(time * 2.1) * 0.16;

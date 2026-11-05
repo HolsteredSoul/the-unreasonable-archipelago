@@ -28,6 +28,11 @@ function findRescue(state: GameState): Command | undefined {
   if (state.timber >= 3) for (const island of islands) {
     if (island.kind === 'ordinary' && island.building !== 'breakwater') candidates.push({ type: 'build', id: island.id, building: 'breakwater' });
   }
+  // Keep established Tow/Build preferences. A last growth stage can also rescue a
+  // bell, but only the real forecast can establish that every bell will ring.
+  for (const island of islands) {
+    if (island.kind === 'bell') candidates.push({ type: 'nourish', id: island.id });
+  }
   return candidates.find(command => {
     const applied = applyCommand(state, command);
     return !applied.error && forecastTide(applied.state).state.status === 'won';
@@ -39,6 +44,9 @@ function rescueHint(state: GameState, command: Command): string {
   if (command.type === 'tow') {
     const direction = DIRECTIONS.findIndex(hex => hex.q === command.to.q - island.q && hex.r === command.to.r - island.r);
     return `Tow ${island.name} ${BEARINGS[direction]} to (${command.to.q}, ${command.to.r}): 1 action + 1 food. Then advance the tide to win.`;
+  }
+  if (command.type === 'nourish') {
+    return `Nourish ${island.name}: 1 action + 2 food now. Growth completes after the safe, fed tide. Then advance the tide to win.`;
   }
   const replacement = island.building ? `, replacing its ${island.building === 'garden' ? 'tide garden' : 'driftwood grove'}` : '';
   return `Build a breakwater on ${island.name}${replacement}: 1 action + 3 timber. Then advance the tide to win.`;
